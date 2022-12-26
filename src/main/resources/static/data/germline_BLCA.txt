@@ -1,0 +1,6 @@
+gene	number
+BRCA2	3
+DNMT3A	1
+MSH2	1
+RAD51D	1
+RB1	1

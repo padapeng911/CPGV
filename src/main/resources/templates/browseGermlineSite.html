@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Browse by site')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navBrowse"></nav>
+
+    <nav th:insert="common::breadcrumbBrowse"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" >Mutation Site Information in Genecast Cohort</p>
+        </div>
+        <div class="card-body">
+            <div th:insert="common::siteInfoT"></div>
+            <div th:insert="common::siteInfoC"></div>
+            <div th:insert="common::siteGNGC"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:replace="commonJS::siteGN"></script>
+
+<script th:replace="commonJS::siteGC"></script>
+
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

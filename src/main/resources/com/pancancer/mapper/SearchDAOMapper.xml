@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.SearchDAO">
+
+    <!--查询所有下拉菜单-->
+    <select id="searchByGene" resultType="Search1">
+         select gene from search1 where gene LIKE "%"#{param1}"%"
+    </select>
+
+
+    <select id="searchByType" resultType="Search2">
+        <!--select type from search2
+        where
+        <if test = "#{param2} = '' ">
+            type IN (A-Z)
+        </if>-->
+         select type from search2 where type LIKE "%"#{param2}"%"
+    </select>
+
+
+    <select id="searchByPathway" resultType="Search3">
+         select pathway from search3 where pathway LIKE "%"#{param3}"%"
+    </select>
+
+
+    <select id="searchBySite" resultType="Search4">
+         select site from search4 where site LIKE "%"#{param4}"%"
+    </select>
+
+</mapper>

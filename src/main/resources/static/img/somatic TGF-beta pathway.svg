@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="219.333px" height="295.334px" viewBox="0 0 219.333 295.334" enable-background="new 0 0 219.333 295.334"
+	 xml:space="preserve">
+<rect x="9.809" y="158.889" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="203.302" height="81.32"/>
+<text transform="matrix(1 0 0 1 99.3662 249.7773)" font-family="'ArialMT'" font-size="8.3712">SMAD</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M16.685,162.178h82.517c1.98,0,3.588,1.605,3.588,3.587v23.918
+	c0,1.981-1.606,3.588-3.588,3.588H16.685c-1.981,0-3.588-1.606-3.588-3.588v-23.918C13.097,163.783,14.704,162.178,16.685,162.178z"
+	/>
+<text transform="matrix(1 0 0 1 43.5225 171.7451)" font-family="'ArialMT'" font-size="8.3712">SMAD2</text>
+<rect x="16.086" y="175.332" fill="#FFF8F8" stroke="#000000" width="83.713" height="14.947"/>
+<text transform="matrix(1 0 0 1 45.9844 185.5977)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M123.718,162.178h82.516c1.981,0,3.588,1.605,3.588,3.587v23.918
+	c0,1.981-1.605,3.588-3.588,3.588h-82.516c-1.982,0-3.589-1.606-3.589-3.588v-23.918
+	C120.129,163.783,121.735,162.178,123.718,162.178z"/>
+<text transform="matrix(1 0 0 1 150.5552 171.7451)" font-family="'ArialMT'" font-size="8.3712">SMAD3</text>
+<rect x="123.12" y="175.332" fill="#FFF8F8" stroke="#000000" width="83.711" height="14.947"/>
+<text transform="matrix(1 0 0 1 153.0161 185.5977)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M72.293,205.828h82.517c1.981,0,3.588,1.605,3.588,3.586v23.92
+	c0,1.98-1.604,3.586-3.588,3.586H72.293c-1.98,0-3.588-1.605-3.588-3.586v-23.92C68.706,207.434,70.312,205.828,72.293,205.828z"/>
+<text transform="matrix(1 0 0 1 99.1318 215.3945)" font-family="'ArialMT'" font-size="8.3712">SMAD4</text>
+<rect x="71.696" y="218.982" fill="#FFD7D7" stroke="#000000" width="83.713" height="14.947"/>
+<text transform="matrix(1 0 0 1 103.9854 229.248)" font-family="'ArialMT'" font-size="8.3712">1.6%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M120.728,4.32h82.517c1.981,0,3.588,1.605,3.588,3.586v23.918
+	c0,1.981-1.605,3.588-3.588,3.588h-82.517c-1.981,0-3.588-1.605-3.588-3.588V7.906C117.14,5.926,118.747,4.32,120.728,4.32z"/>
+<text transform="matrix(1 0 0 1 135.231 22.8564)" font-family="'ArialMT'" font-size="8.3712">Activin ligands</text>
+<rect x="6.221" y="59.629" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.27" height="77.734"/>
+<text transform="matrix(1 0 0 1 40.1719 146.9297)" font-family="'ArialMT'" font-size="8.3712">TGFBR</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M13.097,102.98h82.517c1.981,0,3.588,1.605,3.588,3.588v23.918
+	c0,1.98-1.606,3.588-3.588,3.588H13.097c-1.981,0-3.587-1.606-3.587-3.588v-23.918C9.51,104.586,11.116,102.98,13.097,102.98z"/>
+<text transform="matrix(1 0 0 1 37.8442 112.5488)" font-family="'ArialMT'" font-size="8.3712">TGFBR2</text>
+<rect x="12.499" y="116.135" fill="#FFF8F8" stroke="#000000" width="83.713" height="14.949"/>
+<text transform="matrix(1 0 0 1 44.7886 126.4004)" font-family="'ArialMT'" font-size="8.3712">0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M13.097,62.918h82.517c1.981,0,3.588,1.606,3.588,3.588v23.918
+	c0,1.98-1.606,3.588-3.588,3.588H13.097c-1.981,0-3.587-1.605-3.587-3.588V66.506C9.51,64.524,11.116,62.918,13.097,62.918z"/>
+<text transform="matrix(1 0 0 1 37.8442 72.4863)" font-family="'ArialMT'" font-size="8.3712">TGFBR1</text>
+<rect x="12.499" y="76.074" fill="#FFF8F8" stroke="#000000" width="83.713" height="14.947"/>
+<text transform="matrix(1 0 0 1 42.3965 86.3379)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M13.097,4.32h82.517c1.981,0,3.588,1.605,3.588,3.586v23.918
+	c0,1.981-1.606,3.588-3.588,3.588H13.097c-1.981,0-3.587-1.605-3.587-3.588V7.906C9.51,5.926,11.116,4.32,13.097,4.32z"/>
+<text transform="matrix(1 0 0 1 28.7676 22.8564)" font-family="'ArialMT'" font-size="8.3712">TGFB ligands</text>
+<rect x="113.252" y="59.629" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.867" height="75.342"/>
+<text transform="matrix(1 0 0 1 147.731 144.5371)" font-family="'ArialMT'" font-size="8.3712">ACVR2</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M120.129,100.588h82.517c1.981,0,3.588,1.607,3.588,3.588v23.918
+	c0,1.982-1.605,3.588-3.588,3.588h-82.517c-1.981,0-3.588-1.605-3.588-3.588v-23.918
+	C116.542,102.195,118.147,100.588,120.129,100.588z"/>
+<text transform="matrix(1 0 0 1 144.6392 110.1572)" font-family="'ArialMT'" font-size="8.3712">ACVR2B</text>
+<rect x="119.532" y="113.744" fill="#FFF8F8" stroke="#000000" width="83.712" height="14.948"/>
+<text transform="matrix(1 0 0 1 149.4282 124.0098)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M120.728,62.918h82.517c1.981,0,3.588,1.606,3.588,3.588v23.918
+	c0,1.98-1.605,3.588-3.588,3.588h-82.517c-1.981,0-3.588-1.605-3.588-3.588V66.506C117.14,64.524,118.747,62.918,120.728,62.918z"/>
+<text transform="matrix(1 0 0 1 145.2368 72.4863)" font-family="'ArialMT'" font-size="8.3712">ACVR2A</text>
+<rect x="120.129" y="76.074" fill="#FFF8F8" stroke="#000000" width="83.713" height="14.947"/>
+<text transform="matrix(1 0 0 1 150.0259 86.3379)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<rect x="34.025" y="276.982" fill="#FFFFFF" fill-opacity="0" width="157.857" height="14.352"/>
+<text transform="matrix(1 0 0 1 38.5 287.1484)" font-family="'ArialMT'" font-size="8.3712">Proliferation, stem/progenitor phenotype</text>
+<polygon points="131.395,153.541 135.688,155.649 131.433,158.889 "/>
+<line fill="none" stroke="#000000" x1="143.182" y1="134.971" x2="133.542" y2="154.595"/>
+<polygon points="84.047,155.9 88.211,153.547 88.482,158.889 "/>
+<line fill="none" stroke="#000000" x1="76.318" y1="137.363" x2="86.129" y2="154.724"/>
+<polygon points="159.459,54.836 164.242,54.855 161.833,59.629 "/>
+<line fill="none" stroke="#000000" x1="161.926" y1="35.414" x2="161.851" y2="54.847"/>
+<polygon points="51.963,54.847 56.747,54.847 54.355,59.629 "/>
+<line fill="none" stroke="#000000" x1="54.355" y1="35.414" x2="54.355" y2="54.847"/>
+</svg>

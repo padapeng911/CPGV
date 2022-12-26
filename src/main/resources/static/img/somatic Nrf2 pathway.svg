@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="287px" height="100px" viewBox="0 0 287 100" enable-background="new 0 0 287 100" xml:space="preserve">
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M7.61,6.6h82.611c1.983,0,3.592,1.607,3.592,3.592v23.945
+	c0,1.983-1.607,3.592-3.592,3.592H7.61c-1.983,0-3.592-1.607-3.592-3.592V10.191C4.019,8.206,5.626,6.6,7.61,6.6z"/>
+<text transform="matrix(1 0 0 1 35.4053 16.1758)" font-family="'ArialMT'" font-size="8.3809">KEAP1</text>
+<rect x="7.011" y="19.768" fill="#FFD9D9" stroke="#000000" width="83.81" height="14.967"/>
+<text transform="matrix(1 0 0 1 39.3379 30.043)" font-family="'ArialMT'" font-size="8.3809">1.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M112.371,6.6h82.612c1.982,0,3.592,1.607,3.592,3.592v23.945
+	c0,1.983-1.608,3.592-3.592,3.592h-82.612c-1.982,0-3.592-1.607-3.592-3.592V10.191C108.779,8.206,110.388,6.6,112.371,6.6z"/>
+<text transform="matrix(1 0 0 1 142.9629 16.1758)" font-family="'ArialMT'" font-size="8.3809">CUL3</text>
+<rect x="111.773" y="19.768" fill="#FFF8F8" stroke="#000000" width="83.81" height="14.967"/>
+<text transform="matrix(1 0 0 1 141.7041 30.043)" font-family="'ArialMT'" font-size="8.3809">&lt;0.5%</text>
+<rect x="178.819" y="70.652" fill="#FFFFFF" fill-opacity="0" width="104.163" height="14.367"/>
+<text transform="matrix(1 0 0 1 180.3599 80.8281)" font-family="'ArialMT'" font-size="8.3809">Oxidative Stress Response</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M62.085,62.271h82.611c1.983,0,3.592,1.607,3.592,3.592v23.945
+	c0,1.983-1.607,3.592-3.592,3.592H62.085c-1.982,0-3.592-1.607-3.592-3.592V65.863C58.494,63.88,60.103,62.271,62.085,62.271z"/>
+<text transform="matrix(1 0 0 1 88.0195 71.8486)" font-family="'ArialMT'" font-size="8.3809">NFE2L2</text>
+<rect x="61.487" y="75.441" fill="#FFE3E3" stroke="#000000" width="83.809" height="14.966"/>
+<text transform="matrix(1 0 0 1 93.8135 85.7168)" font-family="'ArialMT'" font-size="8.3809">1.1%</text>
+<line fill="none" stroke="#000000" stroke-width="2" x1="85.613" y1="63.092" x2="89.036" y2="59.741"/>
+<line fill="none" stroke="#000000" x1="64.146" y1="37.727" x2="87.325" y2="61.415"/>
+<polygon points="174.03,80.23 174.03,75.441 178.819,77.836 "/>
+<line fill="none" stroke="#000000" x1="148.289" y1="77.836" x2="174.03" y2="77.836"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="116.476" y1="59.777" x2="120.029" y2="62.988"/>
+<line fill="none" stroke="#000000" x1="139.619" y1="37.727" x2="118.252" y2="61.383"/>
+</svg>

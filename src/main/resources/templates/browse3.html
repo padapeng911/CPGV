@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Browse')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navBrowse"></nav>
+
+    <nav th:insert="common::breadcrumbBrowse"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <br>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/BrowseSomatic}"><h5><b>Gene</b></h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/Browse2}"><h5><b>Cancer type</b></h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#pathway"><h5><b>Pathway</b></h5></a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="pathway" class="tab-pane active"><br>
+                <div class="card border-0">
+                    <div class="card-body">
+                        <table id="browse3table" style="font-size: 15px"></table>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#browse3table").bootstrapTable({
+            url:"/cpgv/Browse3Table",
+            method: 'get',
+            striped : true,
+            theadClasses: "thead-blue",
+            classes: "table table-hover table-striped table-sm",
+            pageNumber : 1,
+            pagination : false,
+            sidePagination : 'client',
+            pageSize : 10,
+            showRefresh : false,
+            columns : [ {
+                title : 'Pathway',
+                field : 'pathway',
+                align: 'center',
+                formatter:function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowsePathway?pathway='+ value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            }, {
+                title : 'Description',
+                field : 'description',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

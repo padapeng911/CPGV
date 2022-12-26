@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Browse by gene')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navBrowse"></nav>
+
+    <nav th:insert="common::breadcrumbBrowse"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" th:text="'Gene Germline Mutation Information in Genecast Cohort and Analysis'"></p>
+        </div>
+        <div class="card-body">
+            <div th:insert="common::geneInfoT"></div>
+            <div th:insert="common::geneInfoC"></div>
+            <div th:insert="common::geneGInfoT"></div>
+            <div th:insert="common::geneGInfoC"></div>
+            <div th:insert="common::geneGNT"></div>
+            <div th:insert="common::geneGNC"></div>
+            <div th:insert="common::geneGCT"></div>
+            <div th:insert="common::geneGCC"></div>
+            <div th:insert="common::geneGComWT"></div>
+            <div th:insert="common::geneGComWC"></div>
+            <div th:insert="common::geneGComTT"></div>
+            <div th:insert="common::geneGComTC"></div>
+            <div th:insert="common::geneGComCT"></div>
+            <div th:insert="common::geneGComCC"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:replace="commonJS::geneGInfo"></script>
+
+<script th:replace="commonJS::geneGN"></script>
+
+<script th:replace="commonJS::geneGC"></script>
+
+<script th:replace="commonJS::geneGC2"></script>
+
+<script th:replace="commonJS::geneGComW"></script>
+
+<script th:replace="commonJS::geneGComW2"></script>
+
+<script th:replace="commonJS::geneGComW3"></script>
+
+<script th:replace="commonJS::geneGComW4"></script>
+
+<script th:replace="commonJS::geneGComT"></script>
+
+<script th:replace="commonJS::geneGComT2"></script>
+
+<script th:replace="commonJS::geneGComC"></script>
+
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Browse by pathway')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navBrowse"></nav>
+
+    <nav th:insert="common::breadcrumbBrowse"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <br>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/BrowseSomatic}"><h5>Gene</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/Browse2}"><h5>Cancer type</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#cancerPathway"><h5>Pathway</h5></a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="cancerPathway" class="tab-pane active"><br>
+                <div id="accordion">
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#somatic">
+                                <h5>Somatic mutation</h5>
+                            </a>
+                        </div>
+                        <div id="somatic" class="collapse show" data-parent="#accordion" th:each="browsePathway,browsePathwayStat:${browsePathways}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10" style="text-align: center">
+                                        <img th:src="@{'/img/somatic '+${browsePathway.pathway}+'.svg'}" alt="Cinque Terre" align="middle" style="width: 80%; margin: 0 auto">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a th:href="@{'/img/somatic '+${browsePathway.pathway}+'.png'}" th:download="'The carrier ratio of somatic mutations of genes in '+${browsePathway.pathway}+'.png'"><img th:src="@{/img/download.png}" width="15px" height="12px"></a>
+                                    </div>
+                                </div>
+                                <table id="browsePathwaySomaticTable"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#germline">
+                                <h5>Germline mutation</h5>
+                            </a>
+                        </div>
+                        <div id="germline" class="collapse" data-parent="#accordion" th:each="browsePathway,browsePathwayStat:${browsePathways}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10" style="text-align: center">
+                                        <img th:src="@{'/img/germline '+${browsePathway.pathway}+'.svg'}" alt="Sorry, no germline mutated genes were detected in this pathway." align="middle" style="width: 80%; margin: 0 auto">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a th:href="@{'/img/germline '+${browsePathway.pathway}+'.png'}" th:download="'The carrier ratio of germline mutations of genes in '+${browsePathway.pathway}+'.png'"><img th:src="@{/img/download.png}" width="15px" height="12px"></a>
+                                    </div>
+                                </div>
+                                <table id="browsePathwayGermlineTable"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        var q = window.location.pathname.substr(1).match(reg_rewrite);
+        if(r != null){
+            return unescape(r[2]);
+        }else if(q != null){
+            return unescape(q[2]);
+        }else{
+            return null;
+        }
+    }
+    var pathway=getQueryString("pathway");
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#browsePathwaySomaticTable").bootstrapTable({
+            url:"/cpgv/BrowsePathwaySomaticTableInfo",
+            striped : true,
+            theadClasses: "thead-blue",
+            classes: "table table-hover table-striped table-sm",
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 10,
+            pageList : [10, 20],
+            showRefresh : false,
+            search:true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                formatter:function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseSomaticGene?gene='+ value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseSomaticSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<span style="color:black;">'+value+'</span>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            },{
+                title : 'Type',
+                field : 'exonicFunc',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#browsePathwayGermlineTable").bootstrapTable({
+            url:"/cpgv/BrowsePathwayGermlineTableInfo",
+            striped : true,
+            theadClasses: "thead-blue",
+            classes: "table table-hover table-striped table-sm",
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 10,
+            pageList : [10, 20],
+            showRefresh : false,
+            search:true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                formatter:function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseGermlineGene?gene='+ value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseGermlineSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<span style="color:black;">'+value+'</span>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            },{
+                title : 'Type',
+                field : 'exonicFunc',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>

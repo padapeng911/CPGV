@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="217.334px" height="299.334px" viewBox="0 0 217.334 299.334" enable-background="new 0 0 217.334 299.334"
+	 xml:space="preserve">
+<rect x="8.811" y="160.729" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="203.301" height="81.32"/>
+<text transform="matrix(1 0 0 1 98.3672 251.6172)" font-family="'ArialMT'" font-size="8.3712">SMAD</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M15.686,164.018h82.517c1.981,0,3.588,1.605,3.588,3.587v23.918
+	c0,1.981-1.606,3.588-3.588,3.588H15.686c-1.98,0-3.588-1.606-3.588-3.588v-23.918C12.098,165.623,13.705,164.018,15.686,164.018z"
+	/>
+<text transform="matrix(1 0 0 1 42.5234 173.585)" font-family="'ArialMT'" font-size="8.3712">SMAD2</text>
+<rect x="15.088" y="177.172" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.947"/>
+<text transform="matrix(1 0 0 1 47.377 187.4375)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M122.719,164.018h82.516c1.982,0,3.588,1.605,3.588,3.587v23.918
+	c0,1.981-1.605,3.588-3.588,3.588h-82.516c-1.982,0-3.588-1.606-3.588-3.588v-23.918
+	C119.131,165.623,120.736,164.018,122.719,164.018z"/>
+<text transform="matrix(1 0 0 1 149.5557 173.585)" font-family="'ArialMT'" font-size="8.3712">SMAD3</text>
+<rect x="122.12" y="177.172" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.947"/>
+<text transform="matrix(1 0 0 1 154.4092 187.4375)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M71.295,207.668h82.516c1.982,0,3.588,1.605,3.588,3.586v23.92
+	c0,1.98-1.604,3.586-3.588,3.586H71.295c-1.98,0-3.588-1.605-3.588-3.586v-23.92C67.707,209.273,69.313,207.668,71.295,207.668z"/>
+<text transform="matrix(1 0 0 1 98.1328 217.2344)" font-family="'ArialMT'" font-size="8.3712">SMAD4</text>
+<rect x="70.697" y="220.822" fill="#FFF8F8" stroke="#000000" width="83.712" height="14.947"/>
+<text transform="matrix(1 0 0 1 100.5942 231.0879)" font-family="'ArialMT'" font-size="8.3712">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M119.729,6.16h82.518c1.98,0,3.588,1.605,3.588,3.586v23.918
+	c0,1.981-1.605,3.588-3.588,3.588h-82.518c-1.98,0-3.588-1.605-3.588-3.588V9.746C116.141,7.766,117.747,6.16,119.729,6.16z"/>
+<text transform="matrix(1 0 0 1 134.2324 24.6963)" font-family="'ArialMT'" font-size="8.3712">Activin ligands</text>
+<rect x="5.223" y="61.469" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.269" height="77.734"/>
+<text transform="matrix(1 0 0 1 39.1729 148.7695)" font-family="'ArialMT'" font-size="8.3712">TGFBR</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M12.098,104.82h82.518c1.98,0,3.587,1.605,3.587,3.588v23.918
+	c0,1.98-1.606,3.588-3.587,3.588H12.098c-1.98,0-3.586-1.606-3.586-3.588v-23.918C8.512,106.426,10.117,104.82,12.098,104.82z"/>
+<text transform="matrix(1 0 0 1 36.8452 114.3887)" font-family="'ArialMT'" font-size="8.3712">TGFBR2</text>
+<rect x="11.5" y="117.975" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.949"/>
+<text transform="matrix(1 0 0 1 43.7896 128.2402)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M12.098,64.758h82.518c1.98,0,3.587,1.606,3.587,3.588v23.918
+	c0,1.98-1.606,3.588-3.587,3.588H12.098c-1.98,0-3.586-1.605-3.586-3.588V68.346C8.512,66.364,10.117,64.758,12.098,64.758z"/>
+<text transform="matrix(1 0 0 1 36.8452 74.3262)" font-family="'ArialMT'" font-size="8.3712">TGFBR1</text>
+<rect x="11.5" y="77.914" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.947"/>
+<text transform="matrix(1 0 0 1 43.7896 88.1777)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M12.098,6.16h82.518c1.98,0,3.587,1.605,3.587,3.586v23.918
+	c0,1.981-1.606,3.588-3.587,3.588H12.098c-1.98,0-3.586-1.605-3.586-3.588V9.746C8.512,7.766,10.117,6.16,12.098,6.16z"/>
+<text transform="matrix(1 0 0 1 27.7686 24.6963)" font-family="'ArialMT'" font-size="8.3712">TGFB ligands</text>
+<rect x="112.254" y="61.469" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.867" height="75.342"/>
+<text transform="matrix(1 0 0 1 146.7314 146.377)" font-family="'ArialMT'" font-size="8.3712">ACVR2</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M119.131,102.428h82.516c1.982,0,3.588,1.607,3.588,3.588v23.918
+	c0,1.982-1.605,3.588-3.588,3.588h-82.516c-1.982,0-3.588-1.605-3.588-3.588v-23.918
+	C115.543,104.035,117.148,102.428,119.131,102.428z"/>
+<text transform="matrix(1 0 0 1 143.6406 111.9971)" font-family="'ArialMT'" font-size="8.3712">ACVR2B</text>
+<rect x="118.532" y="115.584" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.948"/>
+<text transform="matrix(1 0 0 1 150.8213 125.8496)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M119.729,64.758h82.518c1.98,0,3.588,1.606,3.588,3.588v23.918
+	c0,1.98-1.605,3.588-3.588,3.588h-82.518c-1.98,0-3.588-1.605-3.588-3.588V68.346C116.141,66.364,117.747,64.758,119.729,64.758z"/>
+<text transform="matrix(1 0 0 1 144.2373 74.3262)" font-family="'ArialMT'" font-size="8.3712">ACVR2A</text>
+<rect x="119.131" y="77.914" fill="#FFFFFF" stroke="#000000" width="83.713" height="14.947"/>
+<text transform="matrix(1 0 0 1 151.4199 88.1777)" font-family="'ArialMT'" font-size="8.3712">0.0%</text>
+<rect x="33.025" y="278.822" fill="#FFFFFF" fill-opacity="0" width="157.857" height="14.352"/>
+<text transform="matrix(1 0 0 1 37.501 288.9883)" font-family="'ArialMT'" font-size="8.3712">Proliferation, stem/progenitor phenotype</text>
+<polygon points="130.396,155.381 134.689,157.489 130.434,160.729 "/>
+<line fill="none" stroke="#000000" x1="142.184" y1="136.811" x2="132.543" y2="156.435"/>
+<polygon points="83.048,157.74 87.212,155.387 87.482,160.729 "/>
+<line fill="none" stroke="#000000" x1="75.318" y1="139.203" x2="85.13" y2="156.563"/>
+<polygon points="158.461,56.676 163.242,56.695 160.834,61.469 "/>
+<line fill="none" stroke="#000000" x1="160.928" y1="37.254" x2="160.852" y2="56.687"/>
+<polygon points="50.965,56.687 55.748,56.687 53.355,61.469 "/>
+<line fill="none" stroke="#000000" x1="53.355" y1="37.254" x2="53.355" y2="56.687"/>
+</svg>

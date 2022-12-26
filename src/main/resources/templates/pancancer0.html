@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Pan-cancer Analysis')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navAnalysis"></nav>
+
+    <nav th:insert="common::breadcrumbAnalysis"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px">Mutation Characteristics of multiple cancers in Genecast Cohort</p>
+        </div>
+        <input id="typename" type="hidden" th:value="${analysis.type}">
+        <br>
+        <ul th:insert="common::typeNav"></ul>
+        <div class="tab-content">
+            <div id="somatic" class="tab-pane active"><br>
+                <div th:insert="common::typeSNSC"></div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div th:insert="common::typeSComTT"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-11" id="echartsBrowseSomaticType3" style="height: 400px;width: 600px"></div>
+                                <div class="col-sm-1"><a id="downloadT3" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div th:insert="common::typeSComGT"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-11" id="echartsBrowseSomaticType4" style="height: 400px;width: 600px"></div>
+                                <div class="col-sm-1"><a id="downloadT4" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:insert="common::typeSDTS"></div>
+            </div>
+            <div id="germline" class="tab-pane fade"><br>
+                <div th:insert="common::typeGNGC"></div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div th:insert="common::typeGComTT"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-11" id="echartsBrowseGermlineType3" style="height: 400px;width: 600px"></div>
+                                <div class="col-sm-1"><a id="downloadT3_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
+            </div>
+            <div id="clinical" class="tab-pane fade"><br>
+                <div th:insert="common::typeCDGA"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT = window.document.querySelector('#downloadT1')
+    aT.addEventListener('click',()=>{
+        const contentT = document.querySelector('#echartsBrowseSomaticType1 svg').outerHTML
+        const blobT= new Blob([contentT], {type: 'xml/svg'})
+        aT.href = URL.createObjectURL(blobT)
+        aT.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseSomaticType1'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneNumber2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 3) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                genearr.push(dataSet[i]);
+                cancerarr.push(dataSet[i + 1]);
+                datamax.push(dataSet[i + 2]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var j = g * 3 * cancerarr.length + k * 3 + 2;
+                dataSet[j] = Number(dataSet[j]);
+                seriesdata[i][2] = dataSet[j];
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticType1").innerHTML="Sorry, no somatic mutations were detected in these cancers.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    var temp = '';
+                    if (item[2] == "0" || item[2] == '') {
+                        temp = '-';
+                    }else{
+                        temp = item[2];
+                    }
+                    return [item[1], item[0], temp];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest number \nof somatic mutations in these cancers'
+                    },
+                    tooltip: {
+                        position: 'top'
+                    },
+                    grid: {
+                        height: '50%',
+                        top: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        splitArea: {
+                            show: true
+                        },
+                        axisLabel:{
+                            interval:0,
+                            rotate:45
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: maxdata,
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: '5%'
+                    },
+                    series: [{
+                        name: 'Mutated Number',
+                        type: 'heatmap',
+                        data: data,
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT2 = window.document.querySelector('#downloadT2')
+    aT2.addEventListener('click',()=>{
+        const contentT2 = document.querySelector('#echartsBrowseSomaticType2 svg').outerHTML
+        const blobT2= new Blob([contentT2], {type: 'xml/svg'})
+        aT2.href = URL.createObjectURL(blobT2)
+        aT2.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseSomaticType2'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatio2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 3) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                genearr.push(dataSet[i]);
+                cancerarr.push(dataSet[i + 1]);
+                datamax.push(dataSet[i+2]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var j = g * 3 * cancerarr.length + k * 3 + 2;
+                dataSet[j] = Number(dataSet[j]);
+                seriesdata[i][2] = dataSet[j];
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticType2").innerHTML="Sorry, no somatic mutations were detected in these cancers.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    var temp = '';
+                    if (item[2] == "0" || item[2] == '') {
+                        temp = '-';
+                    }else{
+                        temp = item[2];
+                    }
+                    return [item[1], item[0], temp];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest carrier ratio \nof somatic mutations in these cancers'
+                    },
+                    tooltip: {
+                        position: 'top'
+                    },
+                    grid: {
+                        height: '50%',
+                        top: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        splitArea: {
+                            show: true
+                        },
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: maxdata,
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: '5%'
+                    },
+                    series: [{
+                        name: 'Carrier Ratio',
+                        type: 'heatmap',
+                        data: data,
+                        label: {
+                            show: false,
+                            formatter:function(params){
+                                if (params.data[2] > 0.1){
+                                    return '>0.1';
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT3 = window.document.querySelector('#downloadT3')
+    aT3.addEventListener('click',()=>{
+        const contentT3 = document.querySelector('#echartsBrowseSomaticType3 svg').outerHTML
+        const blobT3= new Blob([contentT3], {type: 'xml/svg'})
+        aT3.href = URL.createObjectURL(blobT3)
+        aT3.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseSomaticType3'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsTcga2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 4) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                dataSet[i + 3] = Number(dataSet[i + 3]);
+                genearr.push(dataSet[i]);
+                cancerarr.push("Genecast-"+dataSet[i + 1],"TCGA-"+dataSet[i + 1]);
+                datamax.push(dataSet[i+2],dataSet[i+3]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var n = Math.floor(k / 2);
+                if (k % 2 == 0){
+                    var j = g * 2 * cancerarr.length + n * 4 + 2;
+                    dataSet[j] = Number(dataSet[j]);
+                    seriesdata[i][2] = dataSet[j];
+                }else{
+                    var m = g * 2 * cancerarr.length + n * 4 + 3;
+                    dataSet[m] = Number(dataSet[m]);
+                    seriesdata[i][2] = dataSet[m];
+                }
+            }
+            var arrnum = seriesdata.length;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseSomaticType3").innerHTML="Sorry, these cancer types are not recorded in TCGA.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    return [item[1], item[0], item[2]];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest carrier ratio of somatic mutations \nin these cancers compared with that in TCGA'
+                    },
+                    tooltip: {
+                        position: 'top',
+                        formatter: function (params) {
+                            return 'The carrier ratio in '+ genearr[params.value[0]] + ' of ' + cancerarr[params.value[1]]+' is '+params.value[2];
+                        }
+                    },
+                    grid: {
+                        left: 2,
+                        bottom: 10,
+                        right: 10,
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        boundaryGap: false,
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    series: [{
+                        name: 'Carrier Ratio',
+                        type: 'scatter',
+                        symbolSize: function (val) {
+                            return (1/(Math.log10(val[2])))*10;
+                        },
+                        data: data,
+                        animationDelay: function (idx) {
+                            return idx * 5;
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            document.getElementById("echartsBrowseSomaticType3").innerHTML="Sorry, these cancer types are not recorded in TCGA.";
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT4 = window.document.querySelector('#downloadT4')
+    aT4.addEventListener('click',()=>{
+        const contentT4 = document.querySelector('#echartsBrowseSomaticType4 svg').outerHTML
+        const blobT4= new Blob([contentT4], {type: 'xml/svg'})
+        aT4.href = URL.createObjectURL(blobT4)
+        aT4.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseSomaticType4'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsGermline2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 4) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                dataSet[i + 3] = Number(dataSet[i + 3]);
+                genearr.push(dataSet[i]);
+                cancerarr.push("Somatic-"+dataSet[i + 1],"Germline-"+dataSet[i + 1]);
+                datamax.push(dataSet[i+2],dataSet[i+3]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var n = Math.floor(k / 2);
+                if (k % 2 == 0){
+                    var j = g * 2 * cancerarr.length + n * 4 + 2;
+                    dataSet[j] = Number(dataSet[j]);
+                    seriesdata[i][2] = dataSet[j];
+                }else{
+                    var m = g * 2 * cancerarr.length + n * 4 + 3;
+                    dataSet[m] = Number(dataSet[m]);
+                    seriesdata[i][2] = dataSet[m];
+                }
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticType4").innerHTML="Sorry, no somatic mutations were detected in these cancers.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    return [item[1], item[0], item[2]];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest carrier ratio of somatic mutations \nin these cancers compared with that of germline mutations'
+                    },
+                    tooltip: {
+                        position: 'top',
+                        formatter: function (params) {
+                            return 'The carrier ratio in '+ genearr[params.value[0]] + ' of ' + cancerarr[params.value[1]]+' is '+params.value[2];
+                        }
+                    },
+                    grid: {
+                        left: 2,
+                        bottom: 10,
+                        right: 10,
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        boundaryGap: false,
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    series: [{
+                        name: 'Carrier Ratio',
+                        type: 'scatter',
+                        symbolSize: function (val) {
+                            return (1/(Math.log10(val[2])))*10;
+                        },
+                        data: data,
+                        animationDelay: function (idx) {
+                            return idx * 5;
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var type=$('#typename').val();
+    const aT5 = window.document.querySelector('#downloadT5')
+    aT5.addEventListener('click',()=>{
+        const contentT5 = document.querySelector('#echartsBrowseSomaticType5 svg').outerHTML
+        const blobT5= new Blob([contentT5], {type: 'xml/svg'})
+        aT5.href = URL.createObjectURL(blobT5)
+        aT5.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseSomaticType5'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseSomaticTmbByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var tempname = '';
+            var dataname = [];
+            var datanumber = [];
+            var number = [];
+            for (var i = 0 ; i < dataSet.length; i = i + 2){
+                if(dataSet[i] == tempname){
+                    number.push(dataSet[i + 1]);
+                }else{
+                    if(number.length == 0){
+                    }else{
+                        datanumber.push(number);
+                        number = [];
+                    }
+                    dataname.push(dataSet[i]);
+                    number.push(dataSet[i + 1]);
+                    tempname = dataSet[i];
+                }
+            }
+            datanumber.push(number);
+            var data = echarts.dataTool.prepareBoxplotData(datanumber);
+            var d1=(dataname);
+            var option;
+            option = {
+                title: [
+                    {
+                        text: 'The distribution of TMB for these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center',
+                    },
+                    {
+                        text: 'upper: Q3 + 1.5 * IRQ \nlower: Q1 - 1.5 * IRQ',
+                        borderColor: 'black',
+                        borderWidth: 1,
+                        textStyle: {
+                            fontSize: 10,
+                            color:'black'
+                        },
+                        left: '10%',
+                        top: '91%'
+                    }
+                ],
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '15%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: dataname,
+                    boundaryGap: true,
+                    nameGap: 30,
+                    splitArea: {
+                        show: false
+                    },
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Number',
+                    splitArea: {
+                        show: true
+                    }
+                },
+                series: [
+                    {
+                        name: 'boxplot',
+                        type: 'boxplot',
+                        data: data.boxData,
+                        tooltip: {
+                            formatter: function (param) {
+                                return [
+                                    param.name + ': ',
+                                    'upper: ' + param.data[5],
+                                    'Q3: ' + param.data[4],
+                                    'median: ' + param.data[3],
+                                    'Q1: ' + param.data[2],
+                                    'lower: ' + param.data[1]
+                                ].join('<br/>')
+                            }
+                        }
+                    },
+                    {
+                        name: 'outlier',
+                        type: 'scatter',
+                        data: data.outliers
+                    }
+                ]
+            };
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    var type=$('#typename').val();
+    const aT6 = window.document.querySelector('#downloadT6')
+    aT6.addEventListener('click',()=>{
+        const contentT6 = document.querySelector('#echartsBrowseSomaticType6 svg').outerHTML
+        const blobT6= new Blob([contentT6], {type: 'xml/svg'})
+        aT6.href = URL.createObjectURL(blobT6)
+        aT6.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseSomaticType6'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseSomaticSignatureByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var onearray = [];  //先声明一维
+            for (var i = 0; i < dataSet.length; i = i + 31) {
+                temparr =  [];
+                for (var j = 0; j < 31; j++) {
+                    temparr[j] = dataSet[i + j];
+                };
+                onearray.push(temparr);
+            };
+            var cancerarr = [];
+            for (var i = 0; i < onearray.length; i++) {
+                cancerarr.push(onearray[i][0]);
+            };
+            var cancerfenzu = delRepeat2(cancerarr);
+            var cancernumber = getRepeatNum(cancerarr);
+
+            var datamulit = [];
+            for (var i = 0; i < cancerfenzu.length; i++) {
+                var dataout1 = [];
+                var dataname = cancerfenzu[i]
+                var datanumber = cancernumber[cancerfenzu[i]];
+
+                for (var j = 1; j < 31; j++) {
+                    var datatemp = [];
+                    for (var k = 0; k < datanumber; k++) {
+                        if (onearray[k][j] != 0){
+                            datatemp.push(onearray[k][j]);
+                        }
+                    };
+                    if (datatemp.length > 0){
+                        dataout1.push(datatemp);
+                    }else{
+                        datatemp.push("0");
+                        dataout1.push(datatemp);
+                    }
+                };
+                datamulit.push(echarts.dataTool.prepareBoxplotData(dataout1));
+            };
+            var data = datamulit;
+            var seriesdata = [];
+            for (var i = 0; i < cancerfenzu.length; i++) {
+                var arrayjs = {};
+                arrayjs.name = cancerfenzu[i];
+                arrayjs.type = 'boxplot';
+                arrayjs.data = data[i].boxData;
+                arrayjs.tooltip= {formatter: formatter};
+                seriesdata.push(arrayjs);
+                var arrayjs = {};
+                arrayjs.name = cancerfenzu[i];
+                arrayjs.type = 'pictorialBar';
+                arrayjs.symbolPosition = 'end';
+                arrayjs.symbolSize= '8';
+                arrayjs.data = data[i].outliers;
+                seriesdata.push(arrayjs);
+            };
+            var d1=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21','S22','S23','S24','S25','S26','S27','S28','S29','S30'];
+            option = {
+                title: [
+                    {
+                        text: 'The distribution of signature for these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center',
+                    },
+                    {
+                        subtext: 'S:signature \nS1:small numbers of small insertions and deletions \nS2:mutations in exons \nS3:elevated numbers of large (longer than 3bp) insertions and deletions\nS4:bias for C>A mutations \nS5:bias for T>C substitutions at ApTpN context \nS6,S15,S20,S26:high numbers of small (shorter than 3bp) insertions and deletions at \nmono/polynucleotide repeats \nS7:large numbers of CC>TT dinucleotide mutations at dipyrimidines \nS8:weak bias for C>A substitutions \nS9,S17,S18,S19,S21,S28,S30:N/A \nS10:bias for C>A mutations at TpCpT context and T>G mutations at TpTpT context \nS11,S23:strong bias for C>T mutations \nS12:strong bias for T>C substitutions \nS13:predominantly C>G mutations \nS14:very high numbers of somatic mutations (>200 mutations per MB) \nS16:strong bias for T>C mutations at ApTpN context \nS22,S27:strong bias for T>A mutations \nS24:strong bias for C>A mutations \nS25:bias for T>A mutations \nS29:bias for C>A mutations',
+                        borderColor: 'grey',
+                        borderWidth: 1,
+                        textStyle: {
+                            fontSize: 12,
+                            color:'grey'
+                        },
+                        sublink:'https://cancer.sanger.ac.uk/signatures/signatures_v2/',
+                        left: '6%',
+                        top: '58%'
+                    }
+                ],
+                legend: {
+                    top: '3%',
+                    data: cancerfenzu
+                },
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    top:'10%',
+                    left: '10%',
+                    right: '10%',
+                    bottom: '50%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: d1,
+                    boundaryGap: true,
+                    nameGap: 30,
+                    splitArea: {
+                        show: true
+                    },
+                    axisLabel: {
+                        interval:0,
+                        rotate:75,
+                        formatter: '{value}'
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Percentage',
+                    splitArea: {
+                        show: false
+                    }
+                },
+                dataZoom: [
+                    {
+                        type: 'inside',
+                        start: 0,
+                        end: 20
+                    },
+                    {
+                        show: true,
+                        height: 20,
+                        type: 'slider',
+                        top: '53%',
+                        xAxisIndex: [0],
+                        start: 0,
+                        end: 20
+                    }
+                ],
+                series: seriesdata
+            };
+            function formatter(param) {
+                return [
+                    param.name + ': ',
+                    'upper: ' + param.data[5],
+                    'Q3: ' + param.data[4],
+                    'median: ' + param.data[3],
+                    'Q1: ' + param.data[2],
+                    'lower: ' + param.data[1]
+                ].join('<br/>')
+            }
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT_2 = window.document.querySelector('#downloadT1_2')
+    aT_2.addEventListener('click',()=>{
+        const contentT_2 = document.querySelector('#echartsBrowseGermlineType1 svg').outerHTML
+        const blobT_2= new Blob([contentT_2], {type: 'xml/svg'})
+        aT_2.href = URL.createObjectURL(blobT_2)
+        aT_2.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseGermlineType1'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneNumber2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 3) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                genearr.push(dataSet[i]);
+                cancerarr.push(dataSet[i + 1]);
+                datamax.push(dataSet[i + 2]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var j = g * 3 * cancerarr.length + k * 3 + 2;
+                dataSet[j] = Number(dataSet[j]);
+                seriesdata[i][2] = dataSet[j];
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineType1").innerHTML="Sorry, no germline mutations were detected in these cancers.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    var temp = '';
+                    if (item[2] == "0" || item[2] == '') {
+                        temp = '-';
+                    }else{
+                        temp = item[2];
+                    }
+                    return [item[1], item[0], temp];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest number \nof germline mutations in these cancers'
+                    },
+                    tooltip: {
+                        position: 'top'
+                    },
+                    grid: {
+                        height: '50%',
+                        top: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        splitArea: {
+                            show: true
+                        },
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: maxdata,
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: '5%'
+                    },
+                    series: [{
+                        name: 'Mutated Number',
+                        type: 'heatmap',
+                        data: data,
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT2_2 = window.document.querySelector('#downloadT2_2')
+    aT2_2.addEventListener('click',()=>{
+        const contentT2_2 = document.querySelector('#echartsBrowseGermlineType2 svg').outerHTML
+        const blobT2_2= new Blob([contentT2_2], {type: 'xml/svg'})
+        aT2_2.href = URL.createObjectURL(blobT2_2)
+        aT2_2.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseGermlineType2'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatio2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 3) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                genearr.push(dataSet[i]);
+                cancerarr.push(dataSet[i + 1]);
+                datamax.push(dataSet[i+2]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var j = g * 3 * cancerarr.length + k * 3 + 2;
+                dataSet[j] = Number(dataSet[j]);
+                seriesdata[i][2] = dataSet[j];
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineType2").innerHTML="Sorry, no germline mutations were detected in these cancers.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    var temp = '';
+                    if (item[2] == "0" || item[2] == '') {
+                        temp = '-';
+                    }else{
+                        temp = item[2];
+                    }
+                    return [item[1], item[0], temp];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest carrier ratio \nof germline mutations in these cancers'
+                    },
+                    tooltip: {
+                        position: 'top'
+                    },
+                    grid: {
+                        height: '50%',
+                        top: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        splitArea: {
+                            show: true
+                        },
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: maxdata,
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: '5%'
+                    },
+                    series: [{
+                        name: 'Carrier Ratio',
+                        type: 'heatmap',
+                        data: data,
+                        label: {
+                            show: true,
+                            formatter:function(params){
+                                if (params.data[2] > 0.1){
+                                    return '>0.1';
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    function max(arr) {
+        var max = arr[0];
+        var len = arr.length;
+        for (var i = 1; i < len; i++){
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    var type=$('#typename').val();
+    const aT3_2 = window.document.querySelector('#downloadT3_2')
+    aT3_2.addEventListener('click',()=>{
+        const contentT3_2 = document.querySelector('#echartsBrowseGermlineType3 svg').outerHTML
+        const blobT3_2= new Blob([contentT3_2], {type: 'xml/svg'})
+        aT3_2.href = URL.createObjectURL(blobT3_2)
+        aT3_2.download = 'newplot.svg'
+    })
+    var myChart11 =echarts.init(document.querySelector('#echartsBrowseGermlineType3'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatioVsTcga2?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var genearr = [];
+            var cancerarr = [];
+            var datamax = [];
+            for (var i = 0; i < dataSet.length; i = i + 4) {
+                dataSet[i + 2] = Number(dataSet[i + 2]);
+                dataSet[i + 3] = Number(dataSet[i + 3]);
+                genearr.push(dataSet[i]);
+                cancerarr.push("Genecast-"+dataSet[i + 1],"TCGA-"+dataSet[i + 1]);
+                datamax.push(dataSet[i+2],dataSet[i+3]);
+            }
+            genearr = delRepeat2(genearr);
+            cancerarr = delRepeat2(cancerarr);
+            var maxdata = max(datamax);
+            var seriesdata = new Array();
+            for (var i = 0; i < cancerarr.length*genearr.length; i++) {
+                seriesdata[i] = new Array();
+                var k = Math.floor(i / genearr.length);
+                seriesdata[i][0] = k;
+                var g = i % genearr.length;
+                seriesdata[i][1] = g;
+                var n = Math.floor(k / 2);
+                if (k % 2 == 0){
+                    var j = g * 2 * cancerarr.length + n * 4 + 2;
+                    dataSet[j] = Number(dataSet[j]);
+                    seriesdata[i][2] = dataSet[j];
+                }else{
+                    var m = g * 2 * cancerarr.length + n * 4 + 3;
+                    dataSet[m] = Number(dataSet[m]);
+                    seriesdata[i][2] = dataSet[m];
+                }
+            }
+            var arrnum = seriesdata.length;
+            var sum = 0;
+            for (var h=0;h<arrnum;h++){
+                sum = sum + seriesdata[h][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineType3").innerHTML="Sorry, these cancer types are not recorded in TCGA.";
+            }
+            else {
+                data = seriesdata.map(function (item) {
+                    return [item[1], item[0], item[2]];
+                });
+                option = {
+                    title: {
+                        left: 'center',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        text: 'The top 20 genes with the highest carrier ratio \nof germline mutations in these cancers compared with that in TCGA'
+                    },
+                    tooltip: {
+                        position: 'top',
+                        formatter: function (params) {
+                            return 'The carrier ratio in '+ genearr[params.value[0]] + ' of ' + cancerarr[params.value[1]]+' is '+params.value[2];
+                        }
+                    },
+                    grid: {
+                        left: 2,
+                        bottom: 10,
+                        right: 10,
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: genearr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        boundaryGap: false,
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: cancerarr,
+                        axisLabel:{
+                            interval:0,
+                            rotate:45,
+                        },
+                        splitLine: {
+                            show: true
+                        },
+                        axisLine: {
+                            show: true
+                        }
+                    },
+                    series: [{
+                        name: 'Carrier Ratio',
+                        type: 'scatter',
+                        symbolSize: function (val) {
+                            return (1/(Math.log10(val[2])))*10;
+                        },
+                        data: data,
+                        animationDelay: function (idx) {
+                            return idx * 5;
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart11.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            document.getElementById("echartsBrowseGermlineType3").innerHTML="Sorry, these cancer types are not recorded in TCGA.";
+            console.log("error status:" + error.status);
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    var type=$('#typename').val();
+    const aC = window.document.querySelector('#downloadC1')
+    aC.addEventListener('click',()=>{
+        const contentC = document.querySelector('#echartsBrowseClinicalType1 svg').outerHTML
+        const blobC= new Blob([contentC], {type: 'xml/svg'})
+        aC.href = URL.createObjectURL(blobC)
+        aC.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseClinicalType1'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseClinicalGenderByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            const dataList = [];
+            for (var i = 0 ; i < dataSet.length; i = i + 3){
+                let temparray ={};
+                temparray["x0"] = dataSet[i];
+                temparray["y0"] = dataSet[i+2];
+                temparray["y1"] = dataSet[i+1];
+                dataList.push(temparray);
+            }
+            var option = {
+                title: {
+                    left:'center',
+                    textStyle:{
+                        fontSize:14,
+                    },
+                    text: 'The distribution of sex for these cancers'
+                },
+                grid: {
+                    top: 60,
+                    left: 30,
+                    right: 50,
+                    bottom: 30,
+                    containLabel: true,
+                },
+                color: ['#4171FF', "#FF7F9E"],
+                legend: {
+                    top: 30,
+                    left: 10,
+                    icon: 'circle',
+                    selectedMode: false,
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#fff',
+                    textStyle: {
+                        color: '#333',
+                    },
+                    extraCssText: 'box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);',
+                    axisPointer: {
+                        type: 'shadow',
+                    },
+                    formatter(params) {
+                        const categoryName = (params && params[0] && params[0].name) || '';
+                        const obj = params.map((item, index) => {
+                            if (item.value === undefined) {
+                                item.value = 0;
+                            }
+                            const dotColor = `<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:${item.color}"></span>`;
+                            return `${dotColor + item.seriesName}: ${item.value[item.dimensionNames[item.encode.y[0]]]}%</br>`;
+                        });
+                        return `${categoryName} </br> ${obj.join('')}`;
+                    },
+                },
+                dataset: {
+                    source: dataList
+                },
+                grid: {
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    axisLine: {
+                        show: false,
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                },
+                yAxis: {
+                    show: false,
+                },
+                series: [{
+                    name: 'Male',
+                    type: 'bar',
+                    stack: '百分比',
+                    barMaxWidth: 30,
+                    encode: {
+                        x: 'x0',
+                        y: 'y0',
+                    },
+                },
+                    {
+                        name: 'Female',
+                        type: 'bar',
+                        stack: '百分比',
+                        barMaxWidth: 30,
+                        encode: {
+                            x: 'x0',
+                            y: 'y1',
+                        }
+                    },
+
+                ]
+            };
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    var type=$('#typename').val();
+    var TESTER = document.getElementById("echartsBrowseClinicalType2");
+    $.ajax({
+        url:"/cpgv/BrowseClinicalAgeByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var rows = [];
+            for (var i = 0; i < dataSet.length; i = i + 2) {
+                let temparray ={};
+                temparray["EXPRESSION_VALUE"] = dataSet[i+1];
+                temparray["GROUP_NAME"] = dataSet[i];
+                temparray["GROUP_SHORT"] = dataSet[i];
+                rows.push(temparray);
+            };
+            function unpack(rows, key) {
+                return rows.map(function(row) { return row[key]; });
+            }
+            var data = [{
+                type: 'violin',
+                x: unpack(rows, 'GROUP_SHORT'),
+                y: unpack(rows, 'EXPRESSION_VALUE'),
+                points: 'none',
+                hoverinfo: 'y',
+                box: {
+                    visible: true
+                },
+                line: {
+                    color: 'blue',
+                },
+                meanline: {
+                    visible: true
+                },
+            }];
+            var layout = {
+                title: { text: "The distribution of age for these cancers", font: { size: 14,family: "Arial black"}},
+                xaxis: {
+                    "tickangle": 0,
+                    title: {
+                    },
+                },
+                yaxis: {
+                    zeroline: false,
+                    title: {
+                        text: 'Age (years old)'
+                    },
+                }
+            };
+            var config = {
+                toImageButtonOptions: {
+                    format: 'svg',
+                    filename: "newplot",
+                    height: 450,
+                    width: 800,
+                    scale: 1
+                },
+                modeBarButtonsToRemove: ['zoom2d',"zoomIn2d","zoomOut2d", 'resetScale2d', 'toggleSpikelines','pan2d', 'sendDataToCloud', "select2d","lasso2d",'hoverClosestCartesian', 'autoScale2d', 'hoverCompareCartesian'],
+                displaylogo: false,
+                displayModeBar: true,
+            };
+            Plotly.newPlot(TESTER, data, layout,config);
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>

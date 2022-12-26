@@ -1,0 +1,5 @@
+gene	number
+BRCA1	1
+DNMT3A	1
+FLCN	1
+SDHB	1

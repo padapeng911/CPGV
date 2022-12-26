@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.AnalysisResultDAO2">
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticNumberByType" resultType="BrowseSomaticGeneNumber">
+         select distinct gene from browse_somatic_number where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticNumberByGenes" resultType="BrowseSomaticGeneNumber">
+         select gene, type, number from browse_somatic_number where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineNumberByType" resultType="BrowseGermlineGeneNumber">
+         select distinct gene from browse_germline_number where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineNumberByGenes" resultType="BrowseGermlineGeneNumber">
+         select gene, type, number from browse_germline_number where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByType" resultType="BrowseSomaticGeneRatio">
+         select distinct gene from browse_somatic_carrier_ratio where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGenes" resultType="BrowseSomaticGeneRatio">
+         select gene, type, ratio from browse_somatic_carrier_ratio where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByType" resultType="BrowseGermlineGeneRatio">
+         select distinct gene from browse_germline_carrier_ratio where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGenes" resultType="BrowseGermlineGeneRatio">
+         select gene, type, ratio from browse_germline_carrier_ratio where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByTypeVsTcga" resultType="BrowseSomaticGeneRatioVsTcga">
+         select distinct gene  from browse_somatic_carrier_ratio_vs_tcga where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGenesVsTcga" resultType="BrowseSomaticGeneRatioVsTcga">
+         select gene,type,genecastratio,tcgaratio  from browse_somatic_carrier_ratio_vs_tcga where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByTypeVsTcga" resultType="BrowseGermlineGeneRatioVsTcga">
+         select distinct gene  from browse_germline_carrier_ratio_vs_tcga where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGenesVsTcga" resultType="BrowseGermlineGeneRatioVsTcga">
+         select gene,type,genecastratio,tcgaratio  from browse_germline_carrier_ratio_vs_tcga where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByTypeVsGermline" resultType="BrowseSomaticGeneRatioVsGermline">
+         select distinct gene from compare_with_germline where type IN (${type}) limit 20
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGenesVsGermline" resultType="BrowseSomaticGeneRatioVsGermline">
+         select gene,type,somatic,germline  from compare_with_germline where gene IN (${gene}) AND type IN (${type}) order by gene asc, type asc
+    </select>
+
+    <!--查询所有-->
+    <select id="findTmbByType" resultType="Browsetmb">
+        select type,number from browse_tmb where type IN (${type}) order by type asc
+    </select>
+
+    <!--查询所有-->
+    <select id="findSignatureByType" resultType="SomaticSignature">
+        select * from somatic_signature where type IN (${type}) order by type asc
+    </select>
+
+    <!--查询所有-->
+    <select id="findGenderByType" resultType="BrowseGender">
+        select type, percent1,percent2 from browse_gender where type IN (${type}) order by type asc
+    </select>
+
+    <!--查询所有-->
+    <select id="findAgeByType" resultType="BrowseAge">
+        select type, age from browse_age where type IN (${type}) order by type asc
+    </select>
+</mapper>

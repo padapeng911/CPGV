@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Downloads')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navDownloads"></nav>
+
+    <nav th:insert="common::breadcrumbDownloads"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <br>
+        <h4>&nbsp;&nbsp;&nbsp;<strong>Download all files in CPGV</strong></h4>
+        <br>
+        <div class="tab-content">
+            <div class="container table-responsive">
+                <table class="table table-hover" style="font-size: 15px">
+                        <thead class="thead-blue" align="middle">
+                        <tr >
+                            <th>Cancer type</th>
+                            <th>Number of samples</th>
+                            <th>Number of somatic mutations</th>
+                            <th>Number of germline mutations</th>
+                        </tr>
+                        </thead>
+                        <tbody align="middle">
+                        <tr>
+                            <td>ACC</td>
+                            <td>32</td>
+                            <td><a th:href="@{/data/somatic_ACC.txt}" download="somatic mutant genes in ACC">13</a></td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>BLCA</td>
+                            <td>54</td>
+                            <td><a th:href="@{/data/somatic_BLCA.txt}" download="somatic mutant genes in BLCA">224</a></td>
+                            <td><a th:href="@{/data/germline_BLCA.txt}" download="germline mutant genes in BLCA">7</a></td>
+                        </tr>
+                        <tr>
+                            <td>BRCA</td>
+                            <td>393</td>
+                            <td><a th:href="@{/data/somatic_BRCA.txt}" download="somatic mutant genes in BRCA">726</a></td>
+                            <td><a th:href="@{/data/germline_BRCA.txt}" download="germline mutant genes in BRCA">40</a></td>
+                        </tr>
+                        <tr>
+                            <td>CESC</td>
+                            <td>272</td>
+                            <td><a th:href="@{/data/somatic_CESC.txt}" download="somatic mutant genes in CESC">328</a></td>
+                            <td><a th:href="@{/data/germline_CESC.txt}" download="germline mutant genes in CESC">16</a></td>
+                        </tr>
+                        <tr>
+                            <td>CHOL</td>
+                            <td>402</td>
+                            <td><a th:href="@{/data/somatic_CHOL.txt}" download="somatic mutant genes in CHOL">512</a></td>
+                            <td><a th:href="@{/data/germline_CHOL.txt}" download="germline mutant genes in CHOL">39</a></td>
+                        </tr>
+                        <tr>
+                            <td>COAD</td>
+                            <td>1024</td>
+                            <td><a th:href="@{/data/somatic_COAD.txt}" download="somatic mutant genes in COAD">1944</a></td>
+                            <td><a th:href="@{/data/germline_COAD.txt}" download="germline mutant genes in COAD">80</a></td>
+                        </tr>
+                        <tr>
+                            <td>ESCA</td>
+                            <td>451</td>
+                            <td><a th:href="@{/data/somatic_ESCA.txt}" download="somatic mutant genes in ESCA">587</a></td>
+                            <td><a th:href="@{/data/germline_ESCA.txt}" download="germline mutant genes in ESCA">35</a></td>
+                        </tr>
+                        <tr>
+                            <td>GBM</td>
+                            <td>105</td>
+                            <td><a th:href="@{/data/somatic_GBM.txt}" download="somatic mutant genes in GBM">5</a></td>
+                            <td><a th:href="@{/data/germline_GBM.txt}" download="germline mutant genes in GBM">11</a></td>
+                        </tr>
+                        <tr>
+                            <td>GIST</td>
+                            <td>55</td>
+                            <td><a th:href="@{/data/somatic_GIST.txt}" download="somatic mutant genes in GIST">22</a></td>
+                            <td><a th:href="@{/data/germline_GIST.txt}" download="germline mutant genes in GIST">13</a></td>
+                        </tr>
+                        <tr>
+                            <td>HNSC</td>
+                            <td>225</td>
+                            <td><a th:href="@{/data/somatic_HNSC.txt}" download="somatic mutant genes in HNSC">142</a></td>
+                            <td><a th:href="@{/data/germline_HNSC.txt}" download="germline mutant genes in HNSC">11</a></td>
+                        </tr>
+                        <tr>
+                            <td>KICH</td>
+                            <td>133</td>
+                            <td><a th:href="@{/data/somatic_KICH.txt}" download="somatic mutant genes in KICH">185</a></td>
+                            <td><a th:href="@{/data/germline_KICH.txt}" download="germline mutant genes in KICH">15</a></td>
+                        </tr>
+                        <tr>
+                            <td>LIHC</td>
+                            <td>678</td>
+                            <td><a th:href="@{/data/somatic_LIHC.txt}" download="somatic mutant genes in LIHC">1287</a></td>
+                            <td><a th:href="@{/data/germline_LIHC.txt}" download="germline mutant genes in LIHC">52</a></td>
+                        </tr>
+                        <tr>
+                            <td>LUAD</td>
+                            <td>6139</td>
+                            <td><a th:href="@{/data/somatic_LUAD.txt}" download="somatic mutant genes in LUAD">5372</a></td>
+                            <td><a th:href="@{/data/germline_LUAD.txt}" download="germline mutant genes in LUAD">282</a></td>
+                        </tr>
+                        <tr>
+                            <td>LUSC</td>
+                            <td>1012</td>
+                            <td><a th:href="@{/data/somatic_LUSC.txt}" download="somatic mutant genes in LUSC">2080</a></td>
+                            <td><a th:href="@{/data/germline_LUSC.txt}" download="germline mutant genes in LUSC">63</a></td>
+                        </tr>
+                        <tr>
+                            <td>NASO</td>
+                            <td>288</td>
+                            <td><a th:href="@{/data/somatic_NASO.txt}" download="somatic mutant genes in NASO">217</a></td>
+                            <td><a th:href="@{/data/germline_NASO.txt}" download="germline mutant genes in NASO">22</a></td>
+                        </tr>
+                        <tr>
+                            <td>NE</td>
+                            <td>73</td>
+                            <td><a th:href="@{/data/somatic_NE.txt}" download="somatic mutant genes in NE">155</a></td>
+                            <td><a th:href="@{/data/germline_NE.txt}" download="germline mutant genes in NE">4</a></td>
+                        </tr>
+                        <tr>
+                            <td>NSCL</td>
+                            <td>1766</td>
+                            <td><a th:href="@{/data/somatic_NSCL.txt}" download="somatic mutant genes in NSCL">2801</a></td>
+                            <td><a th:href="@{/data/germline_NSCL.txt}" download="germline mutant genes in NSCL">112</a></td>
+                        </tr>
+                        <tr>
+                            <td>OV</td>
+                            <td>323</td>
+                            <td><a th:href="@{/data/somatic_OV.txt}" download="somatic mutant genes in OV">363</a></td>
+                            <td><a th:href="@{/data/germline_OV.txt}" download="germline mutant genes in OV">61</a></td>
+                        </tr><tr>
+                            <td>PAAD</td>
+                            <td>704</td>
+                            <td><a th:href="@{/data/somatic_PAAD.txt}" download="somatic mutant genes in PAAD">428</a></td>
+                            <td><a th:href="@{/data/germline_PAAD.txt}" download="germline mutant genes in PAAD">33</a></td>
+                        </tr><tr>
+                            <td>PRAD</td>
+                            <td>61</td>
+                            <td><a th:href="@{/data/somatic_PRAD.txt}" download="somatic mutant genes in PRAD">95</a></td>
+                            <td><a th:href="@{/data/germline_PRAD.txt}" download="germline mutant genes in PRAD">5</a></td>
+                        </tr><tr>
+                            <td>READ</td>
+                            <td>819</td>
+                            <td><a th:href="@{/data/somatic_READ.txt}" download="somatic mutant genes in READ">1129</a></td>
+                            <td><a th:href="@{/data/germline_READ.txt}" download="germline mutant genes in READ">41</a></td>
+                        </tr>
+                        <tr>
+                            <td>SARC</td>
+                            <td>86</td>
+                            <td><a th:href="@{/data/somatic_SARC.txt}" download="somatic mutant genes in SARC">63</a></td>
+                            <td><a th:href="@{/data/germline_SARC.txt}" download="germline mutant genes in SARC">18</a></td>
+                        </tr>
+                        <tr>
+                            <td>SCL</td>
+                            <td>284</td>
+                            <td><a th:href="@{/data/somatic_SCL.txt}" download="somatic mutant genes in SCL">1198</a></td>
+                            <td><a th:href="@{/data/germline_SCL.txt}" download="germline mutant genes in SCL">17</a></td>
+                        </tr>
+                        <tr>
+                            <td>SKCM</td>
+                            <td>116</td>
+                            <td><a th:href="@{/data/somatic_SKCM.txt}" download="somatic mutant genes in SKCM">68</a></td>
+                            <td><a th:href="@{/data/germline_SKCM.txt}" download="germline mutant genes in SKCM">11</a></td>
+                        </tr>
+                        <tr>
+                            <td>STAD</td>
+                            <td>1020</td>
+                            <td><a th:href="@{/data/somatic_STAD.txt}" download="somatic mutant genes in STAD">1307</a></td>
+                            <td><a th:href="@{/data/germline_STAD.txt}" download="germline mutant genes in STAD">71</a></td>
+                        </tr>
+                        <tr>
+                            <td>THCA</td>
+                            <td>41</td>
+                            <td><a th:href="@{/data/somatic_THCA.txt}" download="somatic mutant genes in THCA">28</a></td>
+                            <td><a th:href="@{/data/germline_THCA.txt}" download="germline mutant genes in THCA">4</a></td>
+                        </tr>
+                        <tr>
+                            <td>UCEC</td>
+                            <td>103</td>
+                            <td><a th:href="@{/data/somatic_UCEC.txt}" download="somatic mutant genes in UCEC">460</a></td>
+                            <td><a th:href="@{/data/germline_UCEC.txt}" download="germline mutant genes in UCEC">9</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script th:replace="commonJS::statistics"></script>
+</html>

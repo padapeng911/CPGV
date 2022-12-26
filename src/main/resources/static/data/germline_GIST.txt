@@ -1,0 +1,8 @@
+gene	number
+ATM	5
+MSH2	2
+NF1	2
+ATR	1
+FANCC	1
+SBDS	1
+UGT1A1	1

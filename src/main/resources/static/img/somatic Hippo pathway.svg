@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="532px" height="570px" viewBox="0 0 532 570" enable-background="new 0 0 532 570" xml:space="preserve">
+<rect x="9" y="1.796" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.267" height="74.142"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M15.877,5.083h82.515c1.979,0,3.585,1.605,3.585,3.588v23.917
+	c0,1.979-1.605,3.587-3.585,3.587H15.877c-1.981,0-3.586-1.604-3.586-3.587V8.671C12.289,6.691,13.895,5.083,15.877,5.083z"/>
+<text transform="matrix(1 0 0 1 42.9456 23.6497)" font-family="'ArialMT'" font-size="8.3707">DCHS1</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M15.877,41.557h82.515c1.979,0,3.585,1.606,3.585,3.587v23.917
+	c0,1.981-1.605,3.587-3.585,3.587H15.877c-1.981,0-3.586-1.604-3.586-3.587V45.144C12.289,43.164,13.895,41.557,15.877,41.557z"/>
+<text transform="matrix(1 0 0 1 42.9456 59.1223)" font-family="'ArialMT'" font-size="8.3707">DCHS2</text>
+<rect x="128.584" y="0" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="190.141" height="74.143"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M135.461,3.887h82.513c1.981,0,3.587,1.606,3.587,3.587v23.917
+	c0,1.979-1.604,3.587-3.587,3.587h-82.513c-1.98,0-3.588-1.604-3.588-3.587V7.474C131.873,5.494,133.478,3.887,135.461,3.887z"/>
+<text transform="matrix(1 0 0 1 167.0247 13.4543)" font-family="'ArialMT'" font-size="8.3707">FAT1</text>
+<rect x="134.863" y="17.042" fill="#FFDADA" stroke="#000000" width="83.708" height="14.944"/>
+<text transform="matrix(1 0 0 1 167.1497 27.3079)" font-family="'ArialMT'" font-size="8.3707">1.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M229.335,3.288h82.511c1.979,0,3.588,1.604,3.588,3.587v23.917
+	c0,1.98-1.605,3.588-3.588,3.588h-82.511c-1.981,0-3.587-1.604-3.587-3.588V6.879C225.745,4.896,227.353,3.288,229.335,3.288z"/>
+<text transform="matrix(1 0 0 1 260.8987 12.8577)" font-family="'ArialMT'" font-size="8.3707">FAT2</text>
+<rect x="228.736" y="16.444" fill="#FFF8F8" stroke="#000000" width="83.707" height="14.949"/>
+<text transform="matrix(1 0 0 1 258.6311 26.7083)" font-family="'ArialMT'" font-size="8.3707">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M135.461,39.763h82.513c1.981,0,3.587,1.605,3.587,3.587v23.917
+	c0,1.979-1.604,3.586-3.587,3.586h-82.513c-1.98,0-3.588-1.604-3.588-3.586V43.35C131.873,41.369,133.478,39.763,135.461,39.763z"/>
+<text transform="matrix(1 0 0 1 167.0247 49.3303)" font-family="'ArialMT'" font-size="8.3707">FAT3</text>
+<rect x="134.863" y="52.917" fill="#FFF8F8" stroke="#000000" width="83.708" height="14.945"/>
+<text transform="matrix(1 0 0 1 164.759 63.1809)" font-family="'ArialMT'" font-size="8.3707">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M229.335,39.165h82.511c1.979,0,3.588,1.604,3.588,3.586v23.918
+	c0,1.979-1.605,3.587-3.588,3.587h-82.511c-1.981,0-3.587-1.604-3.587-3.587V42.751C225.745,40.772,227.353,39.165,229.335,39.165z"
+	/>
+<text transform="matrix(1 0 0 1 260.8987 48.7307)" font-family="'ArialMT'" font-size="8.3707">FAT4</text>
+<rect x="228.736" y="52.32" fill="#FFF8F8" stroke="#000000" width="83.707" height="14.949"/>
+<text transform="matrix(1 0 0 1 258.6311 62.5842)" font-family="'ArialMT'" font-size="8.3707">&lt;0.5%</text>
+<rect x="334.865" y="0" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="190.139" height="72.349"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M341.74,3.887h82.518c1.98,0,3.582,1.606,3.582,3.587v23.917
+	c0,1.979-1.604,3.587-3.582,3.587H341.74c-1.979,0-3.584-1.604-3.584-3.587V7.474C338.156,5.494,339.761,3.887,341.74,3.887z"/>
+<text transform="matrix(1 0 0 1 369.5842 21.4543)" font-family="'ArialMT'" font-size="8.3707">TAOK1</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M341.74,37.97h82.518c1.98,0,3.582,1.605,3.582,3.586v23.917
+	c0,1.981-1.604,3.587-3.582,3.587H341.74c-1.979,0-3.584-1.604-3.584-3.587V41.556C338.156,39.575,339.761,37.97,341.74,37.97z"/>
+<text transform="matrix(1 0 0 1 369.5842 55.5354)" font-family="'ArialMT'" font-size="8.3707">TAOK3</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M435.615,3.288h82.516c1.98,0,3.586,1.604,3.586,3.587v23.917
+	c0,1.98-1.606,3.588-3.586,3.588h-82.516c-1.979,0-3.586-1.604-3.586-3.588V6.879C432.029,4.896,433.632,3.288,435.615,3.288z"/>
+<text transform="matrix(1 0 0 1 463.4573 20.8577)" font-family="'ArialMT'" font-size="8.3707">TAOK2</text>
+<rect x="116.029" y="114.803" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="211.063" height="159.046"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M127.091,138.42h82.512c1.981,0,3.585,1.604,3.585,3.587v23.916
+	c0,1.979-1.604,3.588-3.585,3.588h-82.512c-1.983,0-3.589-1.606-3.589-3.588v-23.916C123.503,140.025,125.108,138.42,127.091,138.42
+	z"/>
+<text transform="matrix(1 0 0 1 157.9539 156.9866)" font-family="'ArialMT'" font-size="8.3707">SAV1</text>
+<rect x="226.644" y="118.988" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.264" height="71.75"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M233.518,122.277h82.515c1.982,0,3.584,1.605,3.584,3.587v23.916
+	c0,1.981-1.604,3.589-3.584,3.589h-82.515c-1.979,0-3.586-1.604-3.586-3.589v-23.916
+	C229.928,123.883,231.536,122.277,233.518,122.277z"/>
+<text transform="matrix(1 0 0 1 264.3069 140.8411)" font-family="'ArialMT'" font-size="8.3707">STK3</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M233.518,156.357h82.515c1.982,0,3.584,1.604,3.584,3.588v23.917
+	c0,1.981-1.604,3.586-3.584,3.586h-82.515c-1.979,0-3.586-1.604-3.586-3.586v-23.917
+	C229.928,157.961,231.536,156.357,233.518,156.357z"/>
+<text transform="matrix(1 0 0 1 264.3069 174.9241)" font-family="'ArialMT'" font-size="8.3707">STK4</text>
+<rect x="120.214" y="197.91" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.264" height="71.751"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M127.091,201.198h82.512c1.981,0,3.585,1.605,3.585,3.59v23.917
+	c0,1.979-1.604,3.586-3.585,3.586h-82.512c-1.983,0-3.589-1.605-3.589-3.586v-23.917
+	C123.503,202.807,125.108,201.198,127.091,201.198z"/>
+<text transform="matrix(1 0 0 1 155.8606 210.7668)" font-family="'ArialMT'" font-size="8.3707">LATS1</text>
+<rect x="126.49" y="214.355" fill="#FFF8F8" stroke="#000000" width="83.71" height="14.947"/>
+<text transform="matrix(1 0 0 1 156.387 224.6184)" font-family="'ArialMT'" font-size="8.3707">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M127.091,235.281h82.512c1.981,0,3.585,1.608,3.585,3.588v23.918
+	c0,1.979-1.604,3.587-3.585,3.587h-82.512c-1.983,0-3.589-1.606-3.589-3.587v-23.918
+	C123.503,236.89,125.108,235.281,127.091,235.281z"/>
+<text transform="matrix(1 0 0 1 155.8606 253.8489)" font-family="'ArialMT'" font-size="8.3707">LATS2</text>
+<rect x="226.047" y="197.91" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.858" height="71.751"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M232.921,201.198h82.513c1.979,0,3.586,1.605,3.586,3.59v23.917
+	c0,1.979-1.605,3.586-3.586,3.586h-82.513c-1.979,0-3.586-1.605-3.586-3.586v-23.917
+	C229.335,202.807,230.941,201.198,232.921,201.198z"/>
+<text transform="matrix(1 0 0 1 259.5247 219.7668)" font-family="'ArialMT'" font-size="8.3707">MOB1A</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M233.518,235.281h82.515c1.982,0,3.584,1.608,3.584,3.588v23.918
+	c0,1.979-1.604,3.587-3.584,3.587h-82.515c-1.979,0-3.586-1.606-3.586-3.587v-23.918
+	C229.928,236.89,231.536,235.281,233.518,235.281z"/>
+<text transform="matrix(1 0 0 1 260.1223 253.8489)" font-family="'ArialMT'" font-size="8.3707">MOB1B</text>
+<rect x="378.515" y="157.853" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.854" height="72.346"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M385.388,161.141h82.516c1.982,0,3.586,1.604,3.586,3.586v23.916
+	c0,1.98-1.604,3.589-3.586,3.589h-82.516c-1.98,0-3.584-1.605-3.584-3.589v-23.916C381.804,162.747,383.406,161.141,385.388,161.141
+	z"/>
+<text transform="matrix(1 0 0 1 418.7385 178.7083)" font-family="'ArialMT'" font-size="8.3707">NF2</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M385.986,195.82h82.518c1.98,0,3.582,1.605,3.582,3.587v23.916
+	c0,1.981-1.604,3.589-3.582,3.589h-82.518c-1.979,0-3.586-1.604-3.586-3.589v-23.916C382.4,197.426,384.005,195.82,385.986,195.82z"
+	/>
+<text transform="matrix(1 0 0 1 413.9924 213.386)" font-family="'ArialMT'" font-size="8.3707">WWC1</text>
+<rect x="177.614" y="315.703" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.266" height="74.141"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M184.488,318.991h82.519c1.979,0,3.586,1.604,3.586,3.586v23.918
+	c0,1.979-1.605,3.588-3.586,3.588h-82.519c-1.979,0-3.585-1.606-3.585-3.588v-23.918
+	C180.903,320.596,182.508,318.991,184.488,318.991z"/>
+<text transform="matrix(1 0 0 1 215.3538 328.5569)" font-family="'ArialMT'" font-size="8.3707">YAP1</text>
+<rect x="183.892" y="332.143" fill="#FFF8F8" stroke="#000000" width="83.709" height="14.948"/>
+<text transform="matrix(1 0 0 1 213.7874 342.4094)" font-family="'ArialMT'" font-size="8.3707">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M184.488,355.465h82.519c1.979,0,3.586,1.604,3.586,3.586v23.916
+	c0,1.979-1.605,3.588-3.586,3.588h-82.519c-1.979,0-3.585-1.607-3.585-3.588v-23.916
+	C180.903,357.068,182.508,355.465,184.488,355.465z"/>
+<text transform="matrix(1 0 0 1 218.1497 373.0295)" font-family="'ArialMT'" font-size="8.3707">TAZ</text>
+<rect x="9" y="316.298" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.267" height="73.544"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M15.877,319.585h82.515c1.979,0,3.585,1.606,3.585,3.591v23.916
+	c0,1.979-1.605,3.586-3.585,3.586H15.877c-1.981,0-3.586-1.605-3.586-3.586v-23.916C12.289,321.194,13.895,319.585,15.877,319.585z"
+	/>
+<text transform="matrix(1 0 0 1 45.9695 337.1545)" font-family="'ArialMT'" font-size="8.3707">CRB1</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M15.877,355.465h82.515c1.979,0,3.585,1.604,3.585,3.586v23.916
+	c0,1.979-1.605,3.588-3.585,3.588H15.877c-1.981,0-3.586-1.607-3.586-3.588v-23.916C12.289,357.068,13.895,355.465,15.877,355.465z"
+	/>
+<text transform="matrix(1 0 0 1 45.9695 373.0295)" font-family="'ArialMT'" font-size="8.3707">CRB2</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M323.806,306.435h82.51c1.982,0,3.59,1.604,3.59,3.585v23.918
+	c0,1.983-1.604,3.587-3.59,3.587h-82.51c-1.982,0-3.59-1.604-3.59-3.587V310.02C320.216,308.038,321.823,306.435,323.806,306.435z"
+	/>
+<text transform="matrix(1 0 0 1 349.2434 324.0022)" font-family="'ArialMT'" font-size="8.3707">PTPN14</text>
+<rect x="316.927" y="364.133" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="96.268" height="76.532"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M323.806,367.422h82.51c1.982,0,3.59,1.604,3.59,3.586v23.914
+	c0,1.979-1.604,3.59-3.59,3.59h-82.51c-1.982,0-3.59-1.607-3.59-3.59v-23.914C320.216,369.029,321.823,367.422,323.806,367.422z"/>
+<text transform="matrix(1 0 0 1 348.3127 384.9885)" font-family="'ArialMT'" font-size="8.3707">CSNK1E</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M323.806,406.288h82.51c1.982,0,3.59,1.604,3.59,3.584v23.914
+	c0,1.982-1.604,3.591-3.59,3.591h-82.51c-1.982,0-3.59-1.605-3.59-3.591v-23.914C320.216,407.892,321.823,406.288,323.806,406.288z"
+	/>
+<text transform="matrix(1 0 0 1 348.0823 423.8528)" font-family="'ArialMT'" font-size="8.3707">CSNK1D</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M184.488,459.502h82.519c1.979,0,3.586,1.604,3.586,3.584v23.917
+	c0,1.982-1.605,3.588-3.586,3.588h-82.519c-1.979,0-3.585-1.604-3.585-3.588v-23.917
+	C180.903,461.109,182.508,459.502,184.488,459.502z"/>
+<text transform="matrix(1 0 0 1 212.2561 477.0667)" font-family="'ArialMT'" font-size="8.3707">TEAD2</text>
+<rect x="180.305" y="536.034" fill="#FFFFFF" fill-opacity="0" width="89.688" height="31.091"/>
+<text transform="matrix(1 0 0 1 160.5442 554.5686)" font-family="'ArialMT'" font-size="8.3707">Cell proliferation and differentiation</text>
+<polygon points="132.329,113.253 135.617,109.777 137.451,114.803 "/>
+<line fill="none" stroke="#000000" x1="96.344" y1="75.937" x2="133.974" y2="111.516"/>
+<polygon points="220.29,109.988 225.074,110.052 222.618,114.803 "/>
+<line fill="none" stroke="#000000" x1="223.158" y1="74.142" x2="222.68" y2="110.02"/>
+<polygon points="328.7,110.004 331.593,113.816 326.339,114.803 "/>
+<line fill="none" stroke="#000000" x1="382.273" y1="72.35" x2="330.148" y2="111.91"/>
+<polygon points="331.868,191.773 331.876,196.556 327.093,194.172 "/>
+<line fill="none" stroke="#000000" x1="378.515" y1="194.096" x2="331.872" y2="194.163"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="222.345" y1="314.57" x2="227.126" y2="314.443"/>
+<line fill="none" stroke="#000000" x1="223.659" y1="273.848" x2="224.735" y2="314.507"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="176.421" y1="355.254" x2="176.412" y2="350.467"/>
+<line fill="none" stroke="#000000" x1="105.266" y1="352.986" x2="176.417" y2="352.859"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="275.808" y1="368.066" x2="274.202" y2="372.573"/>
+<line fill="none" stroke="#000000" x1="316.927" y1="385.252" x2="275.007" y2="370.32"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="274.531" y1="339.542" x2="275.562" y2="344.208"/>
+<line fill="none" stroke="#000000" x1="320.216" y1="331.892" x2="275.043" y2="341.874"/>
+<polygon points="223.355,454.717 228.138,454.717 225.745,459.502 "/>
+<line fill="none" stroke="#000000" x1="225.745" y1="389.844" x2="225.745" y2="454.717"/>
+<polygon points="222.916,531.232 227.697,531.271 225.269,536.034 "/>
+<line fill="none" stroke="#000000" x1="225.626" y1="490.593" x2="225.306" y2="531.247"/>
+</svg>

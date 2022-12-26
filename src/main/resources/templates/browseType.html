@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Browse by type')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navBrowse"></nav>
+
+    <nav th:insert="common::breadcrumbBrowse"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <br>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/BrowseSomatic}"><h5>Gene</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#cancerType"><h5>Cancer type</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/Browse3}"><h5>Pathway</h5></a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="cancerType" class="tab-pane active"><br>
+                <div id="accordion">
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#somatic">
+                                <h5>Somatic mutation</h5>
+                            </a>
+                        </div>
+                        <div id="somatic" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <div th:insert="common::typeSNSC"></div>
+                                <div th:insert="common::typeSComTG"></div>
+                                <div th:insert="common::typeSDTS"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#germline">
+                                <h5>Germline mutation</h5>
+                            </a>
+                        </div>
+                        <div id="germline" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <div th:insert="common::typeGNGC"></div>
+                                <div th:insert="common::typeGComTG"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#clinical">
+                                <h5>Clinical information</h5>
+                            </a>
+                        </div>
+                        <div id="clinical" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <div th:insert="common::typeCDGA"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        var q = window.location.pathname.substr(1).match(reg_rewrite);
+        if(r != null){
+            return unescape(r[2]);
+        }else if(q != null){
+            return unescape(q[2]);
+        }else{
+            return null;
+        }
+    }
+    var type=getQueryString("type");
+</script>
+
+<script th:include="commonJS::typeSN"></script>
+
+<script th:include="commonJS::typeSC"></script>
+
+<script th:include="commonJS::typeSComT"></script>
+
+<script th:include="commonJS::typeSComG"></script>
+
+<script th:include="commonJS::typeSDT"></script>
+
+<script th:include="commonJS::typeSDS"></script>
+
+
+
+<script th:include="commonJS::typeGN"></script>
+
+<script th:include="commonJS::typeGC"></script>
+
+<script th:include="commonJS::typeGComT"></script>
+
+
+
+<script th:include="commonJS::typeCDG"></script>
+
+<script th:include="commonJS::typeCDA"></script>
+
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>

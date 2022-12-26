@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.SearchByGeneInfoDAO">
+
+    <!--查询对应列表菜单-->
+    <select id="searchBySymbol" resultType="SearchByGeneInfo">
+         select symbol,hgnc_id,name,omim_id,alias_name,entrez_id,gene_synonym,ucsc_id,locus_group,vega_id,locus_type,ensembl_gene_id,refseq_accession,chr,start_coordinate,end_coordinate,uniprot_ids,strand from hgnc_refseq where symbol=#{names}
+    </select>
+
+    <!--查询对应列表菜单 搜索的somatic和germline的列表-->
+    <select id="searchBySomaticSite" resultType="SearchBySomaticSiteInfo">
+         select * from site_info where gid=#{names}
+    </select>
+
+    <!--查询对应列表菜单-->
+    <select id="searchNumberBySomaticSite" resultType="SearchBySomaticSite">
+         select number,type from somatic_site_num_ratio where gid=#{gid}
+    </select>
+
+    <!--查询对应列表菜单-->
+    <select id="searchRatioBySomaticSite" resultType="SearchBySomaticSite">
+         select type,ratio from somatic_site_num_ratio where gid=#{gid}
+    </select>
+
+    <!--查询对应列表菜单-->
+    <select id="searchNumberByGermlineSite" resultType="SearchByGermlineSite">
+         select number,type from germline_site_num_ratio where gid=#{gid}
+    </select>
+
+    <!--查询对应列表菜单-->
+    <select id="searchRatioByGermlineSite" resultType="SearchByGermlineSite">
+         select type,ratio from germline_site_num_ratio where gid=#{gid}
+    </select>
+
+    <!--查询所有-->
+    <select id="selectSomaticSiteByGene" resultType="SearchSomaticSiteByGene">
+        select gene,gnumber,chr,func,exonicFunc from somatic_site where gene=#{gene};
+    </select>
+
+    <!--查询所有-->
+    <select id="selectGermlineSiteByGene" resultType="SearchGermlineSiteByGene">
+        select gene,gnumber,chr,func,exonicFunc from germline_site where gene=#{gene};
+    </select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.BrowseTypeDAO">
+
+    <!--number-->
+    <select id="browseSomaticNumberByType" resultType="BrowseSomaticGeneNumber">
+         select gene, number from browse_somatic_number where type=#{type} order by gene
+    </select>
+
+    <!--ratio-->
+    <select id="browseSomaticRatioByType" resultType="BrowseSomaticGeneRatio">
+         select gene, ratio from browse_somatic_carrier_ratio where type=#{type} order by gene
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="browseSomaticRatioByType2" resultType="BrowseSomaticGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,gene  from browse_somatic_carrier_ratio where type=#{type} order by gene
+    </select>
+
+    <!--compare with TCGA-->
+    <select id="browseSomaticRatioByTypeVsTcga" resultType="BrowseSomaticGeneRatioVsTcga">
+         select genecastratio, tcgaratio, gene, fdr  from browse_somatic_carrier_ratio_vs_tcga where type=#{type}
+    </select>
+
+    <!--number-->
+    <select id="browseGermlineNumberByType" resultType="BrowseGermlineGeneNumber">
+         select gene, number from browse_germline_number where type=#{type} order by gene
+    </select>
+
+    <!--ratio-->
+    <select id="browseGermlineRatioByType" resultType="BrowseGermlineGeneRatio">
+         select gene, ratio from browse_germline_carrier_ratio where type=#{type} order by gene
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="browseGermlineRatioByType2" resultType="BrowseGermlineGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,gene  from browse_germline_carrier_ratio where type=#{type} order by gene
+    </select>
+
+    <!--compare with TCGA-->
+    <select id="browseGermlineRatioByTypeVsTcga" resultType="BrowseGermlineGeneRatioVsTcga">
+         select genecastratio, tcgaratio,gene,fdr from browse_germline_carrier_ratio_vs_tcga where type=#{type}
+    </select>
+
+    <!--tmb-->
+    <select id="findTmbByType" resultType="Browsetmb">
+        select type,number from browse_tmb where type=#{type}
+    </select>
+
+    <!--signature-->
+    <select id="findSignatureByType" resultType="SomaticSignature">
+        select * from somatic_signature where type=#{type}
+    </select>
+
+    <!--age-->
+    <select id="findAgeByType" resultType="BrowseAge">
+        select type, age from browse_age where type=#{type}
+    </select>
+
+    <!--gender-->
+    <select id="findGenderByType" resultType="BrowseGender">
+        select type, female, male from browse_gender where type=#{type}
+    </select>
+
+    <!--compare with germline-->
+    <select id="browseSomaticRatioByTypeVsGermline" resultType="BrowseSomaticGeneRatioVsGermline">
+         select somatic,germline,gene,log2odds  from compare_with_germline where type=#{type} order by somatic desc
+    </select>
+
+</mapper>

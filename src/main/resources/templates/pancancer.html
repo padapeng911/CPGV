@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Pan-cancer Analysis')"></head>
+<body>
+<div class="container-fluid" style="padding-left: 0px;padding-right: 0px;">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navAnalysis"></nav>
+
+    <nav th:insert="common::breadcrumbAnalysis"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" style="padding-top:50px; margin-bottom: 30px">
+                <form name="form1" class="form-horizontal" action="#" th:action="@{/Analysis}" th:object="${analysis}" method="post" id="form1">
+                    <div class="form-group">
+                        <label class="control-label" style="font-size: 16px;font-weight: bold">Multiple selection drop-down menu:</label>
+                        <div class="col-sm-12">
+                            <select name="analysisType" class="js-data-example-ajax-1" multiple="multiple" th:field="*{type}" id="analysisType" style = "width:100%;">
+                                <option value="ACC">ACC</option>
+                                <option value="BLCA">BLCA</option>
+                                <option value="BRCA">BRCA</option>
+                                <option value="CESC">CESC</option>
+                                <option value="CHOL">CHOL</option>
+                                <option value="COAD">COAD</option>
+                                <option value="ESCA">ESCA</option>
+                                <option value="GBM">GBM</option>
+                                <option value="GIST">GIST</option>
+                                <option value="HNSC">HNSC</option>
+                                <option value="KICH">KICH</option>
+                                <option value="LIHC">LIHC</option>
+                                <option value="LUAD">LUAD</option>
+                                <option value="LUSC">LUSC</option>
+                                <option value="NASO">NASO</option>
+                                <option value="NE">NE</option>
+                                <option value="NSCL">NSCL</option>
+                                <option value="OV">OV</option>
+                                <option value="PAAD">PAAD</option>
+                                <option value="PRAD">PRAD</option>
+                                <option value="READ">READ</option>
+                                <option value="SARC">SARC</option>
+                                <option value="SCL">SCL</option>
+                                <option value="SKCM">SKCM</option>
+                                <option value="STAD">STAD</option>
+                                <option value="THCA">THCA</option>
+                                <option value="UCEC">UCEC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" style="font-size: 16px;font-weight: bold">One gene you can enter:</label>
+                        <div class="col-sm-12">
+                            <select name="analysisGene" class="js-data-example-ajax-1" th:field="*{gene}" id="analysisGene" style = "width:100%"></select>
+                        </div>
+                    </div>
+                    <div th:replace="common::formSearch2"></div>
+                </form>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#analysisType").select2();
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#analysisGene').select2({
+            minimumInputLength: 1,
+            ajax: {
+                url: '/cpgv/SearchByParamGene',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var query = {
+                        param1: params.term
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    var result = [];
+                    for (var i = 0; i < data.length; i++) {
+                        result[i] = {id: data[i], text: data[i]};
+                    }
+                    return {
+                        results: result
+                    };
+                }
+            },
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function checkvalues(){
+        var selectval = $("#analysisType option:selected").text();
+        if (selectval == ""){
+            alert("Please input one cancer!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function clearAll(){
+        $("#analysisType").val(null).trigger("change");
+        $("#analysisGene").val(null).trigger("change");
+    }
+</script>
+
+</body>
+<script th:replace="commonJS::statistics"></script>
+</html>

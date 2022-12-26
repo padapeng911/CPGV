@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "com.pancancer.mapper",
+      "type": "java.lang.String",
+      "description": "Description for com.pancancer.mapper."
+    },
+    {
+      "name": "logging",
+      "type": "java.lang.String",
+      "description": "Description for logging."
+    }
+  ] }

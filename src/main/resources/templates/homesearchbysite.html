@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Homesearch by site')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navHome"></nav>
+
+    <div class="card">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" >Mutation Site Information in Genecast Cohort</p>
+        </div>
+        <input id="genename" type="hidden" th:value="${homeSearchItem.selectedval}">
+        <div class="card-body">
+            <div th:insert="common::siteInfoT"></div>
+            <div th:insert="common::siteInfoC"></div>
+            <ul th:insert="common::geneNav"></ul>
+            <div class="tab-content">
+                <div id="somatic" class="tab-pane active"><br>
+                    <div th:insert="common::siteSNSC"></div>
+                </div>
+                <div id="germline" class="tab-pane fade"><br>
+                    <div th:insert="common::siteGNGC"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:replace="commonJS::siteSN"></script>
+
+<script th:replace="commonJS::siteSC"></script>
+
+
+
+<script th:replace="commonJS::siteGN"></script>
+
+<script th:replace="commonJS::siteGC"></script>
+
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

@@ -1,0 +1,6 @@
+gene	number
+PDGFRA	2
+PTCH1	1
+SDHAF2	1
+TBX5	1
+

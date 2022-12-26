@@ -1,0 +1,6 @@
+gene	number
+AR	1
+MET	1
+MSH6	1
+PALB2	1
+SDHA	1

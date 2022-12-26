@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Homesearch by pathway')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navHome"></nav>
+
+    <div class="card">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" th:text="'Mutation in the '+${homeSearchItem.selectedval}+' in Genecast Cohort'"></p>
+        </div>
+        <input id="genename" type="hidden" th:value="${homeSearchItem.selectedval}">
+        <div class="card-body">
+            <ul th:insert="common::geneNav"></ul>
+            <div class="tab-content">
+                <div id="somatic" class="tab-pane active"><br>
+                    <div class="card-header">
+                        <h5 th:text="'The carrier ratio of somatic mutations of genes in '+${homeSearchItem.selectedval}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-10" style="text-align: center">
+                                <img th:src="@{'/img/somatic '+${homeSearchItem.selectedval}+'.svg'}" alt="Cinque Terre" align="middle" style="width: 80%; margin: 0 auto">
+                            </div>
+                            <div class="col-sm-2">
+                                <a th:href="@{'/img/somatic '+${homeSearchItem.selectedval}+'.png'}" th:download="'The carrier ratio of somatic mutations of genes in '+${homeSearchItem.selectedval}+'.png'"><img th:src="@{/img/download.png}" width="15px" height="12px"></a>
+                            </div>
+                        </div>
+                        <table id="homesearchPathwaySomaticTable"></table>
+                    </div>
+                </div>
+                <div id="germline" class="tab-pane fade"><br>
+                    <div class="card-header">
+                        <h5 th:text="'The carrier ratio of germline mutations of genes in '+${homeSearchItem.selectedval}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-10" style="text-align: center">
+                                <img th:src="@{'/img/germline '+${homeSearchItem.selectedval}+'.svg'}" alt="Sorry, no germline mutated genes were detected in this pathway." align="middle" style="width: 80%; margin: 0 auto">
+                            </div>
+                            <div class="col-sm-2">
+                                <a th:href="@{'/img/germline '+${homeSearchItem.selectedval}+'.png'}" th:download="'The carrier ratio of germline mutations of genes in '+${homeSearchItem.selectedval}+'.png'"><img th:src="@{/img/download.png}" width="15px" height="12px"></a>
+                            </div>
+                        </div>
+                        <table id="homesearchPathwayGermlineTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#homesearchPathwaySomaticTable").bootstrapTable({
+            url:"/cpgv/HomeSearchPathwaySomaticTableInfo",
+            striped : true,
+            theadClasses: "thead-blue",
+            classes: "table table-hover table-striped table-sm",
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 10,
+            pageList : [ 10, 20],
+            showRefresh : false,
+            search:true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                formatter:function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseSomaticGene?gene='+ value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            }, {
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseSomaticSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<span style="color:black;">'+value+'</span>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            },{
+                title : 'Type',
+                field : 'exonicFunc',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#homesearchPathwayGermlineTable").bootstrapTable({
+            url:"/cpgv/HomeSearchPathwayGermlineTableInfo",
+            striped : true,
+            theadClasses: "thead-blue",
+            classes: "table table-hover table-striped table-sm",
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 10,
+            pageList : [ 10, 20],
+            showRefresh : false,
+            search:true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                formatter:function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseGermlineGene?gene='+ value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseGermlineSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<span style="color:black;">'+value+'</span>';
+                    return url;
+                },
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            },{
+                title : 'Type',
+                field : 'exonicFunc',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    return '<span style="color:black;">'+value+'</span>';
+                },
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

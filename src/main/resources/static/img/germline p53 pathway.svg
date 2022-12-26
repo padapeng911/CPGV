@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="471.621px" height="259.333px" viewBox="0 0 471.621 259.333" enable-background="new 0 0 471.621 259.333"
+	 xml:space="preserve">
+<rect x="85.721" y="241.479" fill="#FFFFFF" fill-opacity="0" width="114.803" height="14.352"/>
+<text transform="matrix(1 0 0 1 96.3665 251.645)" font-family="'ArialMT'" font-size="8.371">Cell survival, proliferation</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M8.587,105.15h82.516c1.98,0,3.587,1.606,3.587,3.588v23.917
+	c0,1.98-1.606,3.588-3.587,3.588H8.587c-1.98,0-3.587-1.607-3.587-3.588v-23.917C5,106.757,6.606,105.15,8.587,105.15z"/>
+<text transform="matrix(1 0 0 1 32.8665 114.7178)" font-family="'ArialMT'" font-size="8.371">CDKN2A</text>
+<rect x="7.99" y="118.306" fill="#FFF8F8" stroke="#000000" width="83.71" height="14.947"/>
+<text transform="matrix(1 0 0 1 37.887 128.5693)" font-family="'ArialMT'" font-size="8.371">&lt;0.5%</text>
+<rect x="373.924" y="3.502" fill="#FFFFFF" fill-opacity="0" width="93.276" height="14.35"/>
+<text transform="matrix(1 0 0 1 379.3884 13.667)" font-family="'ArialMT'" font-size="8.371">DNA replication stress</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M379.306,160.758h82.514c1.98,0,3.587,1.605,3.587,3.586v23.918
+	c0,1.982-1.605,3.588-3.587,3.588h-82.514c-1.982,0-3.589-1.605-3.589-3.588v-23.918
+	C375.718,162.364,377.323,160.758,379.306,160.758z"/>
+<text transform="matrix(1 0 0 1 401.7166 170.3247)" font-family="'ArialMT'" font-size="8.371">RPS6KA3</text>
+<rect x="378.706" y="173.911" fill="#FFFFFF" stroke="#000000" width="83.712" height="14.949"/>
+<text transform="matrix(1 0 0 1 410.9958 184.1782)" font-family="'ArialMT'" font-size="8.371">0.0%</text>
+<rect x="213.08" y="240.879" fill="#FFFFFF" fill-opacity="0" width="89.689" height="14.354"/>
+<text transform="matrix(1 0 0 1 214.6453 251.0454)" font-family="'ArialMT'" font-size="8.371">Senescence, apoptosis</text>
+<rect x="104.555" y="37.285" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="197.916" height="37.669"/>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M213.08,40.574h82.515c1.981,0,3.588,1.606,3.588,3.587v23.917
+	c0,1.982-1.605,3.588-3.588,3.588H213.08c-1.98,0-3.588-1.605-3.588-3.588V44.161C209.492,42.181,211.099,40.574,213.08,40.574z"/>
+<text transform="matrix(1 0 0 1 242.0134 50.1406)" font-family="'ArialMT'" font-size="8.371">MDM4</text>
+<rect x="212.482" y="53.729" fill="#FFFFFF" stroke="#000000" width="83.71" height="14.948"/>
+<text transform="matrix(1 0 0 1 244.7712 63.9932)" font-family="'ArialMT'" font-size="8.371">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M111.432,40.574h82.515c1.981,0,3.587,1.606,3.587,3.587v23.917
+	c0,1.982-1.605,3.588-3.587,3.588h-82.515c-1.981,0-3.587-1.605-3.587-3.588V44.161C107.844,42.181,109.45,40.574,111.432,40.574z"
+	/>
+<text transform="matrix(1 0 0 1 140.365 50.1406)" font-family="'ArialMT'" font-size="8.371">MDM2</text>
+<rect x="110.834" y="53.729" fill="#FFFFFF" stroke="#000000" width="83.71" height="14.948"/>
+<text transform="matrix(1 0 0 1 143.1228 63.9932)" font-family="'ArialMT'" font-size="8.371">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M161.658,160.758h82.515c1.981,0,3.588,1.605,3.588,3.586v23.918
+	c0,1.982-1.606,3.588-3.588,3.588h-82.515c-1.98,0-3.587-1.605-3.587-3.588v-23.918C158.07,162.364,159.677,160.758,161.658,160.758
+	z"/>
+<text transform="matrix(1 0 0 1 192.9114 170.3247)" font-family="'ArialMT'" font-size="8.371">TP53</text>
+<rect x="161.06" y="173.911" fill="#FFF8F8" stroke="#000000" width="83.71" height="14.949"/>
+<text transform="matrix(1 0 0 1 190.9573 184.1782)" font-family="'ArialMT'" font-size="8.371">&lt;0.5%</text>
+<rect x="226.832" y="105.748" fill="#FFFFFF" fill-opacity="0" width="71.752" height="14.351"/>
+<text transform="matrix(1 0 0 1 230.3728 115.9131)" font-family="'ArialMT'" font-size="8.371">Oncogenic stress</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M379.306,42.367h82.514c1.98,0,3.587,1.606,3.587,3.588v23.917
+	c0,1.981-1.605,3.587-3.587,3.587h-82.514c-1.982,0-3.589-1.605-3.589-3.587V45.955C375.718,43.974,377.323,42.367,379.306,42.367z"
+	/>
+<text transform="matrix(1 0 0 1 412.0369 51.9346)" font-family="'ArialMT'" font-size="8.371">ATM</text>
+<rect x="378.706" y="55.522" fill="#FFF8F8" stroke="#000000" width="83.712" height="14.947"/>
+<text transform="matrix(1 0 0 1 408.6033 65.7871)" font-family="'ArialMT'" font-size="8.371">0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M379.306,99.171h82.514c1.98,0,3.587,1.606,3.587,3.588v23.916
+	c0,1.982-1.605,3.587-3.587,3.587h-82.514c-1.982,0-3.589-1.605-3.589-3.587v-23.916C375.718,100.777,377.323,99.171,379.306,99.171
+	z"/>
+<text transform="matrix(1 0 0 1 406.6052 108.7383)" font-family="'ArialMT'" font-size="8.371">CHEK2</text>
+<rect x="378.706" y="112.325" fill="#FFF8F8" stroke="#000000" width="83.712" height="14.949"/>
+<text transform="matrix(1 0 0 1 408.6033 122.5908)" font-family="'ArialMT'" font-size="8.371">&lt;0.5%</text>
+<line fill="none" stroke="#000000" stroke-width="2" x1="147.97" y1="239.032" x2="151.657" y2="242.081"/>
+<line fill="none" stroke="#000000" x1="190.067" y1="191.85" x2="149.814" y2="240.555"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="158.181" y1="162.596" x2="159.814" y2="158.102"/>
+<line fill="none" stroke="#000000" x1="92.639" y1="136.243" x2="158.997" y2="160.348"/>
+<polygon points="418.172,155.975 422.954,155.975 420.562,160.758 "/>
+<line fill="none" stroke="#000000" x1="420.562" y1="130.262" x2="420.562" y2="155.975"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="158.517" y1="77.623" x2="156.664" y2="73.214"/>
+<line fill="none" stroke="#000000" x1="86.839" y1="105.15" x2="157.59" y2="75.419"/>
+<polygon points="219.124,155.637 222.604,158.918 217.582,160.758 "/>
+<line fill="none" stroke="#000000" x1="255.939" y1="120.099" x2="220.864" y2="157.28"/>
+<polygon points="247.616,238.538 251.412,235.627 252.424,240.879 "/>
+<line fill="none" stroke="#000000" x1="214.834" y1="191.85" x2="249.513" y2="237.083"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="200.607" y1="159.549" x2="205.39" y2="159.575"/>
+<line fill="none" stroke="#000000" x1="203.419" y1="74.955" x2="202.998" y2="159.563"/>
+<polygon points="252.543,173.911 252.543,178.696 247.76,176.303 "/>
+<line fill="none" stroke="#000000" x1="375.718" y1="176.303" x2="252.543" y2="176.303"/>
+<polygon points="418.172,37.585 422.954,37.585 420.562,42.367 "/>
+<line fill="none" stroke="#000000" x1="420.562" y1="17.853" x2="420.562" y2="37.585"/>
+<polygon points="418.172,94.388 422.954,94.388 420.562,99.171 "/>
+<line fill="none" stroke="#000000" x1="420.562" y1="73.46" x2="420.562" y2="94.388"/>
+</svg>

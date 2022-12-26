@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.AnalysisResultDAO">
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticNumberByGene" resultType="BrowseSomaticGeneNumber">
+         select type, number from browse_somatic_number where gene=#{gene} AND type IN (${type}) order by type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGene" resultType="BrowseSomaticGeneRatio">
+         select type, ratio from browse_somatic_carrier_ratio where gene=#{gene} AND type IN (${type}) order by log2odds0 asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGene2" resultType="BrowseSomaticGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_somatic_carrier_ratio where gene=#{gene} AND type IN (${type})
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGeneVsTcga" resultType="BrowseSomaticGeneRatioVsTcga">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_somatic_carrier_ratio_vs_tcga where gene=#{gene} AND type IN (${type})
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGeneVsTcga2" resultType="BrowseSomaticGeneRatioVsTcga">
+         select genecastratio, tcgaratio,type,fdr  from browse_somatic_carrier_ratio_vs_tcga where gene=#{gene} AND type IN (${type}) order by log2odds0 asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineNumberByGene" resultType="BrowseGermlineGeneNumber">
+         select type, number from browse_germline_number where gene=#{gene} AND type IN (${type}) order by type asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGene" resultType="BrowseGermlineGeneRatio">
+         select type, ratio from browse_germline_carrier_ratio where gene=#{gene} AND type IN (${type}) order by log2odds0 asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGene2" resultType="BrowseGermlineGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_germline_carrier_ratio where gene=#{gene} AND type IN (${type})
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGeneVsTcga" resultType="BrowseGermlineGeneRatioVsTcga">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_germline_carrier_ratio_vs_tcga where gene=#{gene} AND type IN (${type})
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGeneVsTcga2" resultType="BrowseGermlineGeneRatioVsTcga">
+         select genecastratio, tcgaratio,type,fdr from browse_germline_carrier_ratio_vs_tcga where gene=#{gene} AND type IN (${type}) order by log2odds0 asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisGermlineRatioByGeneVsCaspmi" resultType="BrowseGermlineGeneRatioVsCaspmi">
+         select gene,aachange,mafInGenecast,mafInCaspmi from browse_germline_maf_vs_caspmi where gene=#{gene}
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGeneVsGermline" resultType="BrowseSomaticGeneRatioVsGermline">
+         select somatic,germline,type,log2odds from compare_with_germline where gene=#{gene} AND type IN (${type}) order by log2odds0 asc
+    </select>
+
+    <!--查询所有符合条件的数组-->
+    <select id="analysisSomaticRatioByGeneVsGermline2" resultType="BrowseSomaticGeneRatioVsGermline">
+         select log2odds0, log10fdr0,type,fdr from compare_with_germline where gene=#{gene} AND type IN (${type})
+    </select>
+
+</mapper>
+

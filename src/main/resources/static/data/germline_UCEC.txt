@@ -1,0 +1,8 @@
+gene	number
+BRCA2	2
+RB1	2
+AR	1
+BRCA1	1
+BRIP1	1
+FANCE	1
+UGT1A1	1

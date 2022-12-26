@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="352.074px" height="247.5px" viewBox="0 0 352.074 247.5" enable-background="new 0 0 352.074 247.5" xml:space="preserve">
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M122.108,60.211h81.566c1.958,0,3.546,1.586,3.546,3.545v23.643
+	c0,1.957-1.588,3.546-3.546,3.546h-81.566c-1.959,0-3.546-1.589-3.546-3.546V63.756C118.561,61.799,120.149,60.211,122.108,60.211z"
+	/>
+<text transform="matrix(1 0 0 1 150.7092 69.668)" font-family="'ArialMT'" font-size="8.2748">MDM2</text>
+<rect x="121.516" y="73.213" fill="#FFFFFF" stroke="#000000" width="82.749" height="14.777"/>
+<text transform="matrix(1 0 0 1 153.4343 83.3613)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<text transform="matrix(1 0 0 1 236.1819 83.3613)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M188.897,110.45h81.567c1.958,0,3.546,1.588,3.546,3.546v23.643
+	c0,1.959-1.588,3.547-3.546,3.547h-81.567c-1.958,0-3.546-1.588-3.546-3.547v-23.643C185.351,112.038,186.939,110.45,188.897,110.45
+	z"/>
+<text transform="matrix(1 0 0 1 212.8967 119.9082)" font-family="'ArialMT'" font-size="8.2748">CDKN1A</text>
+<rect x="188.306" y="123.454" fill="#FFFFFF" stroke="#000000" width="82.749" height="14.776"/>
+<text transform="matrix(1 0 0 1 220.2229 133.5996)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M247.411,163.055h81.567c1.959,0,3.547,1.588,3.547,3.545v23.644
+	c0,1.959-1.588,3.547-3.547,3.547h-81.566c-1.959,0-3.546-1.588-3.546-3.547V166.6C243.865,164.643,245.452,163.055,247.411,163.055
+	z"/>
+<text transform="matrix(1 0 0 1 273.9436 172.5117)" font-family="'ArialMT'" font-size="8.2748">FBXW7</text>
+<rect x="246.821" y="176.057" fill="#FFFFFF" stroke="#000000" width="82.748" height="14.777"/>
+<text transform="matrix(1 0 0 1 278.7385 186.2051)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M7.442,110.45h81.566c1.958,0,3.546,1.588,3.546,3.546v23.643
+	c0,1.959-1.588,3.547-3.546,3.547H7.442c-1.958,0-3.546-1.588-3.546-3.547v-23.643C3.895,112.038,5.483,110.45,7.442,110.45z"/>
+<text transform="matrix(1 0 0 1 33.9724 119.9082)" font-family="'ArialMT'" font-size="8.2748">CCND1</text>
+<rect x="6.85" y="123.454" fill="#FFFFFF" stroke="#000000" width="82.749" height="14.776"/>
+<text transform="matrix(1 0 0 1 38.7683 133.5996)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<rect x="117.379" y="220.387" fill="#FFFFFF" fill-opacity="0" width="92.205" height="14.187"/>
+<text transform="matrix(1 0 0 1 123.011 230.4355)" font-family="'ArialMT'" font-size="8.2748">Cell cycle progression</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M122.698,163.055h81.566c1.959,0,3.547,1.588,3.547,3.545v23.644
+	c0,1.959-1.588,3.547-3.547,3.547h-81.566c-1.958,0-3.546-1.588-3.546-3.547V166.6C119.152,164.643,120.74,163.055,122.698,163.055z
+	"/>
+<text transform="matrix(1 0 0 1 149.4583 172.5117)" font-family="'ArialMT'" font-size="8.2748">CCNE1</text>
+<rect x="122.108" y="176.057" fill="#FFFFFF" stroke="#000000" width="82.749" height="14.777"/>
+<text transform="matrix(1 0 0 1 154.0251 186.2051)" font-family="'ArialMT'" font-size="8.2748">0.0%</text>
+<rect x="302.972" y="118.725" fill="#FFFFFF" fill-opacity="0" width="46.103" height="14.187"/>
+<text transform="matrix(1 0 0 1 307.8538 128.7734)" font-family="'ArialMT'" font-size="8.2748">Apoptosis</text>
+<rect x="3.895" y="163.055" fill="#FFFFFF" fill-opacity="0.5" stroke="#CCCCCC" stroke-width="2" width="88.659" height="30.734"/>
+<text transform="matrix(1 0 0 1 40.1765 172.5117)" font-family="'ArialMT'" font-size="8.2748">RB1</text>
+<rect x="6.85" y="176.354" fill="#FFF8F8" stroke="#000000" width="82.749" height="14.775"/>
+<text transform="matrix(1 0 0 1 36.4045 186.501)" font-family="'ArialMT'" font-size="8.2748">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M7.442,212.112h81.566c1.958,0,3.546,1.588,3.546,3.547v23.644
+	c0,1.959-1.588,3.547-3.546,3.547H7.442c-1.958,0-3.546-1.588-3.546-3.547v-23.644C3.895,213.7,5.483,212.112,7.442,212.112z"/>
+<text transform="matrix(1 0 0 1 38.3357 230.5703)" font-family="'ArialMT'" font-size="8.2748">E2F3</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M7.442,60.211h81.566c1.958,0,3.546,1.586,3.546,3.545v23.643
+	c0,1.957-1.588,3.546-3.546,3.546H7.442c-1.958,0-3.546-1.589-3.546-3.546V63.756C3.895,61.799,5.483,60.211,7.442,60.211z"/>
+<text transform="matrix(1 0 0 1 31.4412 69.5332)" font-family="'ArialMT'" font-size="8.2748">CDKN2A</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M235.591,60.211h81.565c1.959,0,3.547,1.586,3.547,3.545v23.643
+	c0,1.957-1.588,3.546-3.547,3.546h-81.565c-1.959,0-3.546-1.589-3.546-3.546V63.756C232.044,61.799,233.632,60.211,235.591,60.211z"
+	/>
+<text transform="matrix(1 0 0 1 266.4866 69.668)" font-family="'ArialMT'" font-size="8.2748">TP53</text>
+<rect x="234.999" y="73.213" fill="#FFF8F8" stroke="#000000" width="82.748" height="14.777"/>
+<text transform="matrix(1 0 0 1 264.553 83.3613)" font-family="'ArialMT'" font-size="8.2748">&lt;0.5%</text>
+<path fill="#FFFFFF" fill-opacity="0.5" stroke="#000000" d="M235.591,4.65h81.565c1.959,0,3.547,1.588,3.547,3.546V31.84
+	c0,1.957-1.588,3.545-3.547,3.545h-81.565c-1.959,0-3.546-1.588-3.546-3.545V8.196C232.044,6.238,233.632,4.65,235.591,4.65z"/>
+<text transform="matrix(1 0 0 1 267.9475 14.1074)" font-family="'ArialMT'" font-size="8.2748">ATM</text>
+<rect x="234.999" y="17.654" fill="#FFF8F8" stroke="#000000" width="82.748" height="14.775"/>
+<text transform="matrix(1 0 0 1 264.553 27.8008)" font-family="'ArialMT'" font-size="8.2748">0.5%</text>
+<line fill="none" stroke="#000000" stroke-width="2" x1="208.992" y1="176.057" x2="208.992" y2="180.786"/>
+<line fill="none" stroke="#000000" x1="243.865" y1="178.424" x2="208.992" y2="178.424"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="45.86" y1="210.93" x2="50.589" y2="210.93"/>
+<line fill="none" stroke="#000000" x1="48.225" y1="193.79" x2="48.225" y2="210.93"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="45.86" y1="161.872" x2="50.589" y2="161.872"/>
+<line fill="none" stroke="#000000" x1="48.225" y1="141.186" x2="48.225" y2="161.872"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="45.86" y1="109.268" x2="50.589" y2="109.268"/>
+<line fill="none" stroke="#000000" x1="48.225" y1="90.945" x2="48.225" y2="109.268"/>
+<path fill="none" stroke="#000000" d="M211.948,75.577"/>
+<path fill="none" stroke="#000000" d="M232.044,75.577"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="117.379" y1="77.942" x2="117.379" y2="73.213"/>
+<line fill="none" stroke="#000000" x1="92.554" y1="75.577" x2="117.379" y2="75.577"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="182.275" y1="160.469" x2="185.217" y2="164.172"/>
+<line fill="none" stroke="#000000" x1="210.341" y1="141.186" x2="183.746" y2="162.319"/>
+<polygon points="245.449,105.377 248.913,108.596 243.963,110.45 "/>
+<line fill="none" stroke="#000000" x1="262.091" y1="90.945" x2="247.183" y2="106.987"/>
+<polygon points="314.009,117.023 317.371,113.7 319.014,118.725 "/>
+<line fill="none" stroke="#000000" x1="291.561" y1="90.945" x2="315.691" y2="115.362"/>
+<polygon points="274.01,55.482 278.738,55.482 276.373,60.211 "/>
+<line fill="none" stroke="#000000" x1="276.373" y1="35.387" x2="276.373" y2="55.482"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="93.736" y1="176.057" x2="93.736" y2="180.786"/>
+<line fill="none" stroke="#000000" x1="119.152" y1="178.424" x2="93.736" y2="178.424"/>
+<polygon points="112.65,229.846 112.65,225.116 117.379,227.48 "/>
+<line fill="none" stroke="#000000" x1="92.554" y1="227.48" x2="112.65" y2="227.48"/>
+<path fill="none" stroke="#000000" d="M207.22,75.577"/>
+<polyline points="205.998,61.074 209.954,57.566 210.341,62.866 "/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="231.865" y1="92.653" x2="230.643" y2="88.086"/>
+<path fill="none" stroke="#000000" d="M212.445,55.773"/>
+<path fill="none" stroke="#000000" d="M230.143,90.368"/>
+<path fill="none" stroke="#000000" d="M206.612,90.368"/>
+<path fill="none" stroke="#000000" d="M232.416,60.898c0.832,0.291-14.162-5.415-23.529,0"/>
+<path fill="none" stroke="#000000" d="M206.919,90.202c-0.832-0.29,14.164,5.415,23.53,0"/>
+<rect x="7" y="72.713" fill="#FFF8F8" stroke="#000000" width="82.748" height="14.777"/>
+<text transform="matrix(1 0 0 1 36.5535 82.8613)" font-family="'ArialMT'" font-size="8.2748">&lt;0.5%</text>
+</svg>

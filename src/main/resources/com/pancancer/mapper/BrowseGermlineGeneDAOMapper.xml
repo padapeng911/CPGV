@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.BrowseGermlineGeneDAO">
+
+    <!--number-->
+    <select id="browseGermlineNumberByGene" resultType="BrowseGermlineGeneNumber">
+         select type, number from browse_germline_number where gene=#{gene} order by type asc
+    </select>
+
+    <!--ratio柱状图-->
+    <select id="browseGermlineRatioByGene" resultType="BrowseGermlineGeneRatio">
+         select type, ratio from browse_germline_carrier_ratio where gene=#{gene} order by log2odds0+0 asc
+    </select>
+
+    <!--ratio点图-->
+    <select id="browseGermlineRatioByGene2" resultType="BrowseGermlineGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_germline_carrier_ratio where gene=#{gene}
+    </select>
+
+    <!--compare with TCGA点图-->
+    <select id="browseGermlineRatioByGeneVsTcga" resultType="BrowseGermlineGeneRatioVsTcga">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_germline_carrier_ratio_vs_tcga where gene=#{gene}
+    </select>
+
+    <!--compare with TCGA柱状图-->
+    <select id="browseGermlineRatioByGeneVsTcga2" resultType="BrowseGermlineGeneRatioVsTcga">
+         select genecastratio, tcgaratio,type,fdr  from browse_germline_carrier_ratio_vs_tcga where gene=#{gene} order by log2odds0+0 asc
+    </select>
+
+    <!--compare with CASMPI点图-->
+    <select id="browseGermlineRatioByGeneVsCaspmi" resultType="BrowseGermlineGeneRatioVsCaspmi">
+         select gene,aachange,mafInGenecast,mafInCaspmi  from browse_germline_maf_vs_caspmi where gene=#{gene}
+    </select>
+
+    <!--compare with wt-->
+    <select id="browseGermlineComByGene" resultType="BrowseGermlineGeneCom">
+         select * from germline_wt_mut where gene=#{gene}
+    </select>
+
+</mapper>

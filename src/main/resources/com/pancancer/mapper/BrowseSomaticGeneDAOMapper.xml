@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pancancer.dao.BrowseSomaticGeneDAO">
+
+    <!--number-->
+    <select id="browseSomaticNumberByGene" resultType="BrowseSomaticGeneNumber">
+         select type, number from browse_somatic_number where gene=#{gene} order by type asc
+    </select>
+
+    <!--ratio柱状图-->
+    <select id="browseSomaticRatioByGene" resultType="BrowseSomaticGeneRatio">
+         select type, ratio from browse_somatic_carrier_ratio where gene=#{gene} order by log2odds0+0 asc
+    </select>
+
+    <!--ratio点图-->
+    <select id="browseSomaticRatioByGene2" resultType="BrowseSomaticGeneRatio">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_somatic_carrier_ratio where gene=#{gene}
+    </select>
+
+    <!--compare with TCGA点图-->
+    <select id="browseSomaticRatioByGeneVsTcga" resultType="BrowseSomaticGeneRatioVsTcga">
+         select log2odds, log10fdr, log2odds0, log10fdr0,fdr,type  from browse_somatic_carrier_ratio_vs_tcga where gene=#{gene}
+    </select>
+
+    <!--compare with TCGA柱状图-->
+    <select id="browseSomaticRatioByGeneVsTcga2" resultType="BrowseSomaticGeneRatioVsTcga">
+         select genecastratio, tcgaratio,type,fdr  from browse_somatic_carrier_ratio_vs_tcga where gene=#{gene} order by log2odds0+0 asc
+    </select>
+
+    <!--compare with germline柱状图-->
+    <select id="browseSomaticRatioByGeneVsGermline" resultType="BrowseSomaticGeneRatioVsGermline">
+         select somatic,germline,type,fdr  from compare_with_germline where gene=#{gene} order by log2odds0+0 asc
+    </select>
+
+    <!--compare with germline点图-->
+    <select id="browseSomaticRatioByGeneVsGermline2" resultType="BrowseSomaticGeneRatioVsGermline">
+         select log2odds0, log10fdr0,type,fdr  from compare_with_germline where gene=#{gene}
+    </select>
+
+    <!--compare with wt-->
+    <select id="browseSomaticComByGene" resultType="BrowseSomaticGeneCom">
+         select * from somatic_wt_mut where gene=#{gene}
+    </select>
+
+</mapper>

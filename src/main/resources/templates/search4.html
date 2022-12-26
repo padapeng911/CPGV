@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Search')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navSearch"></nav>
+
+    <nav th:insert="common::breadcrumbSearch"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" style="padding-top:50px; margin-bottom: 30px">
+                <form name="form1" class="form-horizontal" action="#" th:action="@{/SearchItem}" th:object="${searchItem}" method="post" id="form1">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" style="font-size: 18px;font-weight: bold">Item</label>
+                        <div class="col-sm-12">
+                            <select name="searchItem" class="form-control" th:field="*{item}" id="searchItem">
+                                <option value="4">Mutation Site</option>
+                                <option value="1">Gene Name</option>
+                                <option value="2">Cancer Type</option>
+                                <option value="3">Pathway Name</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div th:insert="search::formSearch1"></div>
+                    <div th:insert="common::formSearch2"></div>
+                </form>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#searchName').select2({
+            placeholder: 'Please input mutation site you interested',
+            minimumInputLength: 1,
+            ajax: {
+                url: '/cpgv/SearchByParamSite',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var query = {
+                        param4: params.term
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    var result = [];
+                    for (var i = 0; i < data.length; i++) {
+                        result[i] = {id: data[i], text: data[i]};
+                    }
+                    return {
+                        results: result
+                    };
+                }
+            },
+        });
+    });
+</script>
+
+<script th:replace="commonJS::search1"></script>
+
+<script th:replace="commonJS::search2"></script>
+
+<script th:replace="commonJS::search3"></script>
+
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

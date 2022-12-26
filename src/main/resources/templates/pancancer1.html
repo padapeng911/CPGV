@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Pan-cancer Analysis')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navAnalysis"></nav>
+
+    <nav th:insert="common::breadcrumbAnalysis"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" th:text="${analysis.gene}+' Mutation Characteristics of multiple cancers in Genecast Cohort'"></p>
+        </div>
+        <input id="genename" type="hidden" th:value="${analysis.gene}">
+        <input id="typename" type="hidden" th:value="${analysis.type}">
+        <div class="card-body">
+            <div th:insert="common::geneInfoT"></div>
+            <div th:insert="common::geneInfoC"></div>
+            <ul th:insert="common::typeNav"></ul>
+                <div class="tab-content">
+                    <div id="somatic" class="tab-pane active"><br>
+                        <div th:insert="common::geneSInfoT"></div>
+                        <div th:insert="common::geneSInfoC"></div>
+                        <div th:insert="common::geneSNT"></div>
+                        <div th:insert="common::geneSNC"></div>
+                        <div th:insert="common::geneSCT"></div>
+                        <div th:insert="common::geneSCC"></div>
+                        <div th:insert="common::geneSComTT"></div>
+                        <div th:insert="common::geneSComTC"></div>
+                        <div th:insert="common::geneSComGT"></div>
+                        <div th:insert="common::geneSComGC"></div>
+                        <div th:insert="common::typeSDTS"></div>
+                    </div>
+                    <div id="germline" class="tab-pane fade"><br>
+                        <div th:insert="common::geneGInfoT"></div>
+                        <div th:insert="common::geneGInfoC"></div>
+                        <div th:insert="common::geneGNT"></div>
+                        <div th:insert="common::geneGNC"></div>
+                        <div th:insert="common::geneGCT"></div>
+                        <div th:insert="common::geneGCC"></div>
+                        <div th:insert="common::geneGComTT"></div>
+                        <div th:insert="common::geneGComTC"></div>
+                        <div th:insert="common::geneGComCT"></div>
+                        <div th:insert="common::geneGComCC"></div>
+                    </div>
+                    <div id="clinical" class="tab-pane fade"><br>
+                        <div th:insert="common::typeCDGA"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    $(document).ready(function () {
+        $("#somatictable").bootstrapTable({
+            url:"/cpgv/SearchSomaticMutationsByGene?gene="+gene,
+            striped : true,
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 5,
+            pageList : [ 5, 10],
+            showRefresh : false,
+            search : true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                sortable : true
+            },{
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseSomaticSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            }, {
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                sortable : true
+            }, {
+                title: 'Type',
+                field: 'exonicFunc',
+                align: 'center',
+                sortable: true
+            }]
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    var datacancer = ['ACC','THCA','PRAD','BLCA','GIST','NE','SARC','UCEC','GBM','SKCM','KICH','HNSC','CESC','NASO','SCL','OV','CHOL','BRCA','ESCA','PAAD','LIHC','READ','LUSC','STAD','COAD','NSCL','LUAD'];
+    var hashcolor =['Navy','CornflowerBlue','SlateGray','LightSkyBlue','LightSteelBlue','DeepSkyBlue','CadetBlue','Aqua','DarkCyan','MediumSpringGreen','MediumSeaGreen','Green','Olive','DarkKhaki','DarkGoldenrod','SaddleBrown','FireBrick','Maroon','DimGray','Crimson','PaleVioletRed','MediumVioletRed','Purple','MediumOrchid','Indigo','SlateBlue','Blue'];
+    var hashcol = {};
+    for (var i = 0; i < hashcolor.length; i++) {
+        hashcol[datacancer[i]] = hashcolor[i];
+    }
+    const a = window.document.querySelector('#download1')
+    a.addEventListener('click',()=>{
+        const content = document.querySelector('#echartsBrowseSomaticGene1 svg').outerHTML
+        const blob= new Blob([content], {type: 'xml/svg'})
+        a.href = URL.createObjectURL(blob)
+        a.download = 'newplot.svg'
+    })
+    var myChart1 =echarts.init(document.querySelector('#echartsBrowseSomaticGene1'), null, {renderer: 'svg'});
+    myChart1.setOption({
+        tooltip: {},
+        xAxis:{
+            data:[],
+            axisLabel:{
+                interval:0,
+                rotate:75,
+            }
+        },
+        yAxis:{},
+        series:[{name:'Number',type:'bar',barMaxWidth: 30,data:[]}]
+    });
+    $.ajax({
+        type:'POST',
+        url:"/cpgv/AnalysisSomaticGeneNumber?gene="+gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var categories =[];
+            var numberall = [];
+            var j = 0;
+            for (var i = 0;i < data.length;){
+                data[i+1]=Number(data[i+1]);
+                var number = {};
+                var colortmp = {};
+                j = i / 2;
+                categories[j] = data[i];
+                number['value'] = data[i + 1];
+                colortmp['color'] = hashcol[data[i]];
+                number['itemStyle'] = colortmp;
+                number['name'] = data[i];
+                numberall.push(number);
+                i = i + 2;
+            }
+            var arrnum = numberall.length;
+            var sum =0;
+            for (var g=0;g<arrnum;g++){
+                sum = sum +numberall[g].value;
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticGene1").innerHTML="Sorry, no somatic mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                myChart1.setOption({
+                    title: {
+                        text:'The number of somatic mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    xAxis: {data: categories},
+                    series:[{data:numberall}]
+                });
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a3 = window.document.querySelector('#download3')
+    a3.addEventListener('click',()=>{
+        const content3 = document.querySelector('#echartsBrowseSomaticGene3 svg').outerHTML
+        const blob3= new Blob([content3], {type: 'xml/svg'})
+        a3.href = URL.createObjectURL(blob3)
+        a3.download = 'newplot.svg'
+    })
+    var myChart3 = echarts.init(document.querySelector('#echartsBrowseSomaticGene3'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatio12?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            var result3 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                data[i+3]=Number(data[i+3]);
+                if (data[i] != 0){
+                    if (data[i +3] <0.05 & Math.abs(data[i]) >=0.263){
+                        if (data[i] >= 0.263){
+                            if (result1){
+                                result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\""+ data[i + 2]+"\"" +"]";
+                            }else{
+                                result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                            }
+                        }else{
+                            if (result2){
+                                result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }else{
+                                result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }
+                        }
+                    }else{
+                        if (result3){
+                            result3 = result3 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }else{
+                            result3 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }
+                    }
+                }
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var data3=JSON.parse("[" + result3 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum3=data3.length;
+            var arrnum=arrnum1+arrnum2+arrnum3;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseSomaticGene3").innerHTML="Sorry, there is no value that meets the requirements in the volcano map.";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[30,0,0,0],
+                        align:'left',
+                        data: ['Down', 'NoSignifi','Up']
+                    },
+                    xAxis: {
+                        name:'Log2(Odds Ratio)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'-Log10(FDR)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 20, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'Up',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: '1.2 times down',
+                                xAxis:-0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    }, {
+                        name: 'NoSignifi',
+                        data: data3,
+                        type: 'scatter',
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name:'1.2 times higher',
+                                xAxis:0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'grey'
+                            }, {
+                                offset: 1,
+                                color: 'grey'
+                            }])
+                        }
+                    }, {
+                        name: 'Down',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: 'The change is not significant',
+                                yAxis:1.3,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart3.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    var datacancer = ['ACC','THCA','PRAD','BLCA','GIST','NE','SARC','UCEC','GBM','SKCM','KICH','HNSC','CESC','NASO','SCL','OV','CHOL','BRCA','ESCA','PAAD','LIHC','READ','LUSC','STAD','COAD','NSCL','LUAD'];
+    var hashcolor =['Navy','CornflowerBlue','SlateGray','LightSkyBlue','LightSteelBlue','DeepSkyBlue','CadetBlue','Aqua','DarkCyan','MediumSpringGreen','MediumSeaGreen','Green','Olive','DarkKhaki','DarkGoldenrod','SaddleBrown','FireBrick','Maroon','DimGray','Crimson','PaleVioletRed','MediumVioletRed','Purple','MediumOrchid','Indigo','SlateBlue','Blue'];
+    var hashcol = {};
+    for (var i = 0; i < hashcolor.length; i++) {
+        hashcol[datacancer[i]] = hashcolor[i];
+    }
+    const a2 = window.document.querySelector('#download2')
+    a2.addEventListener('click',()=>{
+        const content2 = document.querySelector('#echartsBrowseSomaticGene2 svg').outerHTML
+        const blob2= new Blob([content2], {type: 'xml/svg'})
+        a2.href = URL.createObjectURL(blob2)
+        a2.download = 'newplot.svg'
+    })
+    var myChart1 =echarts.init(document.querySelector('#echartsBrowseSomaticGene2'), null, {renderer: 'svg'});
+    myChart1.setOption({
+        tooltip: {},
+        xAxis:{
+            data:[],
+            axisLabel:{
+                interval:0,
+                rotate:75,
+            }
+        },
+        yAxis:{},
+        series:[{name:'Ratio',type:'bar',barMaxWidth: 30,data:[]}]
+    });
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatio?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var categories =[];
+            var numberall = [];
+            var j = 0;
+            for (var i = 0;i < data.length;){
+                data[i+1]=Number(data[i+1]);
+                var number = {};
+                var colortmp = {};
+                j = i / 2;
+                categories[j] = data[i];
+                number['value'] = data[i + 1];
+                colortmp['color'] = hashcol[data[i]];
+                number['itemStyle'] = colortmp;
+                number['name'] = data[i];
+                numberall.push(number);
+                i = i + 2;
+            }
+            var arrnum = numberall.length;
+            var sum =0;
+            for (var g=0;g<arrnum;g++){
+                sum = sum +numberall[g].value;
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticGene2").innerHTML="Sorry, no somatic mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                myChart1.setOption({
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    xAxis: {data: categories},
+                    series:[{data:numberall}]
+                });
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a4 = window.document.querySelector('#download4')
+    a4.addEventListener('click',()=>{
+        const content4 = document.querySelector('#echartsBrowseSomaticGene4 svg').outerHTML
+        const blob4= new Blob([content4], {type: 'xml/svg'})
+        a4.href = URL.createObjectURL(blob4)
+        a4.download = 'newplot.svg'
+    })
+    var myChart3 = echarts.init(document.querySelector('#echartsBrowseSomaticGene4'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsTcga?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            var result3 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                data[i+3]=Number(data[i+3]);
+                if (data[i] != 0){
+                    if (data[i +3] <0.05 & Math.abs(data[i]) >=0.263){
+                        if (data[i] >= 0.263){
+                            if (result1){
+                                result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\""+ data[i + 2]+"\"" +"]";
+                            }else{
+                                result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                            }
+                        }else{
+                            if (result2){
+                                result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }else{
+                                result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }
+                        }
+
+                    }else{
+                        if (result3){
+                            result3 = result3 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }else{
+                            result3 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }
+                    }
+                }
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var data3=JSON.parse("[" + result3 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum3=data3.length;
+            var arrnum=arrnum1+arrnum2+arrnum3;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseSomaticGene4").innerHTML="Sorry, there is no value that meets the requirements in the volcano map";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+gene+' \nin these cancers compared with TCGA',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                        data: ['High in Genecast', 'NoSignifi','High in TCGA']
+                    },
+                    xAxis: {
+                        name:'Log2(Odds Ratio)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'-Log10(FDR)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 20, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'High in Genecast',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: '1.2 times down',
+                                xAxis:-0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    }, {
+                        name: 'NoSignifi',
+                        data: data3,
+                        type: 'scatter',
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name:'1.2 times higher',
+                                xAxis:0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'grey'
+                            }, {
+                                offset: 1,
+                                color: 'grey'
+                            }])
+                        }
+                    }, {
+                        name: 'High in TCGA',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: 'The change is not significant',
+                                yAxis:1.3,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart3.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a6 = window.document.querySelector('#download6')
+    a6.addEventListener('click',()=>{
+        const content6 = document.querySelector('#echartsBrowseSomaticGene6 svg').outerHTML
+        const blob6= new Blob([content6], {type: 'xml/svg'})
+        a6.href = URL.createObjectURL(blob6)
+        a6.download = 'newplot.svg'
+    })
+    var myChart4 = echarts.init(document.querySelector('#echartsBrowseSomaticGene6'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsTcga12?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '["product", "Genecast", "TCGA"]';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                result1 = result1 +",[" + "\""+data[i+2]+"\""+","+data[i] +","+ data[i+1] +"]";
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var arrnum =data1.length;
+            var sum = 0;
+            for (var j = 1;j < arrnum; j++ ){
+                sum = sum + data1[j][1] + data1[j][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticGene6").innerHTML="Sorry, these cancer types are not recorded in TCGA or no somatic mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                var option;
+                option = {
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+gene+' \nin theses compared with that in TCGA',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                    },
+                    tooltip: {},
+                    dataset: {
+                        source: data1
+                    },
+                    toolbox: {
+                        top:20,
+                        feature: {
+                            magicType : {show: true, type: ['line','bar']},
+                        }
+                    },
+                    xAxis: {
+                        axisLabel:{
+                            interval:0,
+                            rotate:75,
+                        },
+                        type: 'category'
+                    },
+                    yAxis: {},
+                    series: [
+                        {type: 'bar'},
+                        {type: 'bar'}
+                    ]
+                };
+                if (option && typeof option === 'object') {
+                    myChart4.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a5 = window.document.querySelector('#download5')
+    a5.addEventListener('click',()=>{
+        const content5 = document.querySelector('#echartsBrowseSomaticGene5 svg').outerHTML
+        const blob5= new Blob([content5], {type: 'xml/svg'})
+        a5.href = URL.createObjectURL(blob5)
+        a5.download = 'newplot.svg'
+    })
+    var myChart3 = echarts.init(document.querySelector('#echartsBrowseSomaticGene5'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsGermline12?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            var result3 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                data[i+3]=Number(data[i+3]);
+                if (data[i] != 0){
+                    if (data[i +3] <0.05 & Math.abs(data[i]) >=0.263){
+                        if (data[i] >= 0.263){
+                            if (result1){
+                                result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\""+ data[i + 2]+"\"" +"]";
+                            }else{
+                                result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                            }
+                        }else{
+                            if (result2){
+                                result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }else{
+                                result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }
+                        }
+                    }else{
+                        if (result3){
+                            result3 = result3 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }else{
+                            result3 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }
+                    }
+                }
+
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var data3=JSON.parse("[" + result3 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum3=data3.length;
+            var arrnum=arrnum1+arrnum2+arrnum3;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseSomaticGene5").innerHTML="Sorry, there is no value that meets the requirements in the volcano map.";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+gene+' \nin these cancers compared with that of germline mutations',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                        data: ['High in Somatic', 'NoSignifi','High in Germline']
+                    },
+                    xAxis: {
+                        name:'Log2(Odds Ratio)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'-Log10(FDR)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 20, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'High in Somatic',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: '1.2 times down',
+                                xAxis:-0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    }, {
+                        name: 'NoSignifi',
+                        data: data3,
+                        type: 'scatter',
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name:'1.2 times higher',
+                                xAxis:0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'grey'
+                            }, {
+                                offset: 1,
+                                color: 'grey'
+                            }])
+                        }
+                    }, {
+                        name: 'High in Germline',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: 'The change is not significant',
+                                yAxis:1.3,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart3.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a7 = window.document.querySelector('#download7')
+    a7.addEventListener('click',()=>{
+        const content7 = document.querySelector('#echartsBrowseSomaticGene7 svg').outerHTML
+        const blob7= new Blob([content7], {type: 'xml/svg'})
+        a7.href = URL.createObjectURL(blob7)
+        a7.download = 'newplot.svg'
+    })
+    var myChart5 = echarts.init(document.querySelector('#echartsBrowseSomaticGene7'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisSomaticGeneRatioVsGermline?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '["product", "Somatic", "Germline"]';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                result1 = result1 +",[" + "\""+data[i+2]+"\""+","+data[i] +","+ data[i+1] +"]";
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data1=JSON.parse("[" + result1 + "]");
+            var arrnum =data1.length;
+            var sum = 0;
+            for (var j = 1;j < arrnum; j++ ){
+                sum = sum + data1[j][1] + data1[j][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseSomaticGene7").innerHTML="Sorry, no somatic mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                var option;
+                option = {
+                    title: {
+                        text:'The carrier ratio of somatic mutations in '+gene+' \nin these cancers compared with that of germline mutations',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                    },
+                    tooltip: {},
+                    dataset: {
+                        source: data1
+                    },
+                    toolbox: {
+                        top:20,
+                        feature: {
+                            magicType : {show: true, type: ['line','bar']},
+                        }
+                    },
+                    xAxis: {
+                        axisLabel:{
+                            interval:0,
+                            rotate:75,
+                        },
+                        type: 'category'
+                    },
+                    yAxis: {},
+                    series: [
+                        {type: 'bar'},
+                        {type: 'bar'}
+                    ]
+                };
+                if (option && typeof option === 'object') {
+                    myChart5.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const aT5 = window.document.querySelector('#downloadT5')
+    aT5.addEventListener('click',()=>{
+        const contentT5 = document.querySelector('#echartsBrowseSomaticType5 svg').outerHTML
+        const blobT5= new Blob([contentT5], {type: 'xml/svg'})
+        aT5.href = URL.createObjectURL(blobT5)
+        aT5.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseSomaticType5'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseSomaticTmbByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var tempname = '';
+            var dataname = [];
+            var datanumber = [];
+            var number = [];
+            for (i = 0 ; i < dataSet.length; i = i + 2){
+                if(dataSet[i] == tempname){
+                    number.push(dataSet[i + 1]);
+                }else{
+                    if(number.length == 0){
+                    }else{
+                        datanumber.push(number);
+                        number = [];
+                    }
+                    dataname.push(dataSet[i]);
+                    number.push(dataSet[i + 1]);
+                    tempname = dataSet[i];
+                }
+            }
+            datanumber.push(number);
+            var data = echarts.dataTool.prepareBoxplotData(datanumber);
+            var d1=(dataname);
+            var option;
+            option = {
+                title: [
+                    {
+                        text: 'The distribution of TMB for these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center',
+                    },
+                    {
+                        text: 'upper: Q3 + 1.5 * IRQ \nlower: Q1 - 1.5 * IRQ',
+                        borderColor: 'black',
+                        borderWidth: 1,
+                        textStyle: {
+                            fontSize: 10,
+                            color:'black'
+                        },
+                        left: '10%',
+                        top: '91%'
+                    }
+                ],
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '15%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: dataname,
+                    boundaryGap: true,
+                    nameGap: 30,
+                    splitArea: {
+                        show: false
+                    },
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Number',
+                    splitArea: {
+                        show: true
+                    }
+                },
+                series: [
+                    {
+                        name: 'boxplot',
+                        type: 'boxplot',
+                        data: data.boxData,
+                        tooltip: {
+                            formatter: function (param) {
+                                return [
+                                    param.name + ': ',
+                                    'upper: ' + param.data[5],
+                                    'Q3: ' + param.data[4],
+                                    'median: ' + param.data[3],
+                                    'Q1: ' + param.data[2],
+                                    'lower: ' + param.data[1]
+                                ].join('<br/>')
+                            }
+                        }
+                    },
+                    {
+                        name: 'outlier',
+                        type: 'scatter',
+                        data: data.outliers
+                    }
+                ]
+            };
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){ 
+            var obj = {}; 
+            for(var i= 0, l = arr.length; i< l; i++){ 
+                var item = arr[i]; 
+                obj[item] = (obj[item] +1 ) || 1; 
+            } 
+            return obj; 
+    }
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const aT6 = window.document.querySelector('#downloadT6')
+    aT6.addEventListener('click',()=>{
+        const contentT6 = document.querySelector('#echartsBrowseSomaticType6 svg').outerHTML
+        const blobT6= new Blob([contentT6], {type: 'xml/svg'})
+        aT6.href = URL.createObjectURL(blobT6)
+        aT6.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseSomaticType6'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseSomaticSignatureByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            var onearray = [];
+            for (var i = 0; i < dataSet.length; i = i + 31) {
+                temparr =  [];
+                for (var j = 0; j < 31; j++) {
+                    temparr[j] = dataSet[i + j];
+                };
+                onearray.push(temparr);
+            };
+            var cancerarr = [];
+            for (var i = 0; i < onearray.length; i++) {
+                cancerarr.push(onearray[i][0]);
+            };
+            var cancerfenzu = delRepeat2(cancerarr);
+            var cancernumber = getRepeatNum(cancerarr);
+            var datamulit = [];
+            for (var i = 0; i < cancerfenzu.length; i++) {
+                var dataout1 = [];
+                var dataname = cancerfenzu[i]
+                var datanumber = cancernumber[cancerfenzu[i]];
+                for (var j = 1; j < 31; j++) {
+                    var datatemp = [];
+                    for (var k = 0; k < datanumber; k++) {
+                        if (onearray[k][j] != 0){
+                            datatemp.push(onearray[k][j]);
+                        }
+                    };
+                    if (datatemp.length > 0){
+                        dataout1.push(datatemp);
+                    }else{
+                        datatemp.push("0");
+                        dataout1.push(datatemp);
+                    }
+                };
+                datamulit.push(echarts.dataTool.prepareBoxplotData(dataout1));
+            };
+            var data = datamulit;
+            var seriesdata = [];
+            for (var i = 0; i < cancerfenzu.length; i++) {
+                var arrayjs = {};
+                arrayjs.name = cancerfenzu[i];
+                arrayjs.type = 'boxplot';
+                arrayjs.data = data[i].boxData;
+                arrayjs.tooltip= {formatter: formatter};
+                seriesdata.push(arrayjs);
+                var arrayjs = {};
+                arrayjs.name = cancerfenzu[i];
+                arrayjs.type = 'pictorialBar';
+                arrayjs.symbolPosition = 'end';
+                arrayjs.symbolSize= '8';
+                arrayjs.data = data[i].outliers;
+                seriesdata.push(arrayjs);
+            };
+            var d1=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21','S22','S23','S24','S25','S26','S27','S28','S29','S30'];
+            option = {
+                title: [
+                    {
+                        text: 'The distribution of signature for these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center',
+                    },
+                    {
+                        subtext: 'S:signature \nS1:small numbers of small insertions and deletions \nS2:mutations in exons \nS3:elevated numbers of large (longer than 3bp) insertions and deletions\nS4:bias for C>A mutations \nS5:bias for T>C substitutions at ApTpN context \nS6,S15,S20,S26:high numbers of small (shorter than 3bp) insertions and deletions at \nmono/polynucleotide repeats \nS7:large numbers of CC>TT dinucleotide mutations at dipyrimidines \nS8:weak bias for C>A substitutions \nS9,S17,S18,S19,S21,S28,S30:N/A \nS10:bias for C>A mutations at TpCpT context and T>G mutations at TpTpT context \nS11,S23:strong bias for C>T mutations \nS12:strong bias for T>C substitutions \nS13:predominantly C>G mutations \nS14:very high numbers of somatic mutations (>200 mutations per MB) \nS16:strong bias for T>C mutations at ApTpN context \nS22,S27:strong bias for T>A mutations \nS24:strong bias for C>A mutations \nS25:bias for T>A mutations \nS29:bias for C>A mutations',
+                        borderColor: 'grey',
+                        borderWidth: 1,
+                        textStyle: {
+                            fontSize: 12,
+                            color:'grey'
+                        },
+                        sublink:'https://cancer.sanger.ac.uk/signatures/signatures_v2/',
+                        left: '2%',
+                        top: '58%'
+                    }
+                ],
+                legend: {
+                    top: '3%',
+                    data: cancerfenzu
+                },
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '10%',
+                    top:'10%',
+                    right: '10%',
+                    bottom:'50%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: d1,
+                    boundaryGap: true,
+                    nameGap: 30,
+                    splitArea: {
+                        show: true
+                    },
+                    axisLabel: {
+                        interval:0,
+                        rotate:75,
+                        formatter: '{value}'
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Percentage',
+                    splitArea: {
+                        show: false
+                    }
+                },
+                dataZoom: [
+                    {
+                        type: 'inside',
+                        start: 0,
+                        end: 20
+                    },
+                    {
+                        show: true,
+                        height: 20,
+                        type: 'slider',
+                        top: '53%',
+                        xAxisIndex: [0],
+                        start: 0,
+                        end: 20
+                    }
+                ],
+                series: seriesdata
+            };
+            function formatter(param) {
+                return [
+                    param.name + ': ',
+                    'upper: ' + param.data[5],
+                    'Q3: ' + param.data[4],
+                    'median: ' + param.data[3],
+                    'Q1: ' + param.data[2],
+                    'lower: ' + param.data[1]
+                ].join('<br/>')
+            }
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    $(document).ready(function () {
+        $("#germlinetable").bootstrapTable({
+            url:"/cpgv/SearchGermlineMutationsByGene?gene="+gene,
+            striped : true,
+            pageNumber : 1,
+            pagination : true,
+            sidePagination : 'client',
+            pageSize : 5,
+            pageList : [ 5, 10],
+            showRefresh : false,
+            search : true,
+            columns : [ {
+                title : 'Gene Name',
+                field : 'gene',
+                align: 'center',
+                sortable : true
+            },{
+                title : 'Residue.g',
+                field : 'gnumber',
+                align: 'center',
+                formatter: function(value,row,index) {
+                    var url = '<a href="/cpgv/BrowseGermlineSite?site='+ row.gene+'.'+value +'" target="_blank">' + value +'</a>';
+                    return url;
+                },
+                sortable : true
+            }, {
+                title : 'Chromosome',
+                field : 'chr',
+                align: 'center',
+                sortable : true
+            },{
+                title : 'Position',
+                field : 'func',
+                align: 'center',
+                sortable : true
+            }, {
+                title : 'Type',
+                field : 'exonicFunc',
+                align: 'center',
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    var datacancer = ['ACC','THCA','PRAD','BLCA','GIST','NE','SARC','UCEC','GBM','SKCM','KICH','HNSC','CESC','NASO','SCL','OV','CHOL','BRCA','ESCA','PAAD','LIHC','READ','LUSC','STAD','COAD','NSCL','LUAD'];
+    var hashcolor =['Navy','CornflowerBlue','SlateGray','LightSkyBlue','LightSteelBlue','DeepSkyBlue','CadetBlue','Aqua','DarkCyan','MediumSpringGreen','MediumSeaGreen','Green','Olive','DarkKhaki','DarkGoldenrod','SaddleBrown','FireBrick','Maroon','DimGray','Crimson','PaleVioletRed','MediumVioletRed','Purple','MediumOrchid','Indigo','SlateBlue','Blue'];
+    var hashcol = {};
+    for (var i = 0; i < hashcolor.length; i++) {
+        hashcol[datacancer[i]] = hashcolor[i];
+    }
+    const a_2 = window.document.querySelector('#download1_2')
+    a_2.addEventListener('click',()=>{
+        const content_2 = document.querySelector('#echartsBrowseGermlineGene1 svg').outerHTML
+        const blob_2= new Blob([content_2], {type: 'xml/svg'})
+        a_2.href = URL.createObjectURL(blob_2)
+        a_2.download = 'newplot.svg'
+    })
+    var myChart1 =echarts.init(document.querySelector('#echartsBrowseGermlineGene1'), null, {renderer: 'svg'});
+    myChart1.setOption({
+        tooltip: {},
+        xAxis:{
+            data:[],
+            axisLabel:{
+                interval:0,
+                rotate:75,
+            }
+        },
+        yAxis:{},
+        series:[{name:'Number',type:'bar',barMaxWidth: 30,data:[]}]
+    });
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneNumber?gene=" + gene + "&type="+ type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var categories =[];
+            var numberall = [];
+            var j = 0;
+            for (var i = 0;i < data.length;){
+                data[i+1]=Number(data[i+1]);
+                var number = {};
+                var colortmp = {};
+                j = i / 2;
+                categories[j] = data[i];
+                number['value'] = data[i + 1];
+                colortmp['color'] = hashcol[data[i]];
+                number['itemStyle'] = colortmp;
+                number['name'] = data[i];
+                numberall.push(number);
+                i = i + 2;
+            }
+            var arrnum = numberall.length;
+            var sum =0;
+            for (var g=0;g<arrnum;g++){
+                sum = sum +numberall[g].value;
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineGene1").innerHTML="Sorry, no germline mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                myChart1.setOption({
+                    title: {
+                        text:'The number of germline mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    xAxis: {data: categories},
+                    series:[{data:numberall}]
+                });
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a3_2 = window.document.querySelector('#download3_2')
+    a3_2.addEventListener('click',()=>{
+        const content3_2 = document.querySelector('#echartsBrowseGermlineGene3 svg').outerHTML
+        const blob3_2= new Blob([content3_2], {type: 'xml/svg'})
+        a3_2.href = URL.createObjectURL(blob3_2)
+        a3_2.download = 'newplot.svg'
+    })
+    var myChart3 = echarts.init(document.querySelector('#echartsBrowseGermlineGene3'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatio12?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            var result3 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                data[i+3]=Number(data[i+3]);
+                if (data[i] != 0){
+                    if (data[i +3] <0.05 & Math.abs(data[i]) >=0.263){
+                        if (data[i] >= 0.263){
+                            if (result1){
+                                result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\"s"+ data[i + 2]+"\"" +"]";
+                            }else{
+                                result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                            }
+                        }else{
+                            if (result2){
+                                result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }else{
+                                result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }
+                        }
+                    }else{
+                        if (result3){
+                            result3 = result3 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }else{
+                            result3 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }
+                    }
+                }
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var data3=JSON.parse("[" + result3 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum3=data3.length;
+            var arrnum=arrnum1+arrnum2+arrnum3;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseGermlineGene3").innerHTML="Sorry, there is no value that meets the requirements in the volcano map.";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The carrier ratio of germline mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[30,0,0,0],
+                        align:'left',
+                        data: ['Down', 'NoSignifi','Up']
+                    },
+                    xAxis: {
+                        name:'Log2(Odds Ratio)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'-Log10(FDR)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 20, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'Up',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: '1.2 times down',
+                                xAxis:-0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    }, {
+                        name: 'NoSignifi',
+                        data: data3,
+                        type: 'scatter',
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name:'1.2 times higher',
+                                xAxis:0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'grey'
+                            }, {
+                                offset: 1,
+                                color: 'grey'
+                            }])
+                        }
+                    }, {
+                        name: 'Down',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: 'The change is not significant',
+                                yAxis:1.3,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart3.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    var datacancer = ['ACC','THCA','PRAD','BLCA','GIST','NE','SARC','UCEC','GBM','SKCM','KICH','HNSC','CESC','NASO','SCL','OV','CHOL','BRCA','ESCA','PAAD','LIHC','READ','LUSC','STAD','COAD','NSCL','LUAD'];
+    var hashcolor =['Navy','CornflowerBlue','SlateGray','LightSkyBlue','LightSteelBlue','DeepSkyBlue','CadetBlue','Aqua','DarkCyan','MediumSpringGreen','MediumSeaGreen','Green','Olive','DarkKhaki','DarkGoldenrod','SaddleBrown','FireBrick','Maroon','DimGray','Crimson','PaleVioletRed','MediumVioletRed','Purple','MediumOrchid','Indigo','SlateBlue','Blue'];
+    var hashcol = {};
+    for (var i = 0; i < hashcolor.length; i++) {
+        hashcol[datacancer[i]] = hashcolor[i];
+    }
+    const a2_2 = window.document.querySelector('#download2_2')
+    a2_2.addEventListener('click',()=>{
+        const content2_2 = document.querySelector('#echartsBrowseGermlineGene2 svg').outerHTML
+        const blob2_2= new Blob([content2_2], {type: 'xml/svg'})
+        a2_2.href = URL.createObjectURL(blob2_2)
+        a2_2.download = 'newplot.svg'
+    })
+    var myChart1 =echarts.init(document.querySelector('#echartsBrowseGermlineGene2'), null, {renderer: 'svg'});
+    myChart1.setOption({
+        tooltip: {},
+        xAxis:{
+            data:[],
+            axisLabel:{
+                interval:0,
+                rotate:75,
+            }
+        },
+        yAxis:{},
+        series:[{name:'Ratio',type:'bar',barMaxWidth: 30,data:[]}]
+    });
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatio?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var categories =[];
+            var numberall = [];
+            var j = 0;
+            for (var i = 0;i < data.length;){
+                data[i+1]=Number(data[i+1]);
+                var number = {};
+                var colortmp = {};
+                j = i / 2;
+                categories[j] = data[i];
+                number['value'] = data[i + 1];
+                colortmp['color'] = hashcol[data[i]];
+                number['itemStyle'] = colortmp;
+                number['name'] = data[i];
+                numberall.push(number);
+                i = i + 2;
+            }
+            var arrnum = numberall.length;
+            var sum =0;
+            for (var g=0;g<arrnum;g++){
+                sum = sum +numberall[g].value;
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineGene2").innerHTML="Sorry, no germline mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                myChart1.setOption({
+                    title: {
+                        text:'The carrier ratio of germline mutations in '+ gene +' in these cancers',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    xAxis: {data: categories},
+                    series:[{data:numberall}]
+                });
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a4_2 = window.document.querySelector('#download4_2')
+    a4_2.addEventListener('click',()=>{
+        const content4_2 = document.querySelector('#echartsBrowseGermlineGene4 svg').outerHTML
+        const blob4_2= new Blob([content4_2], {type: 'xml/svg'})
+        a4_2.href = URL.createObjectURL(blob4_2)
+        a4_2.download = 'newplot.svg'
+    })
+    var myChart3 = echarts.init(document.querySelector('#echartsBrowseGermlineGene4'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatioVsTcga?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            var result3 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                data[i+3]=Number(data[i+3]);
+                if (data[i] != 0){
+                    if (data[i +3] <0.05 & Math.abs(data[i]) >=0.263){
+                        if (data[i] >= 0.263){
+                            if (result1){
+                                result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\"s"+ data[i + 2]+"\"" +"]";
+                            }else{
+                                result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                            }
+                        }else{
+                            if (result2){
+                                result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }else{
+                                result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                            }
+                        }
+                    }else{
+                        if (result3){
+                            result3 = result3 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }else{
+                            result3 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                        }
+                    }
+                }
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var data3=JSON.parse("[" + result3 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum3=data3.length;
+            var arrnum=arrnum1+arrnum2+arrnum3;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseGermlineGene4").innerHTML="Sorry, there is no value that meets the requirements in the volcano map.";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The carrier ratio of germline mutations in '+gene+' \nin these cancers compared with that in TCGA',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                        data: ['High in Genecast', 'NoSignifi','High in TCGA']
+                    },
+                    xAxis: {
+                        name:'Log2(Odds Ratio)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'-Log10(FDR)',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 20, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'High in Genecast',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: '1.2 times down',
+                                xAxis:-0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    }, {
+                        name: 'NoSignifi',
+                        data: data3,
+                        type: 'scatter',
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name:'1.2 times higher',
+                                xAxis:0.263,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'grey'
+                            }, {
+                                offset: 1,
+                                color: 'grey'
+                            }])
+                        }
+                    }, {
+                        name: 'High in TCGA',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            itemStyle: {
+                                normal: { lineStyle: { type: 'dashed', color:'grey'}
+                                    ,label: { show: false, position:'left' } }
+                            },
+                            data: [{
+                                name: 'The change is not significant',
+                                yAxis:1.3,
+                            },
+                            ]
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart3.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a6_2 = window.document.querySelector('#download6_2')
+    a6_2.addEventListener('click',()=>{
+        const content6_2 = document.querySelector('#echartsBrowseGermlineGene6 svg').outerHTML
+        const blob6_2= new Blob([content6_2], {type: 'xml/svg'})
+        a6_2.href = URL.createObjectURL(blob6_2)
+        a6_2.download = 'newplot.svg'
+    })
+    var myChart4 = echarts.init(document.querySelector('#echartsBrowseGermlineGene6'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatioVsTcga12?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '["product", "Genecast", "TCGA"]';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                result1 = result1 +",[" + "\""+data[i+2]+"\""+","+data[i] +","+ data[i+1] +"]";
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var arrnum =data1.length;
+            var sum = 0;
+            for (var j = 1;j < arrnum; j++ ){
+                sum = sum + data1[j][1] + data1[j][2];
+            }
+            if(sum == 0){
+                document.getElementById("echartsBrowseGermlineGene6").innerHTML="Sorry, these cancer types are not recorded in TCGA or no germline mutations in this gene were detected in these selected cancers.";
+            }
+            else {
+                var option;
+                option = {
+                    title: {
+                        text:'The carrier ratio of germline mutations in '+gene+' \nin these cancers compared with that in TCGA',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[40,0,0,0],
+                        align:'left',
+                    },
+                    tooltip: {},
+                    dataset: {
+                        source: data1
+                    },
+                    toolbox: {
+                        top:20,
+                        feature: {
+                            magicType : {show: true, type: ['line','bar']},
+                        }
+                    },
+                    xAxis: {
+                        axisLabel:{
+                            interval:0,
+                            rotate:75,
+                        },
+                        type: 'category'
+                    },
+                    yAxis: {},
+                    series: [
+                        {type: 'bar'},
+                        {type: 'bar'}
+                    ]
+                };
+                if (option && typeof option === 'object') {
+                    myChart4.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const a5_2 = window.document.querySelector('#download5_2')
+    a5_2.addEventListener('click',()=>{
+        const content5_2 = document.querySelector('#echartsBrowseGermlineGene5 svg').outerHTML
+        const blob5_2= new Blob([content5_2], {type: 'xml/svg'})
+        a5_2.href = URL.createObjectURL(blob5_2)
+        a5_2.download = 'newplot.svg'
+    })
+    var myChart4 = echarts.init(document.querySelector('#echartsBrowseGermlineGene5'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/AnalysisGermlineGeneRatioVsCaspmi?gene=" + gene+"&type="+type,
+        async:false,
+        cache:false,
+        success:function (data){
+            var result1 = '';
+            var result2 = '';
+            for (var i = 0;i < data.length; i = i + 4){
+                data[i]=Number(data[i]);
+                data[i+1]=Number(data[i+1]);
+                if (data[i] > data[i + 1]){
+                    if (result1){
+                        result1 = result1 +",[" + data[i]+","+data[i + 1] +","+"\"s"+ data[i + 2]+"\"" +"]";
+                    }else{
+                        result1 = "[" + data[i]+","+data[i + 1] +","+ "\""+data[i + 2]+"\"" +"]";
+                    }
+                }else{
+                    if (result2){
+                        result2 = result2 +",[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                    }else{
+                        result2 = "[" + data[i]+","+data[i + 1] +","+"\""+data[i + 2]+"\"" +"]";
+                    }
+                }
+            }
+            var data1=JSON.parse("[" + result1 + "]");
+            var data2=JSON.parse("[" + result2 + "]");
+            var arrnum1=data1.length;
+            var arrnum2=data2.length;
+            var arrnum=arrnum1+arrnum2;
+            if(arrnum == 0){
+                document.getElementById("echartsBrowseGermlineGene5").innerHTML="Sorry, no identical germline mutations in this gene were detected in CASPMI.";
+            }
+            else {
+                var option;
+                option = {
+                    backgroundColor: "white",
+                    title: {
+                        text:'The MAF of  germline mutations in '+gene+' \nin these cancers compared with that in CASPMI',
+                        textStyle:{
+                            fontSize:14,
+                        },
+                        left: 'center'
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        x:'center',
+                        y:'top',
+                        padding:[30,0,0,0],
+                        align:'left',
+                        data: ['High in Genecast', 'High in CASPMI']
+                    },
+                    xAxis: {
+                        name:'MAF iN Genecast',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [10, 0, 0, 0]
+                        },
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        name:'MAF in CASPMI',
+                        nameLocation:'center',
+                        nameTextStyle: {
+                            padding: [0, 0, 30, 0]
+                        },
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'grey',
+                                width:0.05
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                type: 'solid'
+                            }
+                        },
+                        scale: true
+                    },
+                    series: [{
+                        name: 'High in CASPMI',
+                        data: data2,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'red',
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'red'
+                            }, {
+                                offset: 1,
+                                color: 'red'
+                            }])
+                        }
+                    },{
+                        name: 'High in Genecast',
+                        data: data1,
+                        type: 'scatter',
+                        label: {
+                            show: true,
+                            formatter:"{@[2]}",
+                            position: 'right',
+                            color: 'blue',
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: function (param) {
+                                    return (param.data[2] +"( "+param.data[0]+", "+param.data[1]+" )");
+                                },
+                                position: 'top'
+                            }
+                        },
+                        itemStyle: {
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'blue'
+                            }, {
+                                offset: 1,
+                                color: 'blue'
+                            }])
+                        }
+                    }]
+                };
+                if (option && typeof option === 'object') {
+                    myChart4.setOption(option);
+                }
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    var gene=$('#genename').val();
+    var type=$('#typename').val();
+    const aC = window.document.querySelector('#downloadC1')
+    aC.addEventListener('click',()=>{
+        const contentC = document.querySelector('#echartsBrowseClinicalType1 svg').outerHTML
+        const blobC= new Blob([contentC], {type: 'xml/svg'})
+        aC.href = URL.createObjectURL(blobC)
+        aC.download = 'newplot.svg'
+    })
+    var myChart3 =echarts.init(document.querySelector('#echartsBrowseClinicalType1'), null, {renderer: 'svg'});
+    $.ajax({
+        url:"/cpgv/BrowseClinicalGenderByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            const dataList = [];
+            for (var i = 0 ; i < dataSet.length; i = i + 3){
+                let temparray ={};
+                temparray["x0"] = dataSet[i];
+                temparray["y0"] = dataSet[i+2];
+                temparray["y1"] = dataSet[i+1];
+                dataList.push(temparray);
+            }
+            var option = {
+                title: {
+                    left:'center',
+                    textStyle:{
+                        fontSize:14,
+                    },
+                    text: 'The distribution of sex for these cancers'
+                },
+                grid: {
+                    top: 60,
+                    left: 30,
+                    right: 50,
+                    bottom: 30,
+                    containLabel: true,
+                },
+                color: ['#4171FF', "#FF7F9E"],
+                legend: {
+                    top: 30,
+                    left: 10,
+                    icon: 'circle',
+                    selectedMode: false,
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#fff',
+                    textStyle: {
+                        color: '#333',
+                    },
+                    extraCssText: 'box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);',
+                    axisPointer: {
+                        type: 'shadow',
+                    },
+                    formatter(params) {
+                        const categoryName = (params && params[0] && params[0].name) || '';
+                        const obj = params.map((item, index) => {
+                            if (item.value === undefined) {
+                                item.value = 0;
+                            }
+                            const dotColor = `<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:${item.color}"></span>`;
+                            return `${dotColor + item.seriesName}: ${item.value[item.dimensionNames[item.encode.y[0]]]}%</br>`;
+                        });
+                        return `${categoryName} </br> ${obj.join('')}`;
+                    },
+                },
+                dataset: {
+                    source: dataList
+                },
+                grid: {
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    axisLine: {
+                        show: false,
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                },
+                yAxis: {
+                    show: false,
+                },
+                series: [{
+                    name: 'Male',
+                    type: 'bar',
+                    stack: '百分比',
+                    barMaxWidth: 30,
+                    encode: {
+                        x: 'x0',
+                        y: 'y0',
+                    },
+                },
+                    {
+                        name: 'Female',
+                        type: 'bar',
+                        stack: '百分比',
+                        barMaxWidth: 30,
+                        encode: {
+                            x: 'x0',
+                            y: 'y1',
+                        }
+                    },
+                ]
+            };
+            if (option && typeof option === 'object') {
+                myChart3.setOption(option);
+            }
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    function getRepeatNum(arr){
+        var obj = {};
+        for(var i= 0, l = arr.length; i< l; i++){
+            var item = arr[i];
+            obj[item] = (obj[item] +1 ) || 1;
+        }
+        return obj;
+    }
+    var type=$('#typename').val();
+    var TESTER = document.getElementById("echartsBrowseClinicalType2");
+    $.ajax({
+        url:"/cpgv/BrowseClinicalAgeByTypes?type=" + type,
+        async:false,
+        cache:false,
+        success:function (dataSet){
+            console.log(dataSet);
+            var rows = [];
+            for (var i = 0; i < dataSet.length; i = i + 2) {
+                let temparray ={};
+                temparray["EXPRESSION_VALUE"] = dataSet[i+1];
+                temparray["GROUP_NAME"] = dataSet[i];
+                temparray["GROUP_SHORT"] = dataSet[i];
+                rows.push(temparray);
+            };
+            function unpack(rows, key) {
+                return rows.map(function(row) { return row[key]; });
+            }
+            var data = [{
+                type: 'violin',
+                x: unpack(rows, 'GROUP_SHORT'),
+                y: unpack(rows, 'EXPRESSION_VALUE'),
+                points: 'none',
+                hoverinfo: 'y',
+                box: {
+                    visible: true
+                },
+                line: {
+                    color: 'blue',
+                },
+                meanline: {
+                    visible: true
+                },
+            }];
+            var layout = {
+                title: { text: "The distribution of age for these cancers", font: { size: 14,family: "Arial black"}},
+                xaxis: {
+                    "tickangle": 0,
+                    title: {
+                    },
+                },
+                yaxis: {
+                    zeroline: false,
+                    title: {
+                        text: 'Age (years old)'
+                    },
+                }
+            };
+            var config = {
+                toImageButtonOptions: {
+                    format: 'svg',
+                    filename: "The distribution of age in different cancers",
+                    height: 450,
+                    width: 800,
+                    scale: 1
+                },
+                modeBarButtonsToRemove: ['zoom2d',"zoomIn2d","zoomOut2d", 'resetScale2d', 'toggleSpikelines','pan2d', 'sendDataToCloud', "select2d","lasso2d",'hoverClosestCartesian', 'autoScale2d', 'hoverCompareCartesian'],
+                displaylogo: false,
+                displayModeBar: true,
+            };
+            Plotly.newPlot(TESTER, data, layout, config);
+        },
+        error:function (error){
+            console.log(error);
+        }
+    });
+</script>
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <meta name="viewport" content="width=1200px, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/semantic/semantic.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/css/select2.min.css}">
+
+    <script th:src="@{/semantic/semantic.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-table.js}"></script>
+    <script th:src="@{/js/headerfooter-full.js}"></script>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/dataTool.min.js}"></script>
+    <script th:src="@{/js/plotly-latest.min.js}"></script>
+    <script th:src="@{/js/FileSaver.min.js}"></script>
+    <script th:src="@{/js/xlsx.core.min.js}"></script>
+    <script th:src="@{/js/tableExport.min.js}"></script>
+    <script th:src="@{/js/bootstrap-table-export.min.js}"></script>
+    <script th:src="@{/js/select2.min.js}"></script>
+    <script th:src="@{/js/highcharts.js}"></script>
+    <script th:src="@{/js/highcharts-3d.js}"></script>
+    <script th:src="@{/js/exporting.js}"></script>
+
+
+
+    <style>
+        .header {
+            background-color: #2d4373;
+        }
+        .card{
+            margin-bottom: 15px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .container-fluid{
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        div.sticky{
+            position: -webkit-sticky;
+            position: sticky;
+            top: 20px;
+            padding: 5px;
+            background-color: WhiteSmoke;
+            border: 0px solid #4CAF50;
+            color: black;
+        }
+        .table .thead-blue th {
+            /*color: #337AB7;*/
+            /*background-color: lightblue;*/
+            /*border-color: lightskyblue;*/
+            /*height:40px;*/
+            border-color:black;
+            align: 'center';
+            valign: 'middle';
+        }
+
+        .select2-container .select2-selection--single {
+            height: 38px;
+            line-height: 38px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered
+        {
+            line-height: 38px;
+        }
+    </style>
+</head>
+<body>
+<!--common header-->
+<div class="header text-white" th:fragment="header">
+
+    <div class="row">
+        <div class="col-sm-1" style="vertical-align: middle;">
+            <div style="margin-top:5px;margin-left: 25px;"><img th:src="@{/img/icon.png}"  alt="Cinque Terre" height="100px"></div>
+        </div>
+        <div class="col-sm-11">
+            <br>
+            <h1><b>CPGV&nbsp;&nbsp;&nbsp;<small>a database for Cancer Peripheral blood Gene Variations</small></b></h1>
+            <p class="text-right" style="font-size: 15px"><b>Database version: 1.0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navHelp">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+           <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<nav class="breadcrumb" style="background-color:WhiteSmoke;margin-top: 15px; margin-bottom: 30px; margin-left: 15px;margin-right: 15px" th:fragment="breadcrumbHelp">
+    <a class="breadcrumb-item" th:href="@{/}">&nbsp;<b>Home</b></a>
+    <span class="breadcrumb-item active"><b>Help</b></span>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navDownloads">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<nav class="breadcrumb" style="background-color:WhiteSmoke;margin-top: 15px; margin-bottom: 30px; margin-left: 15px;margin-right: 15px" th:fragment="breadcrumbDownloads">
+    <a class="breadcrumb-item" th:href="@{/}">&nbsp;<b>Home</b></a>
+    <span class="breadcrumb-item active"><b>Downloads</b></span>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navAnalysis">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<nav class="breadcrumb" style="background-color:WhiteSmoke;margin-top: 15px; margin-bottom: 30px; margin-left: 15px;margin-right: 15px" th:fragment="breadcrumbAnalysis">
+    <a class="breadcrumb-item" th:href="@{/}">&nbsp;<b>Home</b></a>
+    <span class="breadcrumb-item active"><b>Pan-cancer Analysis</b></span>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navSearch">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<nav class="breadcrumb" style="background-color:WhiteSmoke;margin-top: 15px; margin-bottom: 30px; margin-left: 15px;margin-right: 15px" th:fragment="breadcrumbSearch">
+    <a class="breadcrumb-item" th:href="@{/}">&nbsp;<b>Home</b></a>
+    <span class="breadcrumb-item active"><b>Search</b></span>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navBrowse">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<nav class="breadcrumb" style="background-color:WhiteSmoke;margin-top: 15px; margin-bottom: 30px; margin-left: 15px;margin-right: 15px" th:fragment="breadcrumbBrowse">
+    <a class="breadcrumb-item" th:href="@{/}">&nbsp;<b>Home</b></a>
+    <span class="breadcrumb-item active"><b>Browse</b></span>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#2d4373;font-size: 15px;font-weight: bold" th:fragment="navHome">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/}"><i class="home large icon"></i>Home&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/BrowseSomatic}"><i class="bars large icon"></i>Browse&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Search}"><i class="search large icon"></i>Search&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Pan-cancer Analysis}"><i class="chart line large icon"></i>Pan-cancer Analysis&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/Downloads}"><i class="download large icon"></i>Downloads&nbsp;&nbsp;</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/FAQ}"><i class="question circle large icon"></i>Help&nbsp;&nbsp;</a>
+        </li>
+    </ul>
+</nav>
+
+<!--search-->
+<div class="form-group" th:fragment="formSearch2">
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-5">
+            <button class="btn" style="background-color: dodgerblue;color: white; float:right;font-size: 15px;font-weight: bold" onclick="return checkvalues()">Submit</button>
+        </div>
+        <div class="col-sm-offset-7 col-sm-7">
+            <input class="btn" type="button" style="background-color: dodgerblue;color: white; float:left;font-size: 15px;font-weight: bold" value="Reset" onclick="clearAll()">
+        </div>
+    </div>
+</div>
+<!--gene-->
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneInfoT">
+    <h5>Basic Information</h5>
+</div>
+<div class="card-body" th:fragment="geneInfoC">
+    <table class="table table-striped">
+        <thead></thead>
+        <tbody th:each="searchByGeneInfo,searchByGeneInfoStat:${searchByGeneInfos}">
+        <tr class="row" >
+            <td class="col-2"><strong>Symbol</strong></td>
+            <td class="col-4" th:text="${searchByGeneInfo.symbol}"></td>
+            <td class="col-2"><strong>HGNC ID</strong></td>
+            <td class="col-4"><a th:href="@{'https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/'+${searchByGeneInfo.hgnc_id}}" rel="noopener noreferrer" target="_blank" th:text="${searchByGeneInfo.hgnc_id}"></a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Approved Name</strong></td>
+            <td class="col-4" th:text="${searchByGeneInfo.name}"></td>
+            <td class="col-2"><strong>OMIM ID</strong></td>
+            <td class="col-4"><a th:href="@{'https://omim.org/entry/'+${searchByGeneInfo.omim_id}}" rel="noopener noreferrer" target="_blank" th:text="${searchByGeneInfo.omim_id}"></a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Synonyms Symbol</strong></td>
+            <td class="col-4" th:text="${searchByGeneInfo.gene_synonym}"></td>
+            <td class="col-2"><strong>UCSC ID</strong></td>
+            <td class="col-4"><a th:href="@{'https://genome.ucsc.edu/cgi-bin/hgLinkIn?resource=uniprot&id='+${searchByGeneInfo.uniprot_ids}}" rel="noopener noreferrer" target="_blank" th:text="${searchByGeneInfo.ucsc_id}"></a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Location Group</strong></td>
+            <td class="col-4" th:text="${searchByGeneInfo.locus_group}"></td>
+            <td class="col-2"><strong>Vega ID</strong></td>
+            <td class="col-4"><a th:href="@{'http://vega.archive.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g='+${searchByGeneInfo.vega_id}}" rel="noopener noreferrer" target="_blank" th:text="${searchByGeneInfo.vega_id}"></a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Genome Reference</strong></td>
+            <td class="col-4">GRCh37/hg19</td>
+            <td class="col-2"><strong>Entrez ID</strong></td>
+            <td class="col-4"><a th:href="@{'https://www.ncbi.nlm.nih.gov/gene/?term='+${searchByGeneInfo.entrez_id}}" rel="noopener noreferrer" target="_blank" th:text="${searchByGeneInfo.entrez_id}"></a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Gene Location</strong></td>
+            <td class="col-4" th:text="'chr'+${searchByGeneInfo.chr}+':'+${searchByGeneInfo.start_coordinate}+'-'+${searchByGeneInfo.end_coordinate}+':'+${searchByGeneInfo.strand}"></td>
+            <td class="col-2"><strong>Uniprot ID</strong></td>
+            <td class="col-4"><a th:href="@{'https://www.uniprot.org/uniprotkb/'+${searchByGeneInfo.uniprot_ids}}" rel="noopener noreferrer" target="_blank">protein function</a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>SNP2APA</strong></td>
+            <td class="col-4"><a th:href="@{'http://gong_lab.hzau.edu.cn/SNP2APA/#!/cisQTL'}" rel="noopener noreferrer" target="_blank" >cis-apaQTL analysis</a></td>
+            <td class="col-2"><strong>COSMIC</strong></td>
+            <td class="col-4"><a th:href="@{'https://cancer.sanger.ac.uk/cosmic/gene/analysis?ln='+${searchByGeneInfo.symbol}}" rel="noopener noreferrer" target="_blank" >gene information</a></td>
+        </tr>
+        <tr class="row" >
+            <td class="col-2"><strong>Kaplan-Meier Plotter</strong></td>
+            <td class="col-4"><a th:href="@{'http://kmplot.com/analysis/index.php?p=service&cancer=pancancer_dna'}" rel="noopener noreferrer" target="_blank" >survival analysis</a></td>
+            <td class="col-2"><strong>OncoKB</strong></td>
+            <td class="col-4"><a th:href="@{'https://www.oncokb.org/gene/'+${searchByGeneInfo.symbol}}" rel="noopener noreferrer" target="_blank" >targeted drug</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ul class="nav nav-pills" role="tablist" th:fragment="geneNav">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill" href="#somatic"><h5>Somatic mutation</h5></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#germline"><h5>Germline mutation</h5></a>
+    </li>
+</ul>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSInfoT">
+    <h5>Detailed Mutation Information</h5>
+</div>
+<div class="card-body" th:fragment="geneSInfoC">
+    <table id="somatictable"></table>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGInfoT">
+    <h5>Detailed Mutation Information</h5>
+</div>
+<div class="card-body" th:fragment="geneGInfoC">
+    <table id="germlinetable"></table>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSNT">
+    <h5>The number of mutations</h5>
+</div>
+<div class="card-body" th:fragment="geneSNC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download1" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGNT">
+    <h5>The number of mutations</h5>
+</div>
+<div class="card-body" th:fragment="geneGNC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download1_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSCT">
+    <h5>The carrier ratio of mutations</h5>
+</div>
+<div class="card-body" th:fragment="geneSCC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene3" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download3" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGCT">
+    <h5>The carrier ratio of mutations</h5>
+</div>
+<div class="card-body" th:fragment="geneGCC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download2_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                 <div class="col-sm-11" id="echartsBrowseGermlineGene3" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download3_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSComWT">
+    <h5>Compare with wild type</h5>
+</div>
+<div class="card-body" th:fragment="geneSComWC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene8" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene9" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene10" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene11" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGComWT">
+    <h5>Compare with wild type</h5>
+</div>
+<div class="card-body" th:fragment="geneGComWC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene8" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene9" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-sm-6">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-11" id="echartsBrowseGermlineGene10" style="height: 350px;width: 600px"></div>-->
+<!--                <div class="col-sm-1"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-sm-6">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-11" id="echartsBrowseGermlineGene11" style="height: 350px;width: 600px"></div>-->
+<!--                <div class="col-sm-1"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSComTT">
+    <h5>Compare with TCGA</h5>
+</div>
+<div class="card-body" th:fragment="geneSComTC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene6" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download6" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene4" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download4" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGComTT">
+    <h5>Compare with TCGA</h5>
+</div>
+<div class="card-body" th:fragment="geneGComTC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene6" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download6_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene4" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download4_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneSComGT">
+    <h5>Compare with germline</h5>
+</div>
+<div class="card-body" th:fragment="geneSComGC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene7" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download7" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticGene5" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download5" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="geneGComCT">
+    <h5>Compare with CASPMI</h5>
+</div>
+<div class="card-body" th:fragment="geneGComCC">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineGene5" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="download5_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
+</div>
+<!--type-->
+<ul class="nav nav-pills" role="tablist" th:fragment="typeNav">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill" href="#somatic"><h5>Somatic mutation</h5></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#germline"><h5>Germline mutation</h5></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#clinical"><h5>Clinical information</h5></a>
+    </li>
+</ul>
+<div class="row" th:fragment="typeSNSC">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSNT">
+            <h5>The top mutated genes by the number of mutations</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSNC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT1" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSCT">
+            <h5>The top mutated genes by the carrier ratio of mutations</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSCC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" th:fragment="typeSComTG">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSComTT">
+            <h5>Compare with TCGA</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSComTC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType4" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT4" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSComGT">
+            <h5>Compare with germline</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSComGC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType7" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT7" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" th:fragment="typeSDTS">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSDST">
+            <h5>The distribution of signature</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSDSC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType6" style="height: 650px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT6" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeSDTT">
+            <h5>The distribution of TMB</h5>
+        </div>
+        <div class="card-body" th:fragment="typeSDTC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticType5" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT5" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" th:fragment="typeGNGC">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeGNT">
+            <h5>The top mutated genes by the number of mutations</h5>
+        </div>
+        <div class="card-body" th:fragment="typeGNC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineType1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT1_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeGCT">
+            <h5>The top mutated genes by the carrier ratio of mutations</h5>
+        </div>
+        <div class="card-body" th:fragment="typeGCC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineType2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT2_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" th:fragment="typeGComTG">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeGComTT">
+            <h5>Compare with TCGA</h5>
+        </div>
+        <div class="card-body" th:fragment="typeGComTC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineType4" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadT4_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" th:fragment="typeCDGA">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeCDGT">
+            <h5>The distribution of sex</h5>
+        </div>
+        <div class="card-body" th:fragment="typeCDGC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseClinicalType1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadC1" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="typeCDAT">
+            <h5>The distribution of age</h5>
+        </div>
+        <div class="card-body" th:fragment="typeCDAC">
+            <div id="echartsBrowseClinicalType2" style="height: 350px;width: 600px"></div>
+        </div>
+    </div>
+</div>
+<!--site-->
+<div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="siteInfoT">
+    <h5>Mutation Information</h5>
+</div>
+<div class="card-body" th:fragment="siteInfoC">
+    <table class="table table-striped">
+        <thead></thead>
+        <tbody align="middle" th:each="searchBySomaticSiteInfo,searchBySomaticSiteInfoStat:${searchBySomaticSiteInfos}">
+        <tr class="row" th:if="${searchBySomaticSiteInfoStat.index == 0}">
+            <td class="col-2"><strong>Gene Name</strong></td>
+            <td class="col-4" th:text="${searchBySomaticSiteInfo.gene}"></td>
+            <td class="col-2"><strong>Chromosome</strong></td>
+            <td class="col-4" th:text="${searchBySomaticSiteInfo.chr}"></td>
+        </tr>
+        <tr class="row" th:if="${searchBySomaticSiteInfoStat.index == 0}">
+            <td class="col-2"><strong>Position</strong></td>
+            <td class="col-4" th:text="${searchBySomaticSiteInfo.func}"></td>
+            <td class="col-2"><strong>Type</strong></td>
+            <td class="col-4" th:text="${searchBySomaticSiteInfo.exonicfunc}"></td>
+        </tr>
+        <tr class="row" th:if="${searchBySomaticSiteInfoStat.index == 0}">
+            <td class="col-2"><strong>Residue.g</strong></td>
+            <td class="col-4" th:text="${searchBySomaticSiteInfo.gid0}"></td>
+            <td class="col-2"><strong>OncoKB</strong></td>
+            <td class="col-4"><a th:href="@{'https://www.oncokb.org/actionableGenes#hugoSymbol='+${searchBySomaticSiteInfo.gene}}" rel="noopener noreferrer" target="_blank" th:text="'drug information in OncoKB'"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row" th:fragment="siteSNSC">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="siteSNT">
+            <h5>The number of mutation site</h5>
+        </div>
+        <div class="card-body" th:fragment="siteSNC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticSite1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadS1" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="siteSCT">
+            <h5>The carrier ratio of mutation site</h5>
+        </div>
+        <div class="card-body" th:fragment="siteSCC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseSomaticSite2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadS2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" th:fragment="siteGNGC">
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="siteGNT">
+            <h5>The number of mutation site</h5>
+        </div>
+        <div class="card-body" th:fragment="siteGNC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineSite1" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadS1_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card-header" style="color: deepskyblue;font-weight: bold" th:fragment="siteGCT">
+            <h5>The carrier ratio of mutation site</h5>
+        </div>
+        <div class="card-body" th:fragment="siteGCC">
+            <div class="row">
+                <div class="col-sm-11" id="echartsBrowseGermlineSite2" style="height: 350px;width: 600px"></div>
+                <div class="col-sm-1"><a id="downloadS2_2" href=""><img th:src="@{/img/download.png}" width="15px" height="12px"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

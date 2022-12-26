@@ -1,0 +1,9 @@
+gene	number
+BRCA2	3
+RB1	2
+ATM	1
+BLM	1
+BRCA1	1
+DNMT3A	1
+POLE	1
+TP53	1

@@ -1,0 +1,5 @@
+gene	number
+MLH1	1
+RAD50	1
+RECQL	1
+UGT1A1	1

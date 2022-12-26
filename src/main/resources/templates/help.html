@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Help')"></head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+<div class="container-fluid">
+    <div th:insert="common::header" ></div>
+
+    <nav th:insert="common::navHelp"></nav>
+
+    <nav th:insert="common::breadcrumbHelp" ></nav>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sticky">
+                        <ul class="nav nav-stacked nav-pills" id="myScrollspy" style="font-weight: bold">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#introduction">Introduction</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#methods">Data and Methods</a>
+                                <ul class="nav nav-stacked">
+                                    <li class="nav-item"><a class="nav-link" href="#m1">&nbsp;&nbsp;&nbsp;&nbsp;2.1 Sample collection and statistics</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#m2">&nbsp;&nbsp;&nbsp;&nbsp;2.2 Data processing</a></li>
+<!--                                    <li class="nav-item"><a class="nav-link" href="#m3">&nbsp;&nbsp;&nbsp;&nbsp;2.3 Somatic SNV, Germline SNP and InDel calling</a></li>-->
+                                    <li class="nav-item"><a class="nav-link" href="#m4">&nbsp;&nbsp;&nbsp;&nbsp;2.3 Mutation signature analysis</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#m5">&nbsp;&nbsp;&nbsp;&nbsp;2.4 Calculation of tumor mutation burden (TMB)</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#m6">&nbsp;&nbsp;&nbsp;&nbsp;2.5 Estimation of ctDNA content fraction (CCF)</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#m7">&nbsp;&nbsp;&nbsp;&nbsp;2.6 Calculation of gene-level variant number and carrier ratio for somatic and germline variants</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#m8">&nbsp;&nbsp;&nbsp;&nbsp;2.7 Statistics analysis</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#usage">Database Usage</a>
+                                <ul class="nav nav-stacked">
+                                    <li class="nav-item"><a class="nav-link" href="#u1">&nbsp;&nbsp;&nbsp;&nbsp;3.1 What analysis can be done in CPGV?</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#u2">&nbsp;&nbsp;&nbsp;&nbsp;3.2 How to search for genes, cancer types, pathways or sites of interest?</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#u3">&nbsp;&nbsp;&nbsp;&nbsp;3.3 What data can be downloaded?</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <h4 class="passage-header text-primary" id="introduction" style="font-weight: bold">Introduction</h4>
+                    <br>
+                    <h5><strong>1. What is CPGV database?</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Circulating cell-free DNA (cfDNA) in the peripheral blood is a promising biomarker for cancer diagnosis and prognosis. Somatic mutations in cancers have been used to detect therapeutic targets for clinical transformation and individualize drug selection. Germline variants can predict a patient’s risk of developing cancer, affect drug sensitivity, and predict drug toxicity. However, no database or platform has been developed to integrate these pan-cancer cfDNA mutations deeply.
+                        <br>
+                        Here, we present CPGV (http://ngdc.cncb.ac.cn/cpgv), a public database dedicated to collecting, displaying and analyzing 496 germline variants and 11,232 somatic mutations detected in leukocytes and cfDNA of 16,659 patients with cancer from 27 cancer types. Using this database, users can retrieve the germline variants and somatic mutations of each gene across multiple cancers, review the mutation characteristics of each cancer type, and compare the differences in cfDNA profiles among different cancers and in mutations between cfDNA and tumor tissues derived from TCGA (The Cancer Genome Atlas), between somatic and germline mutations, and between cfDNA and CASPMI (a non-tumor reference cohort).
+                        <br>
+                        CPGV is the first pan-cancer cfDNA database, including somatic and germline mutations, and it will serve as an important resource to facilitate cancer research.
+                    </p>
+                    <br>
+                    <h4 class="passage-header text-primary" id="methods" style="font-weight: bold">Data and Methods</h4>
+                    <br>
+                    <h5 id="m1"><strong>2.1 Sample collection and statistics</strong></h5>
+                    <br>
+                    <p style="font-size:15px">16,659 patients with 27 types of cancer have been selected for pan-cancer mutation research. 15,614 pairs of cell-free DNA (tumor) and white blood cell (normal) samples were collected for somatic mutation research, including 15,214 patients, that some patients have 2 pairs of samples at different timepoints. 12,822 white blood cell samples were collected for germline mutation research, including 12,822 patients.</p>
+                    <br>
+                    <img th:src="@{/img/statistics.jpg}" alt="Cinque Terre" align="center">
+                    <h5 id="m2"><strong>2.2 Data processing</strong></h5>
+                    <br>
+<!--                    <p style="font-size:15px">Plasma and white blood cells (WBCs) were separated by centrifugation at 1,600 × g for 10 min. cfDNA was extracted from plasma using a MagMAX™ Cell-Free DNA Isolation Kit (Thermo Fisher Scientific, Waltham, MA, USA). gDNA was extracted from WBCs using a TIANamp Blood DNA Kit (TIANGEN, Beijing, China). The DNA concentration was measured using the Qubit® dsDNA HS Assay Kit (Thermo Fisher Scientific), and the quality was assessed using an Agilent 2100 Bioanalyzer (Agilent, USA). gDNA was cut into 150-200 base-pair (bp) fragments with a Covaris M220 Focused-ultrasonicator (Covaris, Massachusetts, USA), constructed using KAPA Hyper Prep Kit (Kapa Biosystems, USA), hybridized to several in-house panels (Genecast, Wuxi, China), and sequenced on the Illumina NovaSeq 6000 according to the manufacturer’s instructions, producing paired-end reads with a length of 151 bp.</p>-->
+                    <p style="font-size:15px">Preliminary sequencing data in the BCL format were converted to FASTQ files using bcl2fastq (v2.20.0), processed using Trimmomatic (v0.39) for adapter trimming and low-quality read filtering, mapped to the reference genome (hg19) using BWA (0.7.17), sorted and marked duplicates using the Picard toolkit (version 2.1.0), and then realigned using the Genome Analysis Toolkit (GATK, version 3.7).</p>
+                    <br>
+<!--                    <h5 id="m3"><strong>2.3 Somatic SNV, Germline SNP and InDel calling</strong></h5>-->
+<!--                    <br>-->
+<!--                    <p style="font-size:15px">GATK base quality score recalibration (BQSR) was first used to recalibrate base quality. For somatic SNVs and InDel calling, a panel of normals (PoN) containing germline and artifactual sites was created using GATK Mutect2 (4.1.2.0), and then Mutect2 was run to call variants in pairs of tumor and matched normal samples with the PoN. For germline SNP and InDel calling, GATK Haplotype Caller was used to call variants in normal samples in a joint calling mode. These variants were annotated with ANNOVAR and filtered using gnomAD for rare variants. Rare variants were further filtered in the blacklist and healthy people, while nonsynonymous, stop-gain, stop-loss, splicing, frameshift/non-frameshift insertion, and deletion variants among the exonic and splicing regions were retained for later analysis. Pathogenicity classification for germline variants was predicted using CharGer following the American College of Medical Genetics guidelines. Variants with a variant allele frequency (VAF) greater than 0.007 were retained for the final somatic mutation set. The MAF annotator for OncoKB annotation was used to predict oncogenic and drug-used evidence with somatic variants. The variant interpretation for cancer tool was used to assess clinical impacts of somatic variants.</p>-->
+                    <p style="font-size:15px">Pipeline of germline variants identification</p>
+                    <p>&nbsp;&nbsp;<img th:src="@{/img/germline pipeline.jpg}" alt="Cinque Terre" align="center" width="70%"></p>
+                    <p style="font-size:15px">Filtering of somatic mutation sites called from Genecast cohort</p>
+                    <p>&nbsp;&nbsp;<img th:src="@{/img/somatic pipeline.jpg}" alt="Cinque Terre" align="bottom" width="70%"></p>
+                    <br>
+                    <h5 id="m4"><strong>2.3 Mutation signature analysis</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Mutation signatures were determined by applying somatic rare variants in parsing 96 tri-nucleotide contexts to calculate the proportion of COSMIC signatures using the R package (version 4.1.2) “deconstructSigs”.</p>
+                    <br>
+                    <h5 id="m5"><strong>2.4 Calculation of tumor mutation burden (TMB)</strong></h5>
+                    <br>
+                    <p style="font-size:15px">TMB was determined by somatic mutationsin the exonic and splicing regions with a VAF greater than 0.007. Alterations that were likely or known to be oncogenic drivers were excluded. TMB per megabase was calculated as the total number of mutations divided by the total bases of the target panel, with no less than 500x coverage.</p>
+                    <br>
+                    <h5 id="m6"><strong>2.5 Estimation of ctDNA content fraction (CCF)</strong></h5>
+                    <br>
+                    <p style="font-size:15px">The CCF of plasma samples was estimated using a maximum likelihood model based on SNVs and copy number variants in the paired plasma and WBC samples, a method that can calculate CCF at lower ctDNA concentrations with high accuracy and stability.</p>
+                    <p>&nbsp;&nbsp;<img th:src="@{/img/ccf.jpg}" alt="Cinque Terre" align="center" width=70% ></p>
+                    <br>
+                    <h5 id="m7"><strong>2.6 Calculation of gene-level variant number and carrier ratio for somatic and germline variants</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Only the pathogenic and likely pathogenic germline variants predicted by CharGer were used to calculate the gene-level variant number and carrier ratio, and the dysfunctional variants among the exonic and splicing regions for somatic mutations were calculated. We counted the number of variants for each gene in the 27 cancer types. The carrier ratio of a variant is the percentage of patients with this variant per cancer type. The carrier ratio of a gene in a cancer is the proportion of individuals with any mutation in this gene among all patients with the same cancer type.</p>
+                    <br>
+                    <h5 id="m8"><strong>2.7 Statistics analysis</strong></h5>
+                    <br>
+                    <p style="font-size:15px">The relationship between carrier ratio and cancer type in the cfDNA cohort was determined by a one-sided Fisher’s exact test, and a two-sided Fisher’s exact test comparedthese relationships in the cfDNA and TCGA cohorts and the somatic and germline in cfDNA cohort. Multiple hypothesis testing was carried out to adjust the p value.</p>
+                    <br>
+                    <h4 class="passage-header text-primary" id="usage" style="font-weight: bold">Database Usage</h4>
+                    <br>
+                    <h5 id="u1"><strong>3.1 What analysis can be done in CPGV?</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Users can search based on interested gene names, cancer types, pathway names, and mutation sites.</p>
+                    <p style="font-size:15px">Searching for a gene can get the basic introduction of the gene, external links to other resources, such as COSMIC, OncoKB, HGNC, OMIM, UniProt, and UCSC to reduce data redundancy, information on mutations occurring within this gene from all patients, the number and carrier ratio of mutations within this gene, and the distribution of age, sex, CCF and TMB in patients with and without mutations in this gene, and a comparison of the mutations in this gene in our cohort with those in TCGA and CASPMI that is an occupational population with fewer mutant genes and sites. All results are divided into somatic and germline mutations and displayed separately. </p>
+                    <p style="font-size:15px">Searching for cancer types can get the mutation number and carrier ratio of the top 20 mutated genes, a comparison of these genes in somatic mutations with those in TCGA and germline mutations in Genecast, and the distribution of TMB, signature, and clinical characteristics (including sex and age) in this cancer type.</p>
+                    <p style="font-size:15px">Searching for the pathway name can get the mutation carrier ratio and detailed mutation information of all genes in this pathway.</p>
+                    <p style="font-size:15px">Searching for the mutation site can get the detailed mutation information, the number and carrier ratio of this site. </p>
+                    <p style="font-size:15px">Users can also explore the mutational profile across multiple cancers. Once several cancers are selected, CPGV will provide the statistics of mutations from the top 20 mutated genes and a comparison of TMB, mutational signature, and clinical characteristics.Furthermore, users can select a gene with one or more cancer types simultaneously to perform pan-cancer analysis. The gene mutation information and the difference compared with TCGA, CASPMI, and germline mutations in the selected cancers will be displayed.</p>
+                    <br>
+                    <h5 id="u2"><strong>3.2 How to search for genes, cancer types, pathways or sites of interest?</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Users can search through the “Home” module, “Browse” module, “Search” module and “Pan-cancer Analysis” module.</p>
+                    <p style="font-size:15px">There is a quick search box on the “Home” module. Users can search for any item they are interested in.</p>
+                    <img th:src="@{/img/use_home_1.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <img th:src="@{/img/use_home_2.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <p style="font-size:15px">The “Browse” module is divided into three interfaces to display information about all mutated genes and sites, cancer types and pathway. Users simply click on a gene, locus, cancer or pathway name of interest to output the results.</p>
+                    <p>&nbsp;&nbsp;Gene Unit</p>
+                    <img th:src="@{/img/use_b1.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <img th:src="@{/img/use_b2.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <p>&nbsp;&nbsp;Cancer type Unit</p>
+                    <img th:src="@{/img/use_b3.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <p>&nbsp;&nbsp;Pathway Unit</p>
+                    <img th:src="@{/img/use_b4.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <p style="font-size:15px">The “Search” module has four items corresponding to different types. Users simply select the item and enter the keyword of interest.</p>
+                    <img th:src="@{/img/use_s1.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <img th:src="@{/img/use_s2.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <p style="font-size:15px">The “Pan-cancer Analysis” module can get results by entering only cancer, or by entering cancer and genes.</p>
+                    <img th:src="@{/img/use_p.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <h5 id="u3"><strong>3.3 What data can be downloaded?</strong></h5>
+                    <br>
+                    <p style="font-size:15px">Users can download all the analysis results graphs, and download detailed mutation information by cancer types in the “Downloads” module.</p>
+                    <img th:src="@{/img/use_d.jpg}" alt="Cinque Terre" align="center" width=90%>
+                    <br>
+                    <br>
+                    <h4 class="passage-header text-primary" id="contact">Contact Us</h4>
+                    <br>
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-sm-6" style="line-height:5px; padding-left:40px; padding-top:20px">
+                                <h5><strong>Email:</strong></h5>
+                                <h6>fangxd@big.ac.cn</h6>
+                                <h5><strong>Contributors:</strong></h5>
+                                <h6>Yanxia Liu</h6>
+                                <h6>Shouwei Zhang</h6>
+                                <h6>Hongzhu Qu</h6>
+                                <h6>Xiangdong Fang</h6>
+                                <h5><strong>Address:</strong></h5>
+                                <h6>Key Laboratory of Genome Sciences and Information</h6>
+                                <h6>Beijing Institute of Genomics</h6>
+                                <h6>Chinese Academy of Sciences</h6>
+                                <h6>(China National Center for Bioinformation)</h6>
+                                <h6>No.1 Beichen West Road, Chaoyang District</h6>
+                                <h6>Beijing 100101, China</h6>
+                            </div>
+                            <div class="col-sm-6" style="padding-top:20px; padding-bottom:20px">
+                                <img th:src="@{/img/address.png}" alt="Cinque Terre" align="middle" width="400px" height="350px">
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:replace="commonJS::statistics"></script>
+</html>

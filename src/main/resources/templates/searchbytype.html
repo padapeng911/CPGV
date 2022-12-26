@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Search by type')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navSearch"></nav>
+
+    <nav th:insert="common::breadcrumbSearch"></nav>
+
+    <div class="card" style="margin-top:-16px; margin-bottom: 30px">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" th:text="'Mutation Characteristics of '+${searchItem.name}+' in Genecast Cohort and Analysis'"></p>
+        </div>
+        <input id="typename" type="hidden" th:value="${searchItem.name}">
+        <br>
+        <ul th:insert="common::typeNav"></ul>
+        <div class="tab-content">
+            <div id="somatic" class="tab-pane active"><br>
+                <div th:insert="common::typeSNSC"></div>
+                <div th:insert="common::typeSComTG"></div>
+                <div th:insert="common::typeSDTS"></div>
+            </div>
+            <div id="germline" class="tab-pane fade"><br>
+                <div th:insert="common::typeGNGC"></div>
+                <div th:insert="common::typeGComTG"></div>
+            </div>
+            <div id="clinical" class="tab-pane fade"><br>
+                <div th:insert="common::typeCDGA"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    function delRepeat2( arr ){
+        var newArr = [];
+        for(var i=0; i<arr.length; i++){
+            if( newArr.indexOf(arr[i]) == -1 ){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    var type=$('#typename').val();
+</script>
+
+<script th:include="commonJS::typeSN"></script>
+
+<script th:include="commonJS::typeSC"></script>
+
+<script th:include="commonJS::typeSComT"></script>
+
+<script th:include="commonJS::typeSComG"></script>
+
+<script th:include="commonJS::typeSDT"></script>
+
+<script th:include="commonJS::typeSDS"></script>
+
+
+
+<script th:include="commonJS::typeGN"></script>
+
+<script th:include="commonJS::typeGC"></script>
+
+<script th:include="commonJS::typeGComT"></script>
+
+
+
+<script th:include="commonJS::typeCDG"></script>
+
+<script th:include="commonJS::typeCDA"></script>
+
+
+<script th:replace="commonJS::statistics"></script>
+</html>

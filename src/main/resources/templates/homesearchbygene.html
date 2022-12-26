@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('Homesearch by gene')"></head>
+<body>
+<div class="container-fluid">
+    <div th:insert="common::header"></div>
+
+    <nav th:insert="common::navHome"></nav>
+
+    <div class="card">
+        <div class="card-header" style="background-color: #B8DAFF">
+            <p class="card-text" style="font-size:20px" th:text="${homeSearchItem.selectedval}+' Mutation Information in Genecast Cohort and Analysis'"></p>
+        </div>
+        <input id="genename" type="hidden" th:value="${homeSearchItem.selectedval}">
+        <div class="card-body">
+            <div th:insert="common::geneInfoT"></div>
+            <div th:insert="common::geneInfoC"></div>
+            <ul th:insert="common::geneNav"></ul>
+            <div class="tab-content" >
+                <div id="somatic" class="tab-pane active"><br>
+                    <div th:insert="common::geneSInfoT"></div>
+                    <div th:insert="common::geneSInfoC"></div>
+                    <div th:insert="common::geneSNT"></div>
+                    <div th:insert="common::geneSNC"></div>
+                    <div th:insert="common::geneSCT"></div>
+                    <div th:insert="common::geneSCC"></div>
+                    <div th:insert="common::geneSComWT"></div>
+                    <div th:insert="common::geneSComWC"></div>
+                    <div th:insert="common::geneSComTT"></div>
+                    <div th:insert="common::geneSComTC"></div>
+                    <div th:insert="common::geneSComGT"></div>
+                    <div th:insert="common::geneSComGC"></div>
+                </div>
+                <div id="germline" class="tab-pane fade"><br>
+                    <div th:insert="common::geneGInfoT"></div>
+                    <div th:insert="common::geneGInfoC"></div>
+                    <div th:insert="common::geneGNT"></div>
+                    <div th:insert="common::geneGNC"></div>
+                    <div th:insert="common::geneGCT"></div>
+                    <div th:insert="common::geneGCC"></div>
+                    <div th:insert="common::geneGComWT"></div>
+                    <div th:insert="common::geneGComWC"></div>
+                    <div th:insert="common::geneGComTT"></div>
+                    <div th:insert="common::geneGComTC"></div>
+                    <div th:insert="common::geneGComCT"></div>
+                    <div th:insert="common::geneGComCC"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:replace="commonJS::geneSInfo"></script>
+
+<script th:replace="commonJS::geneSN"></script>
+
+<script th:replace="commonJS::geneSC"></script>
+
+<script th:replace="commonJS::geneSC2"></script>
+
+<script th:replace="commonJS::geneSComW"></script>
+
+<script th:replace="commonJS::geneSComW2"></script>
+
+<script th:replace="commonJS::geneSComW3"></script>
+
+<script th:replace="commonJS::geneSComW4"></script>
+
+<script th:replace="commonJS::geneSComT"></script>
+
+<script th:replace="commonJS::geneSComT2"></script>
+
+<script th:replace="commonJS::geneSComG"></script>
+
+<script th:replace="commonJS::geneSComG2"></script>
+
+
+
+<script th:replace="commonJS::geneGInfo"></script>
+
+<script th:replace="commonJS::geneGN"></script>
+
+<script th:replace="commonJS::geneGC"></script>
+
+<script th:replace="commonJS::geneGC2"></script>
+
+<script th:replace="commonJS::geneGComW"></script>
+
+<script th:replace="commonJS::geneGComW2"></script>
+
+<script th:replace="commonJS::geneGComW3"></script>
+
+<script th:replace="commonJS::geneGComW4"></script>
+
+<script th:replace="commonJS::geneGComT"></script>
+
+<script th:replace="commonJS::geneGComT2"></script>
+
+<script th:replace="commonJS::geneGComC"></script>
+
+
+
+
+<script th:replace="commonJS::statistics"></script>
+
+</html>
